@@ -49,6 +49,7 @@ interface ThemeBridge {
     preference?: string
     fontSize?: number
     revision?: number
+    active?: { colorScheme: 'light' | 'dark' }
   }
   setTheme(id: string): void
 }
@@ -418,7 +419,7 @@ Remove all bombs from the camera area before restarting Windose20.`)
         return
       }
       clearBootTimers()
-      if (navigator.userAgent.toLowerCase().includes('jsdom')) {
+      if (forceLight || navigator.userAgent.toLowerCase().includes('jsdom')) {
         bootOverlay?.remove()
         bootOverlay = null
         rebooting = false
@@ -498,13 +499,16 @@ Remove all bombs from the camera area before restarting Windose20.`)
   }
 
   const enforceLightMode = (allowInitialSystemSnapshot = false): void => {
-    if (!body.hasAttribute(DARK_THEME_ATTRIBUTE)) {
+    const snapshot = (ctx.get('theme') as ThemeBridge | undefined)?.getTheme?.()
+    const isDark = snapshot?.active !== undefined
+      ? snapshot.active.colorScheme === 'dark'
+      : body.hasAttribute(DARK_THEME_ATTRIBUTE)
+    if (!isDark) {
       if (themeAdoptionTimer !== null) window.clearTimeout(themeAdoptionTimer)
       themeAdoptionTimer = null
       return
     }
 
-    const snapshot = (ctx.get('theme') as ThemeBridge | undefined)?.getTheme?.()
     const awaitingHostPreference = snapshot?.preference === 'system'
       && snapshot.revision === 0
       && typeof snapshot.fontSize === 'number'
