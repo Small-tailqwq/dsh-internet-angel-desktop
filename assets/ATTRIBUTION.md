@@ -22,7 +22,7 @@ Resource names, versions and hashes below remain available for attribution and c
 | DinkieBitmap 9px | Original font creator / rights holder; full permission chain requires confirmation | [community archive]: TTF source converted to WOFF2 | The archive is not evidence of a font redistribution or conversion license. This permission remains unverified. |
 | Zpix | SolidZORO | Official, unmodified WOFF2 release v3.1.11 | Consult the [author's terms](https://github.com/SolidZORO/zpix-pixel-font); this project grants no additional rights. |
 | Generated notepad and action icons | AI-generated material directed by the project contributors | Generated with OpenAI image tools on 2026-08-20 and 2026-08-27; cropped/resized for the interface | Recorded as generated project material, without claiming ownership of third-party motifs or exclusive rights to generated output. |
-| README promotional screenshot | User-supplied capture; underlying UI/game assets retain their respective owners | [user-supplied capture], dated 2026-09-05; included at the user's direction | Permission to use the capture does not transfer the embedded third-party asset rights. |
+| README promotional screenshot | User-supplied capture; underlying UI/game assets retain their respective owners | [user-supplied capture], dated 2026-09-05; workspace and conversation content replaced with demo text using OpenAI image editing at the user's direction | Permission to use the capture does not transfer the embedded third-party asset rights. |
 
 ## Identification and transformations
 
