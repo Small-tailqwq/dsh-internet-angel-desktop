@@ -1,5 +1,7 @@
 # Internet Angel Desktop · 超绝网络天使桌面
 
+简体中文 | [English](README.en.md) | [日本語](README.ja.md)
+
 **把 DSH Web 变成 windose20 的操作系统。**
 
 受《主播女孩重度依赖》启发的非官方、非商业饭制皮肤。

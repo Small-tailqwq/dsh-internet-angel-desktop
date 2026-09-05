@@ -429,6 +429,7 @@ interface DesktopSurfaces {
   pomodoroBreakInput: HTMLInputElement
   pomodoroApply: HTMLButtonElement
   pomodoroTaskLabel: HTMLElement
+  pomodoroTray: HTMLButtonElement
   pomodoroShortcutLabel: HTMLElement
   medicineShortcut: HTMLButtonElement
   medicineConsent: HTMLElement
@@ -1502,6 +1503,10 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   const pomodoroTask = makeTaskItem(() => t('番茄钟'))
   const medicineTask = makeTaskItem(() => t('吃药'))
   const pomodoroTaskLabel = pomodoroTask.lastElementChild as HTMLElement
+  const pomodoroTray = element('button', css.pomodoroTray ?? '')
+  pomodoroTray.type = 'button'
+  pomodoroTray.hidden = true
+  setAttr(pomodoroTray, 'title', () => t('番茄钟'))
   const pictureTask = makeTaskItem(() => t('我的图片'))
   const imageViewerTask = makeTaskItem(() => t('图片'))
   const saveTask = makeTaskItem(() => t('继续游戏'))
@@ -1549,7 +1554,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   connectionPopover.append(connectionTitle, connectionStatus, connectionAction)
   connectionTray.append(connectionButton, connectionPopover)
 
-  taskbar.append(startButton, quickLaunch, tasks, connectionTray, clockButton)
+  taskbar.append(startButton, quickLaunch, tasks, connectionTray, pomodoroTray, clockButton)
 
   const desktopNotice = element('button', css.desktopNotice ?? '')
   desktopNotice.type = 'button'
@@ -1644,6 +1649,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     pomodoroBreakInput,
     pomodoroApply,
     pomodoroTaskLabel,
+    pomodoroTray,
     pomodoroShortcutLabel: pomodoroShortcut.lastElementChild as HTMLElement,
     medicineShortcut,
     medicineConsent,
@@ -1733,7 +1739,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
         element: pomodoro.window,
         taskButton: pomodoroTask,
         initialState: 'closed',
-        openers: [pomodoroShortcut],
+        openers: [pomodoroShortcut, pomodoroTray],
       },
       {
         id: 'medicine',
@@ -2299,22 +2305,18 @@ function projectUserMessage(row: Element): JineProjection {
   const imageSrcs = images
     .map(image => image.getAttribute('src') ?? '')
     .filter(src => src !== '')
-  const bubble = chrome.querySelector(':scope > div:first-of-type')
-  if (bubble !== null) {
-    return {
-      text: normalizedText(bubble),
-      imageSrcs,
-      time: timeNode === null ? '' : normalizedText(timeNode),
-      read: userMessageRead(row),
-    }
+  // UserStyleBubble nests the text under userRow/userStack, with actions
+  // beside the stack. The first div can therefore contain both text and time.
+  const bubble = chrome.querySelector("[class$='_bubble'], [class*='_bubble_']")
+  const content = (bubble ?? chrome).cloneNode(true) as Element
+  if (bubble === null) {
+    content.querySelectorAll("span[class*='timeStart'], span[class*='timeEnd'], [class$='_actions'], [class*='_actions_'], button")
+      .forEach(node => node.remove())
   }
-
-  const raw = normalizedText(chrome)
-  const trailingTime = raw.match(/(?:^|\s)((?:\d{1,2}月\d{1,2}日\s+)?\d{1,2}:\d{2})$/)
   return {
-    text: trailingTime === null ? raw : raw.slice(0, trailingTime.index).trim(),
+    text: normalizedText(content),
     imageSrcs,
-    time: trailingTime?.[1] ?? '',
+    time: timeNode === null ? '' : normalizedText(timeNode),
     read: userMessageRead(row),
   }
 }
@@ -4017,6 +4019,9 @@ export function apply(ctx: Context): void {
       : t("已完成 {0} 轮；每 4 轮休息 15 分钟。", snapshot.completedFocus))
     setText(surfaces.pomodoroToggle, () => snapshot.running ? t('暂停') : t('启动计时'))
     setText(surfaces.pomodoroTaskLabel, `${resting ? '☕' : '🍅'} ${time}`)
+    setText(surfaces.pomodoroTray, `${resting ? '☕' : '🍅'} ${time}`)
+    surfaces.pomodoroTray.hidden = !snapshot.running
+    setAttr(surfaces.pomodoroTray, 'aria-label', () => t("番茄钟 {0}", time))
     setText(surfaces.pomodoroShortcutLabel, () => snapshot.running ? t("番茄钟 {0}", time) : t('番茄钟'))
     surfaces.pomodoroFocusInput.value = String(snapshot.focusMinutes)
     surfaces.pomodoroBreakInput.value = String(snapshot.breakMinutes)
