@@ -1,0 +1,289 @@
+.medicineWindow { z-index: 58; top: 12vh; left: 31vw; width: min(430px, 46vw); height: min(430px, 65vh); }
+.medicineWindow [class*='windowBody'] { overflow: hidden; background: #211715; }
+.medicineSurface {
+  position: absolute; inset: 0; display: flex; min-width: 0; min-height: 0; align-items: center;
+  flex-direction: column; overflow-y: auto; padding: 8px 12px 10px; color: #f2e7d7;
+  background: repeating-linear-gradient(0deg, rgb(255 255 255 / 2%) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at 50% 32%, #4a3429 0, #281c19 48%, #171110 100%);
+  image-rendering: pixelated;
+}
+.slotStage {
+  --slot-scale: 3.35; position: relative; width: calc(48px * var(--slot-scale));
+  height: calc(48px * var(--slot-scale)); flex: 0 0 auto; transform-origin: 50% 100%;
+}
+.slotBody, .slotWheel { position: absolute; image-rendering: pixelated; pointer-events: none; }
+.slotBody { inset: 0; width: 100%; height: 100%; }
+.slotOutlet { position: absolute; left: calc(20px * var(--slot-scale)); top: calc(37px * var(--slot-scale)); width: 0; height: 0; }
+.medicineSurface[data-slot-phase='broken'] .slotWheel { display: none; }
+.slotWheel {
+  top: calc(18px * var(--slot-scale)); width: calc(16px * var(--slot-scale));
+  height: calc(16px * var(--slot-scale));
+}
+.slotWheel1 { left: calc(5px * var(--slot-scale)); }
+.slotWheel2 { left: calc(14px * var(--slot-scale)); }
+.slotWheel3 { left: calc(23px * var(--slot-scale)); }
+.medicineSurface[data-slot-phase='initiate'] .slotStage { animation: slot-squish 240ms steps(3, jump-none); }
+.medicineSurface[data-slot-phase='spinning'] .slotStage { animation: slot-wiggle 80ms steps(2, jump-none) infinite; }
+.medicineSurface[data-slot-phase='decision'] .slotStage { filter: drop-shadow(0 0 8px rgb(255 197 82 / 42%)); }
+.medicineResult { display: grid; min-height: 112px; place-items: center; align-content: center; }
+.pillIcon {
+  --medicine-pill-x: 0; --medicine-pill-y: 0; display: none; width: 72px; height: 72px;
+  background-image: var(--medicine-pill-sheet);
+  background-position: calc(var(--medicine-pill-x) * -72px) calc(var(--medicine-pill-y) * -72px);
+  background-size: 576px 576px; image-rendering: pixelated;
+  filter: drop-shadow(3px 4px 0 rgb(0 0 0 / 34%));
+}
+.pillIcon[data-medicine-pill] { display: block; }
+.pillIcon[data-medicine-custom-icon] {
+  background-image: var(--medicine-custom-icon); background-position: center; background-size: auto 43px;
+  background-repeat: no-repeat;
+}
+.medicineName { color: #fff1ca; font-size: 19px; line-height: 1.15; }
+.medicineOriginal {
+  margin-top: 3px; color: #c98aaa; font-family: 'Courier New', monospace;
+  font-size: 9px; letter-spacing: 1px;
+}
+.medicineDecisions { display: flex; gap: 8px; margin-top: 8px; }
+.medicineDecisions[hidden], .rollButton[hidden] { display: none; }
+.rollButton, .takeButton, .discardButton {
+  min-width: 76px; padding: 6px 12px; border: 2px solid #86613d; border-radius: 0;
+  color: #f5e4c4; background: #4b3424; box-shadow: 0 3px 0 #1d120d, inset 0 1px 0 #9b7651;
+  font-family: inherit; font-size: 11px; cursor: pointer;
+}
+.rollButton { min-width: 132px; margin-top: 3px; }
+.takeButton { border-color: #77934f; background: #40542e; }
+.discardButton { border-color: #8c5966; background: #57313d; }
+.rollButton:hover:not(:disabled), .rollButton:focus-visible:not(:disabled),
+.takeButton:hover:not(:disabled), .takeButton:focus-visible:not(:disabled),
+.discardButton:hover:not(:disabled), .discardButton:focus-visible:not(:disabled) {
+  filter: brightness(1.25); outline: 1px dotted #ffd477; outline-offset: -4px;
+}
+.rollButton:active:not(:disabled), .takeButton:active:not(:disabled), .discardButton:active:not(:disabled) {
+  transform: translateY(2px); box-shadow: 0 1px 0 #1d120d;
+}
+.rollButton:disabled, .takeButton:disabled, .discardButton:disabled {
+  cursor: not-allowed; filter: saturate(.3); opacity: .42;
+}
+
+.medicineConsentOverlay {
+  position: fixed; z-index: 1400; inset: 0; display: grid; place-items: center; padding: 20px;
+  background: rgb(25 13 48 / 58%); backdrop-filter: blur(2px);
+}
+.medicineConsentOverlay[hidden] { display: none; }
+.medicineConsentDialog {
+  box-sizing: border-box; width: min(520px, calc(100vw - 40px)); padding: 18px 20px 16px;
+  border: 3px solid #4d21cb; color: #4d21cb; background: #f7d8f2;
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #c36dc2, 6px 6px 0 rgb(49 17 185 / 42%);
+  font-family: var(--ngo-pixel-font, monospace);
+}
+.medicineConsentTitle {
+  margin: 0 0 13px; padding: 6px 10px; color: #fff; background: #7650d4;
+  font-size: 18px; font-weight: 400; line-height: 1.35; text-align: center;
+}
+.medicineConsentCopy { margin: 0; font-size: 13px; line-height: 1.8; }
+.medicineConsentActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.medicineConsentAccept, .medicineConsentDecline {
+  min-width: 92px; padding: 7px 12px; border: 2px solid #5635cb; color: #3f1bc6;
+  background: #bde4ef; box-shadow: inset 1px 1px 0 #fff, 2px 2px 0 #b164c1;
+  font: 13px/1.35 var(--ngo-pixel-font, monospace); cursor: pointer;
+}
+.medicineConsentAccept { color: #fff; background: #ff66b8; }
+.medicineConsentAccept:hover, .medicineConsentAccept:focus-visible,
+.medicineConsentDecline:hover, .medicineConsentDecline:focus-visible {
+  outline: 1px dotted #4d21cb; outline-offset: -5px; filter: brightness(1.08);
+}
+.medicineConsentAccept:active, .medicineConsentDecline:active {
+  transform: translate(1px, 1px); box-shadow: inset 1px 1px 0 #fff;
+}
+
+.medicineTestControls {
+  position: fixed; z-index: 1200; right: 12px; bottom: calc(var(--ngo-taskbar-height, 48px) + 12px);
+  width: 300px; padding: 8px; color: #fff1ca; background: #241711f2;
+  border: 2px solid #8b633d; box-shadow: 4px 4px 0 rgb(28 13 8 / 48%);
+  font-family: var(--ngo-pixel-font, monospace); font-size: 10px;
+}
+.medicineTestTitle { display: block; margin-bottom: 6px; color: #ffd477; letter-spacing: 1px; }
+.medicineTestGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+.medicineTestButton, .medicineTestCombo {
+  min-width: 0; padding: 5px 6px; color: #f5e4c4; background: #4b3424;
+  border: 1px solid #86613d; border-radius: 0; font: inherit;
+}
+.medicineTestButton:hover, .medicineTestButton:focus-visible,
+.medicineTestCombo:hover, .medicineTestCombo:focus-visible { background: #68492f; outline: 1px dotted #ffd477; }
+.medicineTestCombo { width: 100%; margin-top: 5px; color: #19110c; background: #ffd477; }
+
+.medicineBuffTray {
+  position: fixed; z-index: 1001; right: calc(var(--ngo-side-width) + 16px);
+  bottom: calc(var(--ngo-taskbar-height) + 76px); display: grid; justify-items: end; gap: 6px;
+  width: min(320px, calc(100vw - var(--ngo-side-width) * 2 - 32px)); pointer-events: none;
+}
+.minecraftBuffBar, .terrariaBuffBar { display: flex; min-height: 44px; justify-content: flex-end; gap: 4px; }
+.minecraftBuffBar[hidden], .terrariaBuffBar[hidden] { display: none; }
+.minecraftBuffBar {
+  padding: 4px; border: 2px solid #111; background: #c6c6c6;
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555, 2px 2px 0 rgb(0 0 0 / 45%);
+}
+.terrariaBuffBar {
+  max-width: 290px; flex-wrap: wrap; padding: 3px 5px; border: 2px solid #70502d;
+  background: rgb(39 28 48 / 82%);
+  box-shadow: inset 1px 1px 0 #dfbd6b, inset -1px -1px 0 #2b1722, 2px 2px 0 rgb(0 0 0 / 42%);
+}
+.medicineBuff { position: relative; width: 38px; height: 38px; }
+.minecraftBuffBar .medicineBuff {
+  border: 2px solid #373737; background: #8b8b8b;
+  box-shadow: inset 1px 1px 0 #ddd, inset -1px -1px 0 #555;
+}
+.terrariaBuffBar .medicineBuff { width: 36px; height: 40px; }
+.medicineBuffIcon {
+  position: absolute; inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px);
+  object-fit: contain; image-rendering: pixelated;
+}
+.medicineBuffTime {
+  position: absolute; right: 1px; bottom: -1px; color: #fff; font-family: 'Courier New', monospace;
+  font-size: 10px; font-weight: 700; line-height: 1; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+}
+
+.effectLayer { position: fixed; z-index: 990; inset: 0; overflow: hidden; pointer-events: none; }
+.retroVision {
+  position: fixed; z-index: 999; inset: 0; pointer-events: none;
+}
+body[data-ngo-retro-vision] {
+  filter: url('#ngo-retro-vision-pixelate');
+}
+.minecraftBlindness {
+  position: fixed; z-index: 1003; top: 0; left: 0;
+  width: clamp(184px, 24vmin, 292px); height: clamp(154px, 21vmin, 254px);
+  border-radius: 47% 53% 51% 49% / 52% 46% 54% 48%; pointer-events: none;
+  background: radial-gradient(ellipse at 48% 46%, transparent 0 30%, rgb(0 0 0 / 7%) 42%,
+    rgb(0 0 0 / 25%) 57%, rgb(0 0 0 / 65%) 76%, rgb(0 0 0 / 96%) 96%);
+  box-shadow: 0 0 0 120vmax rgb(0 0 0 / 98%);
+  transform: translate3d(var(--minecraft-blindness-x, 50vw), var(--minecraft-blindness-y, 50vh), 0)
+    translate(-50%, -50%);
+  transition: transform 240ms cubic-bezier(.22, .72, .2, 1); will-change: transform;
+}
+.minecraftNausea {
+  position: fixed; z-index: 1002; inset: -14vmax; pointer-events: none;
+  background: radial-gradient(circle at 24% 28%, rgb(102 255 126 / 38%), transparent 34%),
+    radial-gradient(circle at 76% 68%, rgb(178 74 255 / 42%), transparent 38%),
+    conic-gradient(from 30deg at 50% 50%, rgb(83 220 157 / 18%), rgb(172 81 215 / 25%),
+      rgb(65 205 184 / 20%), rgb(83 220 157 / 18%));
+  mix-blend-mode: screen; opacity: .38;
+  animation: minecraft-nausea-wash 1285ms ease-in-out infinite alternate;
+}
+.minecraftNausea[data-nausea-source='stew'] {
+  animation: none; mix-blend-mode: normal; will-change: transform, opacity;
+}
+.minecraftNausea[data-nausea-source='red-potion'] {
+  --nausea-opacity-low: .1; --nausea-opacity-high: .2; z-index: 1002;
+  animation-duration: 1700ms;
+}
+.terrariaRedPotion {
+  position: fixed; z-index: 995; inset: -12vmax; pointer-events: none;
+  background: radial-gradient(circle at 18% 24%, rgb(81 190 70 / 32%), transparent 30%),
+    radial-gradient(circle at 82% 70%, rgb(178 18 32 / 38%), transparent 34%),
+    repeating-conic-gradient(from 18deg, rgb(255 61 43 / 10%) 0 12deg, rgb(36 8 44 / 12%) 12deg 24deg);
+  mix-blend-mode: multiply; opacity: .42;
+  animation: terraria-red-potion-sickness 1700ms ease-in-out infinite alternate;
+}
+.terrariaGravityCursor,
+.terrariaRedCursor {
+  position: fixed; z-index: 1005; top: 0; left: 0; width: 32px; height: 32px;
+  background: var(--terraria-cursor) 0 0 / 32px 32px no-repeat; image-rendering: pixelated;
+  pointer-events: none; transform: translate3d(50vw, 50vh, 0); will-change: transform;
+}
+body[data-dsh-internet-angel-desktop][data-ngo-gravity-potion],
+body[data-dsh-internet-angel-desktop][data-ngo-gravity-potion] * {
+  cursor: none !important;
+}
+body[data-dsh-internet-angel-desktop][data-ngo-terraria-red-potion],
+body[data-dsh-internet-angel-desktop][data-ngo-terraria-red-potion] * { cursor: none !important; }
+body[data-dsh-internet-angel-desktop][data-ngo-minecraft-nausea] {
+  transform-origin: 50vw 50vh; will-change: transform;
+  animation: minecraft-nausea-projection 2571ms linear infinite;
+}
+body[data-dsh-internet-angel-desktop][data-ngo-minecraft-nausea] [data-ngo-taskbar] {
+  transform-origin: 50% 100%; will-change: transform;
+  animation: minecraft-nausea-taskbar 1285ms ease-in-out infinite alternate;
+}
+.powerPacman {
+  position: fixed; z-index: 2; top: var(--medicine-pointer-y, 50vh); left: var(--medicine-pointer-x, 50vw);
+  width: 64px; height: 64px; margin: -44px 0 0 -32px; transform: scaleX(var(--medicine-facing, 1));
+  transform-origin: 32px 44px; animation: power-cursor-rainbow 900ms linear infinite;
+}
+.powerPacman::before {
+  position: absolute; z-index: -1; inset: -14px; border-radius: 50%; content: '';
+  background: conic-gradient(#ff5ba7aa, #ffe45caa, #65f2a0aa, #61cfffaa, #a878ffaa, #ff5ba7aa);
+  filter: blur(8px); opacity: .72;
+}
+.powerPacmanSprite {
+  position: absolute; inset: 0; background-image: var(--medicine-gamekid); background-position: 0 0;
+  background-size: 512px 64px; image-rendering: pixelated;
+  animation: gamekid-chomp 333.33ms steps(5, end) infinite;
+}
+.powerConsumable {
+  position: fixed; z-index: 1; width: 54px; height: 54px;
+  background: var(--medicine-consumable) center / contain no-repeat; image-rendering: pixelated;
+  transform: translate(-50%, -50%); filter: drop-shadow(2px 3px 0 rgb(38 18 62 / 45%));
+  animation: power-item-hover 720ms steps(2, jump-none) var(--medicine-item-delay, 0ms) infinite;
+}
+.powerConsumable::after {
+  position: absolute; inset: 4px; border: 2px solid rgb(255 255 255 / 72%); border-radius: 50%;
+  content: ''; opacity: 0; transform: scale(.45);
+}
+.powerConsumable[data-consumed] {
+  animation: power-item-eaten 260ms ease-in forwards;
+}
+.powerConsumable[data-consumed]::after {
+  animation: power-item-burst 260ms ease-out forwards;
+}
+@keyframes slot-wiggle { 50% { transform: translateX(3px); } }
+@keyframes slot-squish { 33% { transform: scale(1.12, .88); } 66% { transform: scale(.94, 1.06); } }
+@keyframes power-cursor-rainbow {
+  from { filter: hue-rotate(0deg) saturate(1.45) drop-shadow(0 0 5px #ff85c7); }
+  to { filter: hue-rotate(360deg) saturate(1.45) drop-shadow(0 0 5px #ff85c7); }
+}
+@keyframes gamekid-chomp { to { background-position-x: -320px; } }
+@keyframes power-item-hover { 50% { transform: translate(-50%, calc(-50% - 4px)) rotate(3deg); } }
+@keyframes power-item-eaten { to { opacity: 0; transform: translate(-50%, -50%) scale(0) rotate(24deg); } }
+@keyframes power-item-burst { 45% { opacity: 1; } to { inset: -14px; opacity: 0; transform: scale(1.5); } }
+@keyframes minecraft-nausea-wash {
+  from { opacity: var(--nausea-opacity-low, .24); transform: translate3d(-2.5%, 1.5%, 0) rotate(-4deg) scale(1.02); }
+  to { opacity: var(--nausea-opacity-high, .46); transform: translate3d(2.5%, -1.5%, 0) rotate(4deg) scale(1.08); }
+}
+@keyframes minecraft-nausea-taskbar {
+  from { transform: translate3d(0, 2px, 0) skewX(-1.2deg) scaleY(.96); }
+  to { transform: translate3d(0, -4px, 0) skewX(1.2deg) scaleY(1.08); }
+}
+@keyframes minecraft-nausea-projection {
+  from {
+    transform: rotate3d(0, .7071, .7071, 0deg) scaleX(.92)
+      rotate3d(0, .7071, .7071, 0deg) scale(1.08);
+  }
+  to {
+    transform: rotate3d(0, .7071, .7071, 360deg) scaleX(.92)
+      rotate3d(0, .7071, .7071, -360deg) scale(1.08);
+  }
+}
+@keyframes terraria-red-potion-sickness {
+  from { opacity: .28; transform: translate3d(-2%, 1%, 0) rotate(-2deg) scale(1.02); }
+  to { opacity: .5; transform: translate3d(2%, -1%, 0) rotate(2deg) scale(1.07); }
+}
+@media (max-width: 1080px) {
+  .medicineWindow { top: 6vh; right: 4vw; left: auto; width: min(430px, 80vw); height: min(430px, 72vh); }
+}
+@media (max-width: 560px), (max-height: 520px) {
+  .medicineWindow { top: 2vh; right: 2vw; left: 2vw; width: auto; height: calc(100vh - var(--ngo-taskbar-height) - 4vh); }
+  .slotStage { --slot-scale: 2.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .medicineSurface[data-slot-phase='initiate'] .slotStage,
+  .medicineSurface[data-slot-phase='spinning'] .slotStage, .powerPacman,
+  .powerConsumable, .minecraftNausea, .terrariaRedPotion { animation: none; }
+  .minecraftBlindness { transition: none; }
+  body[data-dsh-internet-angel-desktop][data-ngo-minecraft-nausea] {
+    animation: none; transform: scaleX(.94) scale(1.08);
+  }
+  body[data-dsh-internet-angel-desktop][data-ngo-minecraft-nausea] [data-ngo-taskbar] {
+    animation: none; transform: scaleY(1.03);
+  }
+}

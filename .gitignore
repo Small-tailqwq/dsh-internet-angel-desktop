@@ -1,0 +1,9 @@
+node_modules/
+artifacts/
+coverage/
+*.tgz
+.DS_Store
+
+# Private research and extraction utilities stay on the developer machine.
+/research/
+/scripts/extract-*.py

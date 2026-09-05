@@ -1,0 +1,227 @@
+.window.window {
+  z-index: 45;
+  top: 3vh;
+  right: calc(var(--ngo-side-width) + 1vw);
+  width: var(--ngo-poketter-width);
+  height: var(--ngo-poketter-height);
+  min-width: min(360px, calc(100vw - 16px));
+  min-height: min(260px, calc(100vh - 76px));
+  overflow: visible;
+  background: transparent;
+  box-shadow: 3px 3px 0 rgb(81 39 255 / 16%);
+}
+
+.window.window[data-window-active='true'] { box-shadow: 4px 4px 0 rgb(81 39 255 / 28%); }
+
+.body.body {
+  --poketter-border: #4d21cb;
+  --poketter-sky: #c8ebf7;
+  --poketter-sheet: #fff;
+  --poketter-ink: #4f1cd3;
+  --poketter-name: #4a83d0;
+  position: absolute;
+  z-index: 1;
+  inset: 42px 12px 22px 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 3px solid var(--poketter-border);
+  color: var(--poketter-ink);
+  background-color: #bd91db;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 112% 112%;
+  isolation: isolate;
+}
+
+.header.header {
+  position: absolute;
+  z-index: 5;
+  top: 5px;
+  left: 24px;
+  width: 128px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.logo.logo {
+  display: block;
+  width: 128px;
+  height: 16px;
+  object-fit: contain;
+  object-position: left top;
+  image-rendering: pixelated;
+}
+
+.sheet.sheet {
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  right: 10px;
+  bottom: 5px;
+  left: 10px;
+  overflow: hidden;
+}
+
+.sheet.sheet::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0 18px 0 0;
+  background: var(--poketter-sheet);
+  clip-path: polygon(19px 0, calc(100% - 19px) 0, calc(100% - 19px) 2px, calc(100% - 17px) 2px, calc(100% - 17px) 4px, calc(100% - 15px) 4px, calc(100% - 15px) 6px, calc(100% - 13px) 6px, calc(100% - 13px) 100%, 13px 100%, 13px 6px, 15px 6px, 15px 4px, 17px 4px, 17px 2px, 19px 2px);
+  content: '';
+  pointer-events: none;
+}
+
+.feed.feed {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 35px 36px 50px 33px;
+  background: transparent;
+  scrollbar-color: #e9a0e0 #cdebf6;
+  scrollbar-width: auto;
+  scrollbar-gutter: stable;
+}
+
+.feed.feed::-webkit-scrollbar { width: 18px; height: 18px; }
+.feed.feed::-webkit-scrollbar-track { background: #cdebf6; }
+.feed.feed::-webkit-scrollbar-thumb { min-height: 96px; border: 0; border-radius: 0; background: #e9a0e0; }
+
+.card.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 118px;
+  box-sizing: border-box;
+  margin: 0 0 18px;
+  padding: 0 0 18px 96px;
+  color: var(--poketter-ink);
+  background: transparent;
+  font-family: var(--ngo-pixel-font);
+  font-synthesis: none;
+  font-kerning: none;
+}
+
+.postAvatar.postAvatar {
+  position: absolute;
+  top: 0;
+  left: 33px;
+  display: block;
+  width: 51px;
+  height: 51px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.subagentAvatar.subagentAvatar {
+  overflow: hidden;
+  border: 2px solid #4d21cb;
+  border-radius: 4px;
+  background-color: #cceafa;
+  background-repeat: no-repeat;
+  background-position: calc(100% + 5px) calc(100% + 2px);
+  background-size: 178px 116px;
+}
+
+.postMain.postMain { min-width: 0; }
+
+.meta.meta {
+  overflow: hidden;
+  width: calc(100% - 8px);
+  color: var(--poketter-name);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content.content {
+  width: 100%;
+  margin-top: 4px;
+  color: var(--poketter-ink);
+  font-family: var(--ngo-pixel-font);
+  font-size: clamp(15px, 1.05vw, 18px);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.content.content [class*='_markdown'] { color: inherit !important; font: inherit !important; }
+.content.content :where(p) { margin: 3px 0 7px; }
+.content.content :where(h1, h2, h3, h4) { margin: 5px 0 8px; color: var(--poketter-border); font: inherit !important; }
+.content.content :where(ul, ol) { margin: 5px 0 8px; padding-left: 1.4em; }
+.content.content :where(pre, code) { border: 1px solid rgb(77 33 203 / 20%); background: rgb(200 235 247 / 42%); font-family: inherit; }
+.content.content :where(pre) { max-width: 100%; padding: 7px 9px; overflow: auto; white-space: pre-wrap; }
+.content.content :where(a) { color: #a43f9d; text-decoration: underline dotted; }
+
+.stats.stats {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 447px;
+  max-width: 100%;
+  height: 20px;
+  margin-top: 6px;
+  color: #07781d;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.stat.stat { position: absolute; top: 0; display: flex; align-items: center; gap: 5px; height: 20px; }
+.retweet.retweet { left: 0; width: 96px; color: #07781d; }
+.favorite.favorite { left: min(240px, 58%); color: #7b7718; }
+.statIcon.statIcon { display: block; width: 20px; height: 20px; object-fit: contain; image-rendering: pixelated; }
+.statNumber.statNumber { min-width: 3ch; }
+
+.date.date {
+  min-height: 35px;
+  margin-top: 10px;
+  color: #5c5f63;
+  font-size: 17px;
+  line-height: 35px;
+  white-space: nowrap;
+}
+
+.divider.divider {
+  width: calc(100% + 63px);
+  height: 1px;
+  margin: 14px 0 0 -63px;
+  background-position: left center;
+  background-repeat: repeat-x;
+  background-size: auto 1px;
+}
+
+.feed.feed [data-poketter-empty] {
+  position: relative;
+  z-index: 1;
+  margin: 37px 20px;
+  padding: 14px;
+  border: 2px dashed rgb(77 33 203 / 34%);
+  color: #7d55a5;
+  background: rgb(255 255 255 / 72%);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 980px), (max-height: 720px) {
+  .window.window { top: 2vh; right: max(8px, var(--ngo-side-width)); width: min(var(--ngo-poketter-width), calc(100vw - var(--ngo-side-width) - 16px)); height: min(var(--ngo-poketter-height), calc(100vh - 70px)); }
+  .feed.feed { padding-right: 26px; padding-left: 30px; }
+  .card.card { padding-left: 76px; }
+  .postAvatar.postAvatar { left: 13px; }
+  .divider.divider { width: calc(100% + 43px); margin-left: -43px; }
+}
+
+@media (max-width: 700px) {
+  .window.window { top: 8px; right: 8px; left: 8px; width: auto; height: calc(100vh - 64px); }
+  .body.body { inset: 42px 10px 22px 8px; }
+  .feed.feed { padding: 31px 22px 40px 20px; }
+  .card.card { padding-left: 60px; }
+  .postAvatar.postAvatar { left: 2px; width: 44px; height: 44px; }
+  .meta.meta { font-size: 14px; }
+  .favorite.favorite { left: 50%; }
+}

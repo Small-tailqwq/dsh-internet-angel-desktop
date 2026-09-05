@@ -1,0 +1,44 @@
+.rewardLayer { position: fixed; inset: 0; pointer-events: none; z-index: 990; overflow: hidden; }
+.blueSpider { position: absolute; left: 0; top: 0; width: 64px; height: 32px; background-size: 320px 32px; image-rendering: pixelated; filter: drop-shadow(0 3px 1px #0005); }
+.wovenWeb { position: absolute; left: 0; top: 0; width: 64px; height: 64px; background-size: contain; background-repeat: no-repeat; filter: drop-shadow(0 0 5px #87cfff); }
+.rareAchievement {
+  box-sizing: border-box; position: fixed; right: calc(var(--ngo-side-width) + 8px);
+  bottom: calc(var(--ngo-taskbar-height) + 8px); z-index: 1401;
+  width: min(300px, calc(100vw - var(--ngo-side-width) * 2 - 16px)); min-height: 70px;
+  display: flex; align-items: center; gap: 12px; padding: 13px 14px;
+  color: #fff; background: #1e2329; border: 1px solid #424750; border-radius: 0;
+  box-shadow: 0 0 12px #0008; font-family: 'Motiva Sans', Arial, 'Microsoft YaHei', sans-serif;
+  pointer-events: none; animation: achievement-arrive 8s both;
+}
+.achievementBadge { position: relative; flex: 0 0 44px; height: 44px; }
+.achievementBadgeImage {
+  position: relative; display: block; width: 100%; height: 100%; background: #101923 center / 40px no-repeat;
+  box-shadow: 0 0 2px 1px rgb(255 184 78 / 60%), 0 0 16px 1px rgb(255 184 78 / 40%);
+}
+/* Steam's nested noise masks rotate against its conic light field. */
+.achievementGlowRoot, .achievementGlowRotation {
+  position: absolute; inset: -20%; mask-image: var(--achievement-mask-root);
+  mask-repeat: repeat; mask-size: 100%; overflow: hidden;
+}
+.achievementGlowRotation { mask-image: var(--achievement-mask-rotate); animation: achievement-rotate 18s linear infinite reverse; }
+.achievementGlow {
+  position: absolute; inset: -10px; animation: achievement-rotate 6s linear infinite; mix-blend-mode: overlay;
+  background: repeating-conic-gradient(rgb(255 217 0 / 17.8%) 0%, rgb(255 184 78 / 0%) 6%, rgb(255 217 0 / 17.8%) 10%, rgb(255 184 78) 26%, rgb(255 217 0 / 17.8%) 35%, rgb(255 184 78) 40%, rgb(255 217 0 / 17.8%) 60%, rgb(255 184 78) 82%, rgb(255 217 0 / 17.8%) 100%);
+  overflow: hidden;
+}
+.achievementCopy { display: flex; flex: 1; min-width: 0; flex-direction: column; margin-left: 4px; }
+.achievementName { color: #fff; font-size: 12px; font-weight: 400; line-height: 16px; }
+.achievementDescription { color: #8b929a; font-size: 12px; font-weight: 300; line-height: 16px; }
+.fortuneCard { position: absolute; display: grid; justify-items: center; transform: translate(-50%, -50%); }
+.tarotFront { width: 64px; height: 96px; background-size: 1408px 96px; image-rendering: pixelated; }
+.fortuneCard { animation: card-arrive 4.5s both; }
+.fortuneText { margin-top: 6px; padding: 8px 12px; background: #ead6ab; color: #3e2823; border: 2px solid #513a2a; box-shadow: 3px 3px #0005; font-size: 12px; white-space: pre; text-align: center; }
+@keyframes achievement-arrive { 0% { opacity: 0; transform: translateY(120%); } 6%, 91% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(120%); } }
+@keyframes achievement-rotate { to { transform: rotate(360deg); } }
+@keyframes card-arrive { 0% { opacity: 0; translate: 0 18px; } 12%, 80% { opacity: 1; translate: 0 -28px; } 100% { opacity: 0; translate: 0 -40px; } }
+@media (prefers-reduced-motion: reduce) { .rareAchievement, .achievementGlowRotation, .achievementGlow, .fortuneCard { animation: none; } }
+
+.trollBomb { position: absolute; background-repeat: no-repeat; image-rendering: pixelated; }
+.bombHandle { position: absolute; left: 226px; top: 326px; width: 60px; height: 64px; padding: 0; border: 0; background: transparent; pointer-events: auto; cursor: grab; touch-action: none; }
+.bombHandle:active { cursor: grabbing; }
+.bombHandle:focus-visible { outline: 2px dashed #ffd477; }

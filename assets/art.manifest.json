@@ -1,0 +1,3926 @@
+{
+  "schemaVersion": 1,
+  "output": "src/client/art.generated.ts",
+  "assets": [
+    {
+      "id": "ngo-cursor",
+      "exportName": "NGO_CURSOR",
+      "source": "assets/source/ngo-cursor.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-cursor-horizontal",
+      "exportName": "NGO_CURSOR_HORIZONTAL",
+      "source": "assets/source/ngo-cursor-horizontal.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-cursor-vertical",
+      "exportName": "NGO_CURSOR_VERTICAL",
+      "source": "assets/source/ngo-cursor-vertical.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-cursor-diagonal-1",
+      "exportName": "NGO_CURSOR_DIAGONAL_1",
+      "source": "assets/source/ngo-cursor-diagonal-1.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-cursor-diagonal-2",
+      "exportName": "NGO_CURSOR_DIAGONAL_2",
+      "source": "assets/source/ngo-cursor-diagonal-2.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-window-minimize",
+      "exportName": "NGO_WINDOW_MINIMIZE",
+      "source": "assets/source/ngo-window-minimize.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-window-maximize",
+      "exportName": "NGO_WINDOW_MAXIMIZE",
+      "source": "assets/source/ngo-window-maximize.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-window-close",
+      "exportName": "NGO_WINDOW_CLOSE",
+      "source": "assets/source/ngo-window-close.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-wallpaper",
+      "exportName": "NGO_WALLPAPER",
+      "source": "assets/source/ngo-wallpaper.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-window-frame",
+      "exportName": "NGO_WINDOW_FRAME",
+      "source": "assets/source/ngo-window-frame.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 42,
+          "right": 12,
+          "bottom": 22,
+          "left": 69
+        }
+      }
+    },
+    {
+      "id": "ngo-window-frame-inactive",
+      "exportName": "NGO_WINDOW_FRAME_INACTIVE",
+      "source": "assets/source/ngo-window-frame-inactive.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 42,
+          "right": 14,
+          "bottom": 22,
+          "left": 70
+        }
+      }
+    },
+    {
+      "id": "ngo-side-default",
+      "exportName": "NGO_SIDE_DEFAULT",
+      "source": "assets/source/ngo-side-default.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-side-noon",
+      "exportName": "NGO_SIDE_NOON",
+      "source": "assets/source/ngo-side-noon.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-side-evening",
+      "exportName": "NGO_SIDE_EVENING",
+      "source": "assets/source/ngo-side-evening.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-side-night",
+      "exportName": "NGO_SIDE_NIGHT",
+      "source": "assets/source/ngo-side-night.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-chat-background",
+      "exportName": "NGO_CHAT_BACKGROUND",
+      "source": "assets/source/ngo-chat-background.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-balloon",
+      "exportName": "NGO_BALLOON",
+      "source": "assets/source/ngo-balloon.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 3,
+          "right": 3,
+          "bottom": 3,
+          "left": 3
+        }
+      }
+    },
+    {
+      "id": "ngo-notification",
+      "exportName": "NGO_NOTIFICATION",
+      "source": "assets/source/ngo-notification.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (tuuti)"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 0,
+          "right": 4,
+          "bottom": 4,
+          "left": 0
+        }
+      }
+    },
+    {
+      "id": "ngo-start-menu",
+      "exportName": "NGO_START_MENU",
+      "source": "assets/source/ngo-start-menu.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 37,
+          "right": 0,
+          "bottom": 144,
+          "left": 0
+        }
+      }
+    },
+    {
+      "id": "ngo-start-button",
+      "exportName": "NGO_START_BUTTON",
+      "source": "assets/source/ngo-start-button.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 2,
+          "right": 2,
+          "bottom": 2,
+          "left": 39
+        }
+      }
+    },
+    {
+      "id": "ngo-start-selected",
+      "exportName": "NGO_START_SELECTED",
+      "source": "assets/source/ngo-start-selected.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-day-button",
+      "exportName": "NGO_DAY_BUTTON",
+      "source": "assets/source/ngo-day-button.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-watch-noon",
+      "exportName": "NGO_WATCH_NOON",
+      "source": "assets/source/ngo-watch-noon.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_watch_noon)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-day-passing-heart",
+      "exportName": "NGO_DAY_PASSING_HEART",
+      "source": "assets/source/ngo-day-passing-heart.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets1.assets path_id 383, Sprite icon_pinkheart)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-watch-evening",
+      "exportName": "NGO_WATCH_EVENING",
+      "source": "assets/source/ngo-watch-evening.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_watch_evening)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-watch-night",
+      "exportName": "NGO_WATCH_NIGHT",
+      "source": "assets/source/ngo-watch-night.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_watch_night)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-streamer",
+      "exportName": "NGO_STREAMER",
+      "source": "assets/source/ngo-streamer.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-stream",
+      "exportName": "NGO_ICON_STREAM",
+      "source": "assets/source/ngo-icon-stream.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-jine",
+      "exportName": "NGO_ICON_JINE",
+      "source": "assets/source/ngo-icon-jine.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-todo",
+      "exportName": "NGO_ICON_TODO",
+      "source": "assets/source/ngo-icon-todo-generated.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-20 Todo/notepad pixel icon prompt"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-internet",
+      "exportName": "NGO_ICON_INTERNET",
+      "source": "assets/source/ngo-icon-internet.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-sleep",
+      "exportName": "NGO_ICON_SLEEP",
+      "source": "assets/source/ngo-icon-sleep.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-icon-medicine",
+      "exportName": "NGO_ICON_MEDICINE",
+      "source": "assets/source/ngo-icon-medicine.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-status-follower",
+      "exportName": "NGO_STATUS_FOLLOWER",
+      "source": "assets/source/ngo-status-follower.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-status-love",
+      "exportName": "NGO_STATUS_LOVE",
+      "source": "assets/source/ngo-status-love.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-status-stress",
+      "exportName": "NGO_STATUS_STRESS",
+      "source": "assets/source/ngo-status-stress.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-status-yami",
+      "exportName": "NGO_STATUS_YAMI",
+      "source": "assets/source/ngo-status-yami.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from NEEDY GIRL OVERDOSE"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-background",
+      "exportName": "NGO_POKETTER_BACKGROUND",
+      "source": "assets/source/ngo-poketter-background.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (loose_0008)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-logo",
+      "exportName": "NGO_POKETTER_LOGO",
+      "source": "assets/source/ngo-poketter-logo.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (loose_0009)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-divider",
+      "exportName": "NGO_POKETTER_DIVIDER",
+      "source": "assets/source/ngo-poketter-divider.png",
+      "kind": "tile",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (loose_0010)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-avatar",
+      "exportName": "NGO_POKETTER_AVATAR",
+      "source": "assets/source/ngo-poketter-avatar.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (icon_cho)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-ame-avatar",
+      "exportName": "NGO_POKETTER_AME_AVATAR",
+      "source": "assets/source/ngo-poketter-ame-avatar.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, Sprite icon_ame)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-retweet",
+      "exportName": "NGO_POKETTER_RETWEET",
+      "source": "assets/source/ngo-poketter-retweet.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (icon_retweet)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-poketter-favorite",
+      "exportName": "NGO_POKETTER_FAVORITE",
+      "source": "assets/source/ngo-poketter-favorite.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (icon_star)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-jine-ame",
+      "exportName": "NGO_JINE_AME",
+      "source": "assets/source/ngo-jine-ame.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive (icon_jine_ame)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-taskbar-poketter",
+      "exportName": "NGO_TASKBAR_POKETTER",
+      "source": "assets/source/ngo-taskbar-poketter.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-taskbar-jine",
+      "exportName": "NGO_TASKBAR_JINE",
+      "source": "assets/source/ngo-taskbar-jine.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-taskbar-taskmanager",
+      "exportName": "NGO_TASKBAR_TASKMANAGER",
+      "source": "assets/source/ngo-taskbar-taskmanager.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-taskbar-window",
+      "exportName": "NGO_TASKBAR_WINDOW",
+      "source": "assets/source/ngo-taskbar-window.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 3,
+          "right": 3,
+          "bottom": 3,
+          "left": 3
+        }
+      }
+    },
+    {
+      "id": "ngo-taskbar-window-pressed",
+      "exportName": "NGO_TASKBAR_WINDOW_PRESSED",
+      "source": "assets/source/ngo-taskbar-window-pressed.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 3,
+          "right": 3,
+          "bottom": 3,
+          "left": 3
+        }
+      }
+    },
+    {
+      "id": "ngo-webcam-background",
+      "exportName": "NGO_WEBCAM_BACKGROUND",
+      "source": "assets/source/ngo-webcam-background.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-webcam-screensaver-1",
+      "exportName": "NGO_WEBCAM_SCREENSAVER_1",
+      "source": "assets/source/ngo-webcam-screensaver-1.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Extracted from the locally owned NEEDY GIRL OVERDOSE game files"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-screensaver-2",
+      "exportName": "NGO_WEBCAM_SCREENSAVER_2",
+      "source": "assets/source/ngo-webcam-screensaver-2.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Extracted from the locally owned NEEDY GIRL OVERDOSE game files"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-screensaver-3",
+      "exportName": "NGO_WEBCAM_SCREENSAVER_3",
+      "source": "assets/source/ngo-webcam-screensaver-3.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Extracted from the locally owned NEEDY GIRL OVERDOSE game files"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-idle-0",
+      "exportName": "NGO_WEBCAM_IDLE_0",
+      "source": "assets/source/ngo-webcam-idle-0.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-idle-1",
+      "exportName": "NGO_WEBCAM_IDLE_1",
+      "source": "assets/source/ngo-webcam-idle-1.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-font-dinkie-9px",
+      "exportName": "NGO_FONT_DINKIE_9PX",
+      "source": "assets/source/ngo-dinkie-9px.woff2",
+      "kind": "font",
+      "attribution": {
+        "creator": "DinkieBitmap font creator and respective rights holders",
+        "license": "Private non-commercial fan use only; no redistribution grant claimed",
+        "source": "User-provided NGO community web reference archive; WOFF2 conversion"
+      }
+    },
+    {
+      "id": "ngo-font-zpix",
+      "exportName": "NGO_FONT_ZPIX",
+      "source": "assets/source/zpix-v3.1.11.woff2",
+      "kind": "font",
+      "attribution": {
+        "creator": "SolidZORO",
+        "license": "Personal Product FREE; commercial use requires a paid license; modification, conversion, splitting, and unauthorized redistribution are prohibited",
+        "source": "Official unmodified WOFF2 from http[extraction workspace]"
+      }
+    },
+    {
+      "id": "ngo-webcam-hand",
+      "exportName": "NGO_WEBCAM_HAND",
+      "source": "assets/source/ngo-webcam-hand.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-pat-audio",
+      "exportName": "NGO_WEBCAM_PAT_AUDIO",
+      "source": "assets/source/ngo-webcam-pat.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      }
+    },
+    {
+      "id": "ngo-webcam-smile-0",
+      "exportName": "NGO_WEBCAM_SMILE_0",
+      "source": "assets/source/ngo-webcam-smile-0.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-completed",
+      "exportName": "NGO_TODO_COMPLETED",
+      "source": "assets/source/ngo-todo-completed.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_cho)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-0",
+      "exportName": "NGO_TODO_PROGRESS_0",
+      "source": "assets/source/ngo-todo-progress-0.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_000)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-1",
+      "exportName": "NGO_TODO_PROGRESS_1",
+      "source": "assets/source/ngo-todo-progress-1.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_001)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-2",
+      "exportName": "NGO_TODO_PROGRESS_2",
+      "source": "assets/source/ngo-todo-progress-2.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_002)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-3",
+      "exportName": "NGO_TODO_PROGRESS_3",
+      "source": "assets/source/ngo-todo-progress-3.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_003)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-4",
+      "exportName": "NGO_TODO_PROGRESS_4",
+      "source": "assets/source/ngo-todo-progress-4.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_004)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-5",
+      "exportName": "NGO_TODO_PROGRESS_5",
+      "source": "assets/source/ngo-todo-progress-5.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_005)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-6",
+      "exportName": "NGO_TODO_PROGRESS_6",
+      "source": "assets/source/ngo-todo-progress-6.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_006)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-todo-progress-7",
+      "exportName": "NGO_TODO_PROGRESS_7",
+      "source": "assets/source/ngo-todo-progress-7.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_loading_poketter_007)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-goal-target",
+      "exportName": "NGO_GOAL_TARGET",
+      "source": "assets/source/ngo-goal-target.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-pause",
+      "exportName": "NGO_GOAL_PAUSE",
+      "source": "assets/source/ngo-goal-pause.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-resume",
+      "exportName": "NGO_GOAL_RESUME",
+      "source": "assets/source/ngo-goal-resume.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-edit",
+      "exportName": "NGO_GOAL_EDIT",
+      "source": "assets/source/ngo-goal-edit.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-delete",
+      "exportName": "NGO_GOAL_DELETE",
+      "source": "assets/source/ngo-goal-delete.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-save",
+      "exportName": "NGO_GOAL_SAVE",
+      "source": "assets/source/ngo-goal-save.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-goal-cancel",
+      "exportName": "NGO_GOAL_CANCEL",
+      "source": "assets/source/ngo-goal-cancel.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "OpenAI image generation, directed by the user and Codex",
+        "license": "Generated specifically for this private non-commercial fan skin",
+        "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-webcam-smile-1",
+      "exportName": "NGO_WEBCAM_SMILE_1",
+      "source": "assets/source/ngo-webcam-smile-1.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-smile-2",
+      "exportName": "NGO_WEBCAM_SMILE_2",
+      "source": "assets/source/ngo-webcam-smile-2.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided NGO community web reference archive"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-tooltip-balloon",
+      "exportName": "NGO_TOOLTIP_BALLOON",
+      "source": "assets/source/ngo-tooltip-balloon.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (tooltip_balloon)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-pien-tutorial",
+      "exportName": "NGO_PIEN_TUTORIAL",
+      "source": "assets/source/ngo-pien-tutorial.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (pien_tutorial)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-bios",
+      "exportName": "NGO_BOOT_BIOS",
+      "source": "assets/source/ngo-boot-bios.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (boot_bios)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-bios-logo",
+      "exportName": "NGO_BOOT_BIOS_LOGO",
+      "source": "assets/source/ngo-boot-bios-logo.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (bios_logo)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-caution-background",
+      "exportName": "NGO_BOOT_CAUTION_BACKGROUND",
+      "source": "assets/source/ngo-boot-caution-background.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (setup)"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-boot-caution-frame",
+      "exportName": "NGO_BOOT_CAUTION_FRAME",
+      "source": "assets/source/ngo-boot-caution-frame.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (windowbase_active)"
+      },
+      "geometry": {
+        "edgePolicy": "allow",
+        "nineSlice": {
+          "top": 42,
+          "right": 14,
+          "bottom": 22,
+          "left": 69
+        }
+      }
+    },
+    {
+      "id": "ngo-boot-caution-button",
+      "exportName": "NGO_BOOT_CAUTION_BUTTON",
+      "source": "assets/source/ngo-boot-caution-button.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (BaseButton)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-caution-button-hovered",
+      "exportName": "NGO_BOOT_CAUTION_BUTTON_HOVERED",
+      "source": "assets/source/ngo-boot-caution-button-hovered.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (BaseButtonHovered)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-caution-button-pressed",
+      "exportName": "NGO_BOOT_CAUTION_BUTTON_PRESSED",
+      "source": "assets/source/ngo-boot-caution-button-pressed.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (BaseButtonPressed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-boot-caution-icon",
+      "exportName": "NGO_BOOT_CAUTION_ICON",
+      "source": "assets/source/ngo-boot-caution-icon.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (icon_game)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-font-press-start-2p",
+      "exportName": "NGO_FONT_PRESS_START_2P",
+      "source": "assets/source/ngo-press-start-2p.woff2",
+      "kind": "font",
+      "attribution": {
+        "creator": "CodeMan38 and respective rights holders",
+        "license": "SIL Open Font License 1.1",
+        "source": "PressStart2P-Regular.ttf from the user-provided NGO reference archive; WOFF2 conversion"
+      }
+    },
+    {
+      "id": "ngo-boot-background",
+      "exportName": "NGO_BOOT_BACKGROUND",
+      "source": "assets/source/ngo-boot-background.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (bg_boot_en)"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-boot-login",
+      "exportName": "NGO_BOOT_LOGIN",
+      "source": "assets/source/ngo-boot-login.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (login)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-web-icon",
+      "exportName": "NGO_WEB_ICON",
+      "source": "assets/source/ngo-web-icon.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the game's application icon (Windose.exe, 32x32, from the user's NEEDY GIRL OVERDOSE installation)"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-web-icon-192",
+      "exportName": "NGO_WEB_ICON_192",
+      "source": "assets/source/ngo-web-icon-192.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "6x exact nearest-neighbor upscale of assets/source/ngo-web-icon.png (PWA manifest 192x192 icon, same game application icon)"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-web-icon-512",
+      "exportName": "NGO_WEB_ICON_512",
+      "source": "assets/source/ngo-web-icon-512.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "16x exact nearest-neighbor upscale of assets/source/ngo-web-icon.png (PWA manifest 512x512 icon, same game application icon)"
+      },
+      "geometry": {
+        "edgePolicy": "no-transparent-bands"
+      }
+    },
+    {
+      "id": "ngo-se-bios-piko",
+      "exportName": "NGO_SE_BIOS_PIKO",
+      "source": "assets/source/ngo-se-bios-piko.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-boot-caution",
+      "exportName": "NGO_SE_BOOT_CAUTION",
+      "source": "assets/source/ngo-se-boot-caution.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-boot",
+      "exportName": "NGO_SE_BOOT",
+      "source": "assets/source/ngo-se-boot.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-command-execute",
+      "exportName": "NGO_SE_COMMAND_EXECUTE",
+      "source": "assets/source/ngo-se-command-execute.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-haisin-superchat",
+      "exportName": "NGO_SE_HAISIN_SUPERCHAT",
+      "source": "assets/source/ngo-se-haisin-superchat.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-jine-recieve",
+      "exportName": "NGO_SE_JINE_RECIEVE",
+      "source": "assets/source/ngo-se-jine-recieve.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-jine-send-stamp",
+      "exportName": "NGO_SE_JINE_SEND_STAMP",
+      "source": "assets/source/ngo-se-jine-send-stamp.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-kari",
+      "exportName": "NGO_SE_KARI",
+      "source": "assets/source/ngo-se-kari.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-nadenade-1",
+      "exportName": "NGO_SE_NADENADE_1",
+      "source": "assets/source/ngo-se-nadenade-1.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-notification",
+      "exportName": "NGO_SE_NOTIFICATION",
+      "source": "assets/source/ngo-se-notification.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets path_id 115, AudioClip Notification)"
+      }
+    },
+    {
+      "id": "ngo-se-piyo",
+      "exportName": "NGO_SE_PIYO",
+      "source": "assets/source/ngo-se-piyo.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets path_id 89, AudioClip piyo)"
+      }
+    },
+    {
+      "id": "ngo-se-per",
+      "exportName": "NGO_SE_PER",
+      "source": "assets/source/ngo-se-per.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-pill-guiiin",
+      "exportName": "NGO_SE_PILL_GUIIIN",
+      "source": "assets/source/ngo-se-pill-guiiin.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-piporo",
+      "exportName": "NGO_SE_PIPORO",
+      "source": "assets/source/ngo-se-piporo.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-pirodown",
+      "exportName": "NGO_SE_PIRODOWN",
+      "source": "assets/source/ngo-se-pirodown.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-poko",
+      "exportName": "NGO_SE_POKO",
+      "source": "assets/source/ngo-se-poko.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-pop-tooltip",
+      "exportName": "NGO_SE_POP_TOOLTIP",
+      "source": "assets/source/ngo-se-pop-tooltip.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-pop-tutorial",
+      "exportName": "NGO_SE_POP_TUTORIAL",
+      "source": "assets/source/ngo-se-pop-tutorial.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-status-down",
+      "exportName": "NGO_SE_STATUS_DOWN",
+      "source": "assets/source/ngo-se-status-down.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-status-showdiff",
+      "exportName": "NGO_SE_STATUS_SHOWDIFF",
+      "source": "assets/source/ngo-se-status-showdiff.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-status-up",
+      "exportName": "NGO_SE_STATUS_UP",
+      "source": "assets/source/ngo-se-status-up.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-tweet-change-top",
+      "exportName": "NGO_SE_TWEET_CHANGE_TOP",
+      "source": "assets/source/ngo-se-tweet-change-top.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-tweet-kusorep",
+      "exportName": "NGO_SE_TWEET_KUSOREP",
+      "source": "assets/source/ngo-se-tweet-kusorep.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-tweet-load",
+      "exportName": "NGO_SE_TWEET_LOAD",
+      "source": "assets/source/ngo-se-tweet-load.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-window-close",
+      "exportName": "NGO_SE_WINDOW_CLOSE",
+      "source": "assets/source/ngo-se-window-close.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-se-bios-hdd",
+      "exportName": "NGO_SE_BIOS_HDD",
+      "source": "assets/source/ngo-se-bios-hdd.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (sharedassets0.assets, AudioClip, sharedassets0.resource)"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-idle-0",
+      "exportName": "NGO_WEBCAM_CHO_IDLE_0",
+      "source": "assets/source/ngo-webcam-cho-idle-0.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_cho_yukkuri_* from sharedassets/Addressables stream frames)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-idle-1",
+      "exportName": "NGO_WEBCAM_CHO_IDLE_1",
+      "source": "assets/source/ngo-webcam-cho-idle-1.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_cho_yukkuri_* from sharedassets/Addressables stream frames)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-smile-0",
+      "exportName": "NGO_WEBCAM_CHO_SMILE_0",
+      "source": "assets/source/ngo-webcam-cho-smile-0.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_cho_yukkuri_* from sharedassets/Addressables stream frames)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-smile-1",
+      "exportName": "NGO_WEBCAM_CHO_SMILE_1",
+      "source": "assets/source/ngo-webcam-cho-smile-1.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_cho_yukkuri_* from sharedassets/Addressables stream frames)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-smile-2",
+      "exportName": "NGO_WEBCAM_CHO_SMILE_2",
+      "source": "assets/source/ngo-webcam-cho-smile-2.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_cho_yukkuri_* from sharedassets/Addressables stream frames)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-bgm-mainloop",
+      "exportName": "NGO_BGM_MAINLOOP",
+      "source": "assets/source/ngo-bgm-mainloop.ogg",
+      "kind": "audio",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Decoded from the user's NEEDY GIRL OVERDOSE sharedassets0.assets AudioClip BGM_mainloop_normal (desktop loop), transcoded to OGG"
+      }
+    },
+    {
+      "id": "ngo-slider-thumb",
+      "exportName": "NGO_SLIDER_THUMB",
+      "source": "assets/source/ngo-slider-thumb.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Cropped from the user's NEEDY GIRL OVERDOSE ControlPanel volume slider handle (in-game grab)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-footer",
+      "exportName": "NGO_FOOTER",
+      "source": "assets/source/ngo-footer.png",
+      "kind": "scene",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (Footer)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-base-button",
+      "exportName": "NGO_BASE_BUTTON",
+      "source": "assets/source/ngo-base-button.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (BaseButton)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-base-button-disabled",
+      "exportName": "NGO_BASE_BUTTON_DISABLED",
+      "source": "assets/source/ngo-base-button-disabled.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (BaseButtonDisabled)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-save-file",
+      "exportName": "NGO_SAVE_FILE",
+      "source": "assets/source/ngo-save-file.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (App_Load/DataPrefab icon_desktop_text)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-start-pressed",
+      "exportName": "NGO_START_PRESSED",
+      "source": "assets/source/ngo-start-pressed.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (start_pressed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner-006",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER_006",
+      "source": "assets/source/ngo-webcam-ame-handspinner-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner-007",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER_007",
+      "source": "assets/source/ngo-webcam-ame-handspinner-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner-008",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER_008",
+      "source": "assets/source/ngo-webcam-ame-handspinner-008.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-000",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_000",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-001",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_001",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-002",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_002",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-003",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_003",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-005",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_005",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-009",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_009",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-009.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-010",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_010",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-010.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-handspinner2-011",
+      "exportName": "NGO_WEBCAM_AME_HANDSPINNER2_011",
+      "source": "assets/source/ngo-webcam-ame-handspinner2-011.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-headphone-000",
+      "exportName": "NGO_WEBCAM_AME_HEADPHONE_000",
+      "source": "assets/source/ngo-webcam-ame-headphone-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-headphone-001",
+      "exportName": "NGO_WEBCAM_AME_HEADPHONE_001",
+      "source": "assets/source/ngo-webcam-ame-headphone-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-headphone-002",
+      "exportName": "NGO_WEBCAM_AME_HEADPHONE_002",
+      "source": "assets/source/ngo-webcam-ame-headphone-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-nail-000",
+      "exportName": "NGO_WEBCAM_AME_NAIL_000",
+      "source": "assets/source/ngo-webcam-ame-nail-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-nail-001",
+      "exportName": "NGO_WEBCAM_AME_NAIL_001",
+      "source": "assets/source/ngo-webcam-ame-nail-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-nail-002",
+      "exportName": "NGO_WEBCAM_AME_NAIL_002",
+      "source": "assets/source/ngo-webcam-ame-nail-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-nail-003",
+      "exportName": "NGO_WEBCAM_AME_NAIL_003",
+      "source": "assets/source/ngo-webcam-ame-nail-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-nail-004",
+      "exportName": "NGO_WEBCAM_AME_NAIL_004",
+      "source": "assets/source/ngo-webcam-ame-nail-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-000",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_000",
+      "source": "assets/source/ngo-webcam-ame-selfie-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-001",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_001",
+      "source": "assets/source/ngo-webcam-ame-selfie-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-002",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_002",
+      "source": "assets/source/ngo-webcam-ame-selfie-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-003",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_003",
+      "source": "assets/source/ngo-webcam-ame-selfie-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-004",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_004",
+      "source": "assets/source/ngo-webcam-ame-selfie-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-selfie-005",
+      "exportName": "NGO_WEBCAM_AME_SELFIE_005",
+      "source": "assets/source/ngo-webcam-ame-selfie-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-000",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_000",
+      "source": "assets/source/ngo-webcam-ame-sleep-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-001",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_001",
+      "source": "assets/source/ngo-webcam-ame-sleep-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-002",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_002",
+      "source": "assets/source/ngo-webcam-ame-sleep-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-003",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_003",
+      "source": "assets/source/ngo-webcam-ame-sleep-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-004",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_004",
+      "source": "assets/source/ngo-webcam-ame-sleep-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-005",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_005",
+      "source": "assets/source/ngo-webcam-ame-sleep-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-006",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_006",
+      "source": "assets/source/ngo-webcam-ame-sleep-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-007",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_007",
+      "source": "assets/source/ngo-webcam-ame-sleep-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-sleep-008",
+      "exportName": "NGO_WEBCAM_AME_SLEEP_008",
+      "source": "assets/source/ngo-webcam-ame-sleep-008.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-000",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_000",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-001",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_001",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-002",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_002",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-003",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_003",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-004",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_004",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-005",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_005",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-006",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_006",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-vocaltrain-008",
+      "exportName": "NGO_WEBCAM_AME_VOCALTRAIN_008",
+      "source": "assets/source/ngo-webcam-ame-vocaltrain-008.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-game-000",
+      "exportName": "NGO_WEBCAM_AME_GAME_000",
+      "source": "assets/source/ngo-webcam-ame-game-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-game-001",
+      "exportName": "NGO_WEBCAM_AME_GAME_001",
+      "source": "assets/source/ngo-webcam-ame-game-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-game-002",
+      "exportName": "NGO_WEBCAM_AME_GAME_002",
+      "source": "assets/source/ngo-webcam-ame-game-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-iraira-000",
+      "exportName": "NGO_WEBCAM_AME_IRAIRA_000",
+      "source": "assets/source/ngo-webcam-ame-iraira-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-iraira-001",
+      "exportName": "NGO_WEBCAM_AME_IRAIRA_001",
+      "source": "assets/source/ngo-webcam-ame-iraira-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-iraira-002",
+      "exportName": "NGO_WEBCAM_AME_IRAIRA_002",
+      "source": "assets/source/ngo-webcam-ame-iraira-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-iraira-003",
+      "exportName": "NGO_WEBCAM_AME_IRAIRA_003",
+      "source": "assets/source/ngo-webcam-ame-iraira-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-000",
+      "exportName": "NGO_WEBCAM_AME_OUT_000",
+      "source": "assets/source/ngo-webcam-ame-out-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-001",
+      "exportName": "NGO_WEBCAM_AME_OUT_001",
+      "source": "assets/source/ngo-webcam-ame-out-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-002",
+      "exportName": "NGO_WEBCAM_AME_OUT_002",
+      "source": "assets/source/ngo-webcam-ame-out-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-003",
+      "exportName": "NGO_WEBCAM_AME_OUT_003",
+      "source": "assets/source/ngo-webcam-ame-out-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-004",
+      "exportName": "NGO_WEBCAM_AME_OUT_004",
+      "source": "assets/source/ngo-webcam-ame-out-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-005",
+      "exportName": "NGO_WEBCAM_AME_OUT_005",
+      "source": "assets/source/ngo-webcam-ame-out-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-006",
+      "exportName": "NGO_WEBCAM_AME_OUT_006",
+      "source": "assets/source/ngo-webcam-ame-out-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-007",
+      "exportName": "NGO_WEBCAM_AME_OUT_007",
+      "source": "assets/source/ngo-webcam-ame-out-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-008",
+      "exportName": "NGO_WEBCAM_AME_OUT_008",
+      "source": "assets/source/ngo-webcam-ame-out-008.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-009",
+      "exportName": "NGO_WEBCAM_AME_OUT_009",
+      "source": "assets/source/ngo-webcam-ame-out-009.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-010",
+      "exportName": "NGO_WEBCAM_AME_OUT_010",
+      "source": "assets/source/ngo-webcam-ame-out-010.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-011",
+      "exportName": "NGO_WEBCAM_AME_OUT_011",
+      "source": "assets/source/ngo-webcam-ame-out-011.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-012",
+      "exportName": "NGO_WEBCAM_AME_OUT_012",
+      "source": "assets/source/ngo-webcam-ame-out-012.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-out-013",
+      "exportName": "NGO_WEBCAM_AME_OUT_013",
+      "source": "assets/source/ngo-webcam-ame-out-013.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_out_a Addressables animation, safe leave-chair frames only)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-henoji-000",
+      "exportName": "NGO_WEBCAM_AME_HENOJI_000",
+      "source": "assets/source/ngo-webcam-ame-henoji-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (stream_ame_henoji Addressables .anim bundle, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-000",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_000",
+      "source": "assets/source/ngo-webcam-ame-anxiety-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-001",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_001",
+      "source": "assets/source/ngo-webcam-ame-anxiety-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-002",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_002",
+      "source": "assets/source/ngo-webcam-ame-anxiety-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-005",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_005",
+      "source": "assets/source/ngo-webcam-ame-anxiety-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-006",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_006",
+      "source": "assets/source/ngo-webcam-ame-anxiety-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-anxiety-007",
+      "exportName": "NGO_WEBCAM_AME_ANXIETY_007",
+      "source": "assets/source/ngo-webcam-ame-anxiety-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-craziness-000",
+      "exportName": "NGO_WEBCAM_AME_CRAZINESS_000",
+      "source": "assets/source/ngo-webcam-ame-craziness-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-craziness-001",
+      "exportName": "NGO_WEBCAM_AME_CRAZINESS_001",
+      "source": "assets/source/ngo-webcam-ame-craziness-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-craziness-002",
+      "exportName": "NGO_WEBCAM_AME_CRAZINESS_002",
+      "source": "assets/source/ngo-webcam-ame-craziness-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-craziness-003",
+      "exportName": "NGO_WEBCAM_AME_CRAZINESS_003",
+      "source": "assets/source/ngo-webcam-ame-craziness-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-000",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_000",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-001",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_001",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-002",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_002",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-003",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_003",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-004",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_004",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-005",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_005",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-006",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_006",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-007",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_007",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-009",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_009",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-009.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-010",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_010",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-010.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlenormal-011",
+      "exportName": "NGO_WEBCAM_AME_IDLENORMAL_011",
+      "source": "assets/source/ngo-webcam-ame-idlenormal-011.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-000",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_000",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-001",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_001",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-002",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_002",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-003",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_003",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-004",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_004",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-005",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_005",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-005.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-006",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_006",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-006.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-007",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_007",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-007.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-ame-idlehappy-008",
+      "exportName": "NGO_WEBCAM_AME_IDLEHAPPY_008",
+      "source": "assets/source/ngo-webcam-ame-idlehappy-008.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-akaruku-000",
+      "exportName": "NGO_WEBCAM_CHO_AKARUKU_000",
+      "source": "assets/source/ngo-webcam-cho-akaruku-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-akaruku-001",
+      "exportName": "NGO_WEBCAM_CHO_AKARUKU_001",
+      "source": "assets/source/ngo-webcam-cho-akaruku-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-idle-000",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_IDLE_000",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-idle-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-idle-001",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_IDLE_001",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-idle-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-smile-000",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_SMILE_000",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-smile-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-smile-001",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_SMILE_001",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-smile-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-smile-002",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_SMILE_002",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-smile-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-smile-003",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_SMILE_003",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-smile-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-teach-000",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_TEACH_000",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-teach-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-yukkuri-teach-001",
+      "exportName": "NGO_WEBCAM_CHO_YUKKURI_TEACH_001",
+      "source": "assets/source/ngo-webcam-cho-yukkuri-teach-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-000",
+      "exportName": "NGO_WEBCAM_CHO_SU_000",
+      "source": "assets/source/ngo-webcam-cho-su-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-001",
+      "exportName": "NGO_WEBCAM_CHO_SU_001",
+      "source": "assets/source/ngo-webcam-cho-su-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-002",
+      "exportName": "NGO_WEBCAM_CHO_SU_002",
+      "source": "assets/source/ngo-webcam-cho-su-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-superchat-000",
+      "exportName": "NGO_WEBCAM_CHO_SU_SUPERCHAT_000",
+      "source": "assets/source/ngo-webcam-cho-su-superchat-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-superchat-001",
+      "exportName": "NGO_WEBCAM_CHO_SU_SUPERCHAT_001",
+      "source": "assets/source/ngo-webcam-cho-su-superchat-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-superchat-002",
+      "exportName": "NGO_WEBCAM_CHO_SU_SUPERCHAT_002",
+      "source": "assets/source/ngo-webcam-cho-su-superchat-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-su-superchat-003",
+      "exportName": "NGO_WEBCAM_CHO_SU_SUPERCHAT_003",
+      "source": "assets/source/ngo-webcam-cho-su-superchat-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-pray-000",
+      "exportName": "NGO_WEBCAM_CHO_PRAY_000",
+      "source": "assets/source/ngo-webcam-cho-pray-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-pray-001",
+      "exportName": "NGO_WEBCAM_CHO_PRAY_001",
+      "source": "assets/source/ngo-webcam-cho-pray-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-pray-002",
+      "exportName": "NGO_WEBCAM_CHO_PRAY_002",
+      "source": "assets/source/ngo-webcam-cho-pray-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-pray-003",
+      "exportName": "NGO_WEBCAM_CHO_PRAY_003",
+      "source": "assets/source/ngo-webcam-cho-pray-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-pray-004",
+      "exportName": "NGO_WEBCAM_CHO_PRAY_004",
+      "source": "assets/source/ngo-webcam-cho-pray-004.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-sleepy-000",
+      "exportName": "NGO_WEBCAM_CHO_SLEEPY_000",
+      "source": "assets/source/ngo-webcam-cho-sleepy-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-sleepy-001",
+      "exportName": "NGO_WEBCAM_CHO_SLEEPY_001",
+      "source": "assets/source/ngo-webcam-cho-sleepy-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-sleepy-002",
+      "exportName": "NGO_WEBCAM_CHO_SLEEPY_002",
+      "source": "assets/source/ngo-webcam-cho-sleepy-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-sleepy-003",
+      "exportName": "NGO_WEBCAM_CHO_SLEEPY_003",
+      "source": "assets/source/ngo-webcam-cho-sleepy-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-superchat-000",
+      "exportName": "NGO_WEBCAM_CHO_SUPERCHAT_000",
+      "source": "assets/source/ngo-webcam-cho-superchat-000.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-superchat-001",
+      "exportName": "NGO_WEBCAM_CHO_SUPERCHAT_001",
+      "source": "assets/source/ngo-webcam-cho-superchat-001.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-superchat-002",
+      "exportName": "NGO_WEBCAM_CHO_SUPERCHAT_002",
+      "source": "assets/source/ngo-webcam-cho-superchat-002.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-webcam-cho-superchat-003",
+      "exportName": "NGO_WEBCAM_CHO_SUPERCHAT_003",
+      "source": "assets/source/ngo-webcam-cho-superchat-003.png",
+      "kind": "ornament",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from the user's NEEDY GIRL OVERDOSE installation (streamameanimation/streamchoanimation Addressables .anim bundles, game sprite-frame indexed)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "ngo-power-item-pien",
+      "exportName": "NGO_POWER_ITEM_PIEN",
+      "source": "assets/source/ngo-power-item-pien.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_pien (icon_pien_cat)"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-power-item-heart",
+      "exportName": "NGO_POWER_ITEM_HEART",
+      "source": "assets/source/ngo-power-item-heart.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_heart (icon_heart)"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-power-item-bear",
+      "exportName": "NGO_POWER_ITEM_BEAR",
+      "source": "assets/source/ngo-power-item-bear.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_bear (icon_bear)"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-power-item-mendako",
+      "exportName": "NGO_POWER_ITEM_MENDAKO",
+      "source": "assets/source/ngo-power-item-mendako.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_mendako (icon_mendako)"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "ngo-power-item-tea",
+      "exportName": "NGO_POWER_ITEM_TEA",
+      "source": "assets/source/ngo-power-item-tea.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "WSS playground and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_tea (icon_tea)"
+      },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-body-0",
+      "exportName": "ISAAC_SLOT_BODY_0",
+      "source": "assets/source/isaac-slot-body-0.png",
+      "kind": "ornament",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-body-1",
+      "exportName": "ISAAC_SLOT_BODY_1",
+      "source": "assets/source/isaac-slot-body-1.png",
+      "kind": "ornament",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-body-2",
+      "exportName": "ISAAC_SLOT_BODY_2",
+      "source": "assets/source/isaac-slot-body-2.png",
+      "kind": "ornament",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-00",
+      "exportName": "ISAAC_SLOT_ICON_00",
+      "source": "assets/source/isaac-slot-icon-00.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-01",
+      "exportName": "ISAAC_SLOT_ICON_01",
+      "source": "assets/source/isaac-slot-icon-01.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-02",
+      "exportName": "ISAAC_SLOT_ICON_02",
+      "source": "assets/source/isaac-slot-icon-02.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-08",
+      "exportName": "ISAAC_SLOT_ICON_08",
+      "source": "assets/source/isaac-slot-icon-08.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-09",
+      "exportName": "ISAAC_SLOT_ICON_09",
+      "source": "assets/source/isaac-slot-icon-09.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-10",
+      "exportName": "ISAAC_SLOT_ICON_10",
+      "source": "assets/source/isaac-slot-icon-10.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-11",
+      "exportName": "ISAAC_SLOT_ICON_11",
+      "source": "assets/source/isaac-slot-icon-11.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-12",
+      "exportName": "ISAAC_SLOT_ICON_12",
+      "source": "assets/source/isaac-slot-icon-12.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-icon-13",
+      "exportName": "ISAAC_SLOT_ICON_13",
+      "source": "assets/source/isaac-slot-icon-13.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-pill-sheet",
+      "exportName": "ISAAC_PILL_SHEET",
+      "source": "assets/source/isaac-pill-sheet.png",
+      "kind": "icon",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, pickup_007_pill.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-gamekid",
+      "exportName": "ISAAC_GAMEKID",
+      "source": "assets/source/isaac-gamekid.png",
+      "kind": "ornament",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, costume_004_gamekid.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "isaac-slot-coin",
+      "exportName": "ISAAC_SLOT_COIN",
+      "source": "assets/source/isaac-slot-coin.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 24" }
+    },
+    {
+      "id": "isaac-slot-pull",
+      "exportName": "ISAAC_SLOT_PULL",
+      "source": "assets/source/isaac-slot-pull.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 435" }
+    },
+    {
+      "id": "isaac-slot-spin-loop",
+      "exportName": "ISAAC_SLOT_SPIN_LOOP",
+      "source": "assets/source/isaac-slot-spin-loop.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 436" }
+    },
+    {
+      "id": "isaac-slot-stop",
+      "exportName": "ISAAC_SLOT_STOP",
+      "source": "assets/source/isaac-slot-stop.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 437" }
+    },
+    {
+      "id": "isaac-slot-spawn",
+      "exportName": "ISAAC_SLOT_SPAWN",
+      "source": "assets/source/isaac-slot-spawn.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, slotspawn 0" }
+    },
+    {
+      "id": "isaac-voice-power-pill",
+      "exportName": "ISAAC_VOICE_POWER_PILL",
+      "source": "assets/source/isaac-voice-power-pill.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 407" }
+    },
+    {
+      "id": "isaac-voice-retro-vision",
+      "exportName": "ISAAC_VOICE_RETRO_VISION",
+      "source": "assets/source/isaac-voice-retro-vision.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 410" }
+    },
+    {
+      "id": "isaac-gamekid-chew",
+      "exportName": "ISAAC_GAMEKID_CHEW",
+      "source": "assets/source/isaac-gamekid-chew.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 142 (SOUND_SMB_LARGE_CHEWS_4)" }
+    },
+    {
+      "id": "terraria-gravity-potion",
+      "exportName": "TERRARIA_GRAVITY_POTION",
+      "source": "assets/source/terraria-gravity-potion.png",
+      "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided Terraria Gravity Potion icon" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-buff-gravitation",
+      "exportName": "TERRARIA_BUFF_GRAVITATION",
+      "source": "assets/source/terraria-buff-gravitation.png",
+      "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki Gravitation buff icon, internal Buff ID 18 (File:Gravitation.png)" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-gravity-potion-use",
+      "exportName": "TERRARIA_GRAVITY_POTION_USE",
+      "source": "assets/source/terraria-gravity-potion-use.wav",
+      "kind": "audio",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided Terraria potion use sound" }
+    },
+    {
+      "id": "minecraft-suspicious-stew",
+      "exportName": "MINECRAFT_SUSPICIOUS_STEW",
+      "source": "assets/source/minecraft-suspicious-stew.png",
+      "kind": "icon",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/suspicious_stew.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "minecraft-suspicious-stew-eat",
+      "exportName": "MINECRAFT_SUSPICIOUS_STEW_EAT",
+      "source": "assets/source/minecraft-suspicious-stew-eat.ogg",
+      "kind": "audio",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/eat1.ogg (object ebf6fcfa3dd26d6f684fd90388221d4ee4a1af1d)" }
+    },
+    {
+      "id": "minecraft-effect-blindness",
+      "exportName": "MINECRAFT_EFFECT_BLINDNESS",
+      "source": "assets/source/minecraft-effect-blindness.png",
+      "kind": "icon",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/blindness.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "minecraft-effect-nausea",
+      "exportName": "MINECRAFT_EFFECT_NAUSEA",
+      "source": "assets/source/minecraft-effect-nausea.png",
+      "kind": "icon",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/nausea.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "minecraft-milk-bucket",
+      "exportName": "MINECRAFT_MILK_BUCKET",
+      "source": "assets/source/minecraft-milk-bucket.png",
+      "kind": "icon",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/milk_bucket.png" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "minecraft-drink",
+      "exportName": "MINECRAFT_DRINK",
+      "source": "assets/source/minecraft-drink.ogg",
+      "kind": "audio",
+      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/drink.ogg (object ed402bb1c240a70fa9eb05fe5eec436c248598f2)" }
+    },
+    {
+      "id": "terraria-red-potion",
+      "exportName": "TERRARIA_RED_POTION",
+      "source": "assets/source/terraria-red-potion.png",
+      "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Red Potion.png, matching Terraria item ID 678" },
+      "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-poisoned", "exportName": "TERRARIA_DEBUFF_POISONED",
+      "source": "assets/source/terraria-debuff-poisoned.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Poisoned.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-darkness", "exportName": "TERRARIA_DEBUFF_DARKNESS",
+      "source": "assets/source/terraria-debuff-darkness.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Darkness.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-cursed", "exportName": "TERRARIA_DEBUFF_CURSED",
+      "source": "assets/source/terraria-debuff-cursed.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Cursed.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-on-fire", "exportName": "TERRARIA_DEBUFF_ON_FIRE",
+      "source": "assets/source/terraria-debuff-on-fire.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file On Fire!.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-bleeding", "exportName": "TERRARIA_DEBUFF_BLEEDING",
+      "source": "assets/source/terraria-debuff-bleeding.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Bleeding.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-confused", "exportName": "TERRARIA_DEBUFF_CONFUSED",
+      "source": "assets/source/terraria-debuff-confused.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Confused.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-slow", "exportName": "TERRARIA_DEBUFF_SLOW",
+      "source": "assets/source/terraria-debuff-slow.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Slow.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-weak", "exportName": "TERRARIA_DEBUFF_WEAK",
+      "source": "assets/source/terraria-debuff-weak.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Weak.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-silenced", "exportName": "TERRARIA_DEBUFF_SILENCED",
+      "source": "assets/source/terraria-debuff-silenced.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Silenced.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-broken-armor", "exportName": "TERRARIA_DEBUFF_BROKEN_ARMOR",
+      "source": "assets/source/terraria-debuff-broken-armor.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Broken Armor.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {
+      "id": "terraria-debuff-suffocation", "exportName": "TERRARIA_DEBUFF_SUFFOCATION",
+      "source": "assets/source/terraria-debuff-suffocation.png", "kind": "icon",
+      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Suffocation.png" }, "geometry": { "edgePolicy": "allow" }
+    },
+    {"id": "isaac-blue-spider-walk", "exportName": "ISAAC_BLUE_SPIDER_WALK", "source": "assets/source/isaac-blue-spider-walk.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "003.073_blue spider.anm2 Walk crops and per-frame tint"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "isaac-blue-spider", "exportName": "ISAAC_BLUE_SPIDER", "source": "assets/source/isaac-blue-spider.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "003.073_blue spider.anm2 Walk frame 2"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "isaac-tarot-card", "exportName": "ISAAC_TAROT_CARD", "source": "assets/source/isaac-tarot-card.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "005.301_tarot card.anm2 Idle body frame"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "isaac-slot-icon-05", "exportName": "ISAAC_SLOT_ICON_05", "source": "assets/source/isaac-slot-icon-05.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Slot machine original insect reel symbol"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "steam-achievement", "exportName": "STEAM_ACHIEVEMENT", "source": "assets/source/steam-achievement.wav", "kind": "audio", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam steamui/sounds/desktop_toast_default.wav"}},
+    {"id": "steam-achievement-mask-root", "exportName": "STEAM_ACHIEVEMENT_MASK_ROOT", "source": "assets/source/steam-achievement-mask-root.png", "kind": "icon", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam CSS RareAchievementIconGlowContainerRoot embedded PNG mask"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "steam-achievement-mask-rotate", "exportName": "STEAM_ACHIEVEMENT_MASK_ROTATE", "source": "assets/source/steam-achievement-mask-rotate.png", "kind": "icon", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam CSS RareAchievementIconGlowContainer embedded PNG mask"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "isaac-troll-bomb-timeline", "exportName": "ISAAC_TROLL_BOMB_TIMELINE", "source": "assets/source/isaac-troll-bomb-timeline.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "004.003_troll bomb.anm2 Appear/Pulse/Explode + 1000.001_bomb explosion.anm2 Explosion; original layers, interpolated transforms, tints and 30 FPS delays"}, "geometry": {"edgePolicy": "allow"}},
+    {"id": "isaac-bomb-drop-0", "exportName": "ISAAC_BOMB_DROP_0", "source": "assets/source/isaac-bomb-drop-0.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 40: sfx/fetus land.wav"}},
+    {"id": "isaac-bomb-drop-1", "exportName": "ISAAC_BOMB_DROP_1", "source": "assets/source/isaac-bomb-drop-1.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 40: sfx/fetus land 1.wav"}},
+    {"id": "isaac-bomb-explode-0", "exportName": "ISAAC_BOMB_EXPLODE_0", "source": "assets/source/isaac-bomb-explode-0.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss explosions 0.wav"}},
+    {"id": "isaac-bomb-explode-1", "exportName": "ISAAC_BOMB_EXPLODE_1", "source": "assets/source/isaac-bomb-explode-1.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss explosions 1.wav"}},
+    {"id": "isaac-bomb-explode-2", "exportName": "ISAAC_BOMB_EXPLODE_2", "source": "assets/source/isaac-bomb-explode-2.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss expolsions 2.wav"}},
+    {"id": "isaac-tarot-fronts", "exportName": "ISAAC_TAROT_FRONTS", "source": "assets/source/isaac-tarot-fronts.png", "kind": "icon", "geometry": {"edgePolicy": "allow"}, "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "ui/ui_cardfronts.anm2 first 22 named tarot frames"}},
+    {"id": "isaac-slot-broken", "exportName": "ISAAC_SLOT_BROKEN", "source": "assets/source/isaac-slot-broken.png", "kind": "icon", "geometry": {"edgePolicy": "allow"}, "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "006.001_slot machine.anm2 Broken body frame"}}
+  ]
+}

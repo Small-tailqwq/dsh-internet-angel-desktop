@@ -1,0 +1,26 @@
+{
+  "id": "internet-angel-desktop",
+  "name": "超绝网络天使桌面",
+  "nameEn": "Internet Angel Desktop",
+  "author": "Small-tailqwq",
+  "tagline": "把 DSH Web 变成 windose20 的操作系统。",
+  "description": "受《主播女孩重度依赖》启发的非官方、非商业饭制皮肤。在 JINE 里对话，在任务管理器看任务过程，在 POKETTER 阅读结果，从桌面窗口间继续你的工作。",
+  "tags": [
+    "fan-made",
+    "pixel-art",
+    "retro-desktop",
+    "non-commercial"
+  ],
+  "accent": "#5227ff",
+  "bodyAttr": "data-dsh-internet-angel-desktop",
+  "dshCompatibility": "0.1.2rc1",
+  "package": "@deepseek-ai/dsh-client-ui-skin-internet-angel-desktop",
+  "wiring": {
+    "id": "ui-skin-internet-angel-desktop",
+    "bundleWired": false
+  },
+  "preview": {
+    "light": "preview/desktop.png"
+  },
+  "order": 0
+}
