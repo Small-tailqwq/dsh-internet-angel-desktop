@@ -4210,9 +4210,7 @@ body[data-dsh-internet-angel-desktop] [data-ngo-theme-choice='dark'] {
   box-sizing: border-box;
   display: block;
   width: max-content;
-  min-width: 400px;
   max-width: min(640px, calc(100vw - 24px));
-  min-height: 92px;
   border-style: solid;
   border-width: 8px 42px 28px 9px;
   border-image-slice: 8 42 28 9 fill;
@@ -4234,7 +4232,6 @@ body[data-dsh-internet-angel-desktop] [data-ngo-theme-choice='dark'] {
   z-index: 1;
   display: block;
   width: max-content;
-  min-width: 349px;
   max-width: min(589px, calc(100vw - 75px));
   color: var(--ngo-ink);
   white-space: pre-line;

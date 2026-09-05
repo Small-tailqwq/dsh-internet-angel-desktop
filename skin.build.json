@@ -1,6 +1,7 @@
 {
   "schema": 1,
-  "fingerprint": "b6cdb67822646100f111f746e9cbc62e99d773df60e8c2b7ab9f3a610676155a",
+  "fingerprint": "ce8aa8f0eeba191d3bd466d613240fe5bad600ddb570ab58047390f2ee42bfba",
+  "sourceCommit": "6d036e7c71dbe23da7e00fa53bbc4b5a63097e03",
   "repository": "Small-tailqwq/dsh-internet-angel-desktop",
   "path": "."
 }
