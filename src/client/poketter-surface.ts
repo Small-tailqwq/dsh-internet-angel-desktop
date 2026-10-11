@@ -39,7 +39,7 @@ function element<K extends keyof HTMLElementTagNameMap>(
 export function createPoketterHeader(): HTMLDivElement {
   const header = element('div', css.header ?? '')
   const logo = element('img', css.logo ?? '')
-  logo.src = NGO_POKETTER_LOGO.dataUri
+  logo.src = NGO_POKETTER_LOGO.url
   logo.alt = 'Poketter'
   header.append(logo)
   return header
@@ -76,7 +76,7 @@ function renderPost(post: PoketterPost): HTMLElement {
     ? element('img', css.postAvatar ?? '')
     : element('span', `${css.postAvatar ?? ''} ${css.subagentAvatar ?? ''}`)
   if (avatar instanceof HTMLImageElement) {
-    avatar.src = NGO_POKETTER_AME_AVATAR.dataUri
+    avatar.src = NGO_POKETTER_AME_AVATAR.url
     avatar.alt = ''
   } else {
     avatar.style.backgroundImage = identity!.avatarCssUrl
@@ -90,8 +90,8 @@ function renderPost(post: PoketterPost): HTMLElement {
   content.append(sanitizeFinalMarkdown(post.source))
   const stats = element('div', css.stats ?? '')
   stats.append(
-    stat(`${css.stat ?? ''} ${css.retweet ?? ''}`, NGO_POKETTER_RETWEET.dataUri, () => t('转推')),
-    stat(`${css.stat ?? ''} ${css.favorite ?? ''}`, NGO_POKETTER_FAVORITE.dataUri, () => t('收藏')),
+    stat(`${css.stat ?? ''} ${css.retweet ?? ''}`, NGO_POKETTER_RETWEET.url, () => t('转推')),
+    stat(`${css.stat ?? ''} ${css.favorite ?? ''}`, NGO_POKETTER_FAVORITE.url, () => t('收藏')),
   )
   const date = element('div', css.date ?? '', `${post.orderLabel}${post.time === '' ? '' : ` · ${post.time}`}`)
   const divider = element('div', css.divider ?? '')

@@ -1,5 +1,7 @@
 # Internet Angel Desktop · 超绝网络天使桌面
 
+npm package: `@smalltailqwq/dsh-client-ui-skin-internet-angel-desktop`
+
 [简体中文](README.md) | English | [日本語](README.ja.md)
 
 **Turn DSH Web into a windose20 desktop.**
@@ -38,6 +40,20 @@ the manager may first return to the official default interface; simply select on
 **This is a UI skin for DSH Web, not a standalone game.** See [skin.json](skin.json) for the host compatibility declaration;
 it is not a blanket compatibility guarantee for other versions, all devices, or third-party plugins.
 
+The current adaptation targets DSH `0.2.0-rc.2`. Desktop and Start offer a Plugin Manager window
+with native plugin lists, details, and configuration. It supports dragging and resizing; minimizing or closing
+returns to chat, and restoring its task opens the plugin list. Control Panel follows the settings portal and
+scrolls horizontally at narrow widths. Navigation, dragging, window states, form editing, and chat draft
+retention were verified. Plugin installation, toggles, saving configuration, and IME composition were not tested.
+
+Control Panel, Plugin Manager and native tools share pixel controls. Browser (Desktop and Start) and
+Terminal (quick launch, next to Task Manager) open as floating windows in the desktop's window frame
+without expanding the right sidebar, with taskbar refocusing. Stream opens the official channel in the
+browser, and the magnifier in JINE's title bar opens a separate chat search window. My Computer is an
+XP-style explorer over the current session's workspace that hands files to the host preview, with
+My Pictures collecting images from JINE. Tools follow the selected session and unavailable host
+components are disabled; DSH disables Browser by default in Web profiles, where Stream opens a new tab.
+
 ## Feedback scope
 
 **This project does not accept reports about compatibility with any third-party plugins.**
@@ -60,7 +76,7 @@ pnpm build
 pnpm build:manifest
 ```
 
-Source code and inline asset modules are in `src/`; installation artifacts are in `lib/`. Keep build artifacts and the build fingerprint in sync after changes.
+Source code is in `src/`; installation artifacts are in `lib/`. Original assets live in `assets/source/` and are registered in `assets/art.manifest.json`; `pnpm build` first copies them by content hash into `assets/runtime/`, which the skin's node half serves instead of inlining them into JavaScript. Keep build artifacts, runtime assets and the build fingerprint in sync after changes.
 Tests are in `tests/`; builds and unit tests do not replace visual and interaction checks on real devices.
 Reproducible bug reports and narrowly scoped improvements to the skin itself are welcome.
 

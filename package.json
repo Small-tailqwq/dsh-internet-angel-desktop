@@ -1,9 +1,8 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-skin-internet-angel-desktop",
+  "name": "@smalltailqwq/dsh-client-ui-skin-internet-angel-desktop",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
-  "description": "Non-commercial pastel pixel desktop fan skin for DSH Web",
+  "description": "An unofficial, non-commercial NEEDY GIRL OVERDOSE-inspired pixel desktop skin for DSH, with JINE chat and movable app windows.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Small-tailqwq/dsh-internet-angel-desktop.git"
@@ -13,7 +12,8 @@
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
     "./skin.json": "./skin.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
   },
   "files": [
     "lib",
@@ -22,8 +22,13 @@
     "skin.build.json",
     "preview",
     "assets/ATTRIBUTION.md",
+    "assets/runtime",
     "README.md",
-    "NOTICE.md"
+    "NOTICE.md",
+    "locale/*.json",
+    "assets/plugin-icon.png",
+    "assets/icons/internet-angel.ico",
+    "assets/plugin-icon-prompt.md"
   ],
   "dsh": {
     "bundle": {
@@ -47,7 +52,9 @@
     "platform": "web"
   },
   "scripts": {
-    "build": "tsdown",
+    "build:desktop-icon": "node scripts/build-desktop-icon.mjs",
+    "art": "node scripts/write-skin-art.mjs",
+    "build": "node scripts/write-skin-art.mjs && tsdown",
     "build:manifest": "node scripts/write-skin-build.mjs . Small-tailqwq/dsh-internet-angel-desktop",
     "watch": "tsdown --watch",
     "typecheck": "tsc --noEmit",
@@ -69,5 +76,22 @@
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },
-  "packageManager": "pnpm@10.33.2"
+  "packageManager": "pnpm@10.33.2",
+  "icon": "assets/plugin-icon.png",
+  "author": "Small-tailqwq",
+  "homepage": "https://github.com/Small-tailqwq/dsh-internet-angel-desktop#readme",
+  "bugs": {
+    "url": "https://github.com/Small-tailqwq/dsh-internet-angel-desktop/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-skin",
+    "pixel-art",
+    "desktop",
+    "needy-girl-overdose"
+  ]
 }

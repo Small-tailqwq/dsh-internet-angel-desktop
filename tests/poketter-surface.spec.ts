@@ -38,7 +38,7 @@ describe('POKETTER surface', () => {
     const header = createPoketterHeader()
     const avatar = header.querySelector('img')
 
-    expect(avatar?.src).toMatch(/^data:image\/png;base64,/)
+    expect(avatar?.src).toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
     expect(avatar?.alt).toBe('Poketter')
     expect(avatar?.src).not.toContain('codex-ngo-reference')
   })
@@ -50,7 +50,7 @@ describe('POKETTER surface', () => {
     decoratePoketterStage(stage)
     renderPoketter(feed, [], 'empty-surface')
 
-    expect(stage.style.backgroundImage).toContain('data:image/png;base64,')
+    expect(stage.style.backgroundImage).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     expect(feed.style.backgroundImage).toBe('')
   })
 })

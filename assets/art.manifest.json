@@ -1031,7 +1031,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-pause",
@@ -1043,7 +1045,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-resume",
@@ -1055,7 +1059,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-edit",
@@ -1067,7 +1073,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-delete",
@@ -1079,7 +1087,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-save",
@@ -1091,7 +1101,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-goal-cancel",
@@ -1103,7 +1115,9 @@
         "license": "Generated specifically for this private non-commercial fan skin",
         "source": "Built-in image generation; 2026-08-27 notepad Goal action icon sprite prompt"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-webcam-smile-1",
@@ -1724,7 +1738,7 @@
       "attribution": {
         "creator": "WSS playground and respective rights holders",
         "license": "All rights reserved; private non-commercial fan use only",
-        "source": "Decoded from the user's NEEDY GIRL OVERDOSE sharedassets0.assets AudioClip BGM_mainloop_normal (desktop loop), transcoded to OGG"
+        "source": "Decoded from the user's NEEDY GIRL OVERDOSE sharedassets0.assets AudioClip BGM_mainloop_normal (desktop loop), transcoded to OGG; audio samples attenuated by 0.08 (approximately -22 dB) on 2026-10-03"
       }
     },
     {
@@ -3557,7 +3571,9 @@
         "license": "All rights reserved; private non-commercial fan use only",
         "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_pien (icon_pien_cat)"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-power-item-heart",
@@ -3569,7 +3585,9 @@
         "license": "All rights reserved; private non-commercial fan use only",
         "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_heart (icon_heart)"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-power-item-bear",
@@ -3581,7 +3599,9 @@
         "license": "All rights reserved; private non-commercial fan use only",
         "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_bear (icon_bear)"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-power-item-mendako",
@@ -3593,7 +3613,9 @@
         "license": "All rights reserved; private non-commercial fan use only",
         "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_mendako (icon_mendako)"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "ngo-power-item-tea",
@@ -3605,322 +3627,784 @@
         "license": "All rights reserved; private non-commercial fan use only",
         "source": "Locally extracted from NEEDY GIRL OVERDOSE App_Live supacha_tea (icon_tea)"
       },
-      "geometry": { "edgePolicy": "allow" }
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-body-0",
       "exportName": "ISAAC_SLOT_BODY_0",
       "source": "assets/source/isaac-slot-body-0.png",
       "kind": "ornament",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-body-1",
       "exportName": "ISAAC_SLOT_BODY_1",
       "source": "assets/source/isaac-slot-body-1.png",
       "kind": "ornament",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-body-2",
       "exportName": "ISAAC_SLOT_BODY_2",
       "source": "assets/source/isaac-slot-body-2.png",
       "kind": "ornament",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-00",
       "exportName": "ISAAC_SLOT_ICON_00",
       "source": "assets/source/isaac-slot-icon-00.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-01",
       "exportName": "ISAAC_SLOT_ICON_01",
       "source": "assets/source/isaac-slot-icon-01.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-02",
       "exportName": "ISAAC_SLOT_ICON_02",
       "source": "assets/source/isaac-slot-icon-02.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-08",
       "exportName": "ISAAC_SLOT_ICON_08",
       "source": "assets/source/isaac-slot-icon-08.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-09",
       "exportName": "ISAAC_SLOT_ICON_09",
       "source": "assets/source/isaac-slot-icon-09.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-10",
       "exportName": "ISAAC_SLOT_ICON_10",
       "source": "assets/source/isaac-slot-icon-10.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-11",
       "exportName": "ISAAC_SLOT_ICON_11",
       "source": "assets/source/isaac-slot-icon-11.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-12",
       "exportName": "ISAAC_SLOT_ICON_12",
       "source": "assets/source/isaac-slot-icon-12.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-icon-13",
       "exportName": "ISAAC_SLOT_ICON_13",
       "source": "assets/source/isaac-slot-icon-13.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, 006.001 Slot Machine"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-pill-sheet",
       "exportName": "ISAAC_PILL_SHEET",
       "source": "assets/source/isaac-pill-sheet.png",
       "kind": "icon",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, pickup_007_pill.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, pickup_007_pill.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-gamekid",
       "exportName": "ISAAC_GAMEKID",
       "source": "assets/source/isaac-gamekid.png",
       "kind": "ornament",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, costume_004_gamekid.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, costume_004_gamekid.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "isaac-slot-coin",
       "exportName": "ISAAC_SLOT_COIN",
       "source": "assets/source/isaac-slot-coin.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 24" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 24"
+      }
     },
     {
       "id": "isaac-slot-pull",
       "exportName": "ISAAC_SLOT_PULL",
       "source": "assets/source/isaac-slot-pull.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 435" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 435"
+      }
     },
     {
       "id": "isaac-slot-spin-loop",
       "exportName": "ISAAC_SLOT_SPIN_LOOP",
       "source": "assets/source/isaac-slot-spin-loop.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 436" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 436"
+      }
     },
     {
       "id": "isaac-slot-stop",
       "exportName": "ISAAC_SLOT_STOP",
       "source": "assets/source/isaac-slot-stop.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 437" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 437"
+      }
     },
     {
       "id": "isaac-slot-spawn",
       "exportName": "ISAAC_SLOT_SPAWN",
       "source": "assets/source/isaac-slot-spawn.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, slotspawn 0" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, slotspawn 0"
+      }
     },
     {
       "id": "isaac-voice-power-pill",
       "exportName": "ISAAC_VOICE_POWER_PILL",
       "source": "assets/source/isaac-voice-power-pill.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 407" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 407"
+      }
     },
     {
       "id": "isaac-voice-retro-vision",
       "exportName": "ISAAC_VOICE_RETRO_VISION",
       "source": "assets/source/isaac-voice-retro-vision.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 410" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 410"
+      }
     },
     {
       "id": "isaac-gamekid-chew",
       "exportName": "ISAAC_GAMEKID_CHEW",
       "source": "assets/source/isaac-gamekid-chew.wav",
       "kind": "audio",
-      "attribution": { "creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 142 (SOUND_SMB_LARGE_CHEWS_4)" }
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided local extraction from The Binding of Isaac: Repentance, sounds.xml id 142 (SOUND_SMB_LARGE_CHEWS_4)"
+      }
     },
     {
       "id": "terraria-gravity-potion",
       "exportName": "TERRARIA_GRAVITY_POTION",
       "source": "assets/source/terraria-gravity-potion.png",
       "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided Terraria Gravity Potion icon" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided Terraria Gravity Potion icon"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "terraria-buff-gravitation",
       "exportName": "TERRARIA_BUFF_GRAVITATION",
       "source": "assets/source/terraria-buff-gravitation.png",
       "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki Gravitation buff icon, internal Buff ID 18 (File:Gravitation.png)" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki Gravitation buff icon, internal Buff ID 18 (File:Gravitation.png)"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "terraria-gravity-potion-use",
       "exportName": "TERRARIA_GRAVITY_POTION_USE",
       "source": "assets/source/terraria-gravity-potion-use.wav",
       "kind": "audio",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "User-provided Terraria potion use sound" }
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "User-provided Terraria potion use sound"
+      }
     },
     {
       "id": "minecraft-suspicious-stew",
       "exportName": "MINECRAFT_SUSPICIOUS_STEW",
       "source": "assets/source/minecraft-suspicious-stew.png",
       "kind": "icon",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/suspicious_stew.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/suspicious_stew.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "minecraft-suspicious-stew-eat",
       "exportName": "MINECRAFT_SUSPICIOUS_STEW_EAT",
       "source": "assets/source/minecraft-suspicious-stew-eat.ogg",
       "kind": "audio",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/eat1.ogg (object ebf6fcfa3dd26d6f684fd90388221d4ee4a1af1d)" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/eat1.ogg (object ebf6fcfa3dd26d6f684fd90388221d4ee4a1af1d)"
+      }
     },
     {
       "id": "minecraft-effect-blindness",
       "exportName": "MINECRAFT_EFFECT_BLINDNESS",
       "source": "assets/source/minecraft-effect-blindness.png",
       "kind": "icon",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/blindness.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/blindness.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "minecraft-effect-nausea",
       "exportName": "MINECRAFT_EFFECT_NAUSEA",
       "source": "assets/source/minecraft-effect-nausea.png",
       "kind": "icon",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/nausea.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/mob_effect/nausea.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "minecraft-milk-bucket",
       "exportName": "MINECRAFT_MILK_BUCKET",
       "source": "assets/source/minecraft-milk-bucket.png",
       "kind": "icon",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/milk_bucket.png" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official client asset, assets/minecraft/textures/item/milk_bucket.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
       "id": "minecraft-drink",
       "exportName": "MINECRAFT_DRINK",
       "source": "assets/source/minecraft-drink.ogg",
       "kind": "audio",
-      "attribution": { "creator": "Mojang Studios and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/drink.ogg (object ed402bb1c240a70fa9eb05fe5eec436c248598f2)" }
+      "attribution": {
+        "creator": "Mojang Studios and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Minecraft Java Edition 26.2 official asset index, minecraft/sounds/random/drink.ogg (object ed402bb1c240a70fa9eb05fe5eec436c248598f2)"
+      }
     },
     {
       "id": "terraria-red-potion",
       "exportName": "TERRARIA_RED_POTION",
       "source": "assets/source/terraria-red-potion.png",
       "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Red Potion.png, matching Terraria item ID 678" },
-      "geometry": { "edgePolicy": "allow" }
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Red Potion.png, matching Terraria item ID 678"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-poisoned", "exportName": "TERRARIA_DEBUFF_POISONED",
-      "source": "assets/source/terraria-debuff-poisoned.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Poisoned.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-poisoned",
+      "exportName": "TERRARIA_DEBUFF_POISONED",
+      "source": "assets/source/terraria-debuff-poisoned.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Poisoned.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-darkness", "exportName": "TERRARIA_DEBUFF_DARKNESS",
-      "source": "assets/source/terraria-debuff-darkness.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Darkness.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-darkness",
+      "exportName": "TERRARIA_DEBUFF_DARKNESS",
+      "source": "assets/source/terraria-debuff-darkness.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Darkness.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-cursed", "exportName": "TERRARIA_DEBUFF_CURSED",
-      "source": "assets/source/terraria-debuff-cursed.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Cursed.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-cursed",
+      "exportName": "TERRARIA_DEBUFF_CURSED",
+      "source": "assets/source/terraria-debuff-cursed.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Cursed.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-on-fire", "exportName": "TERRARIA_DEBUFF_ON_FIRE",
-      "source": "assets/source/terraria-debuff-on-fire.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file On Fire!.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-on-fire",
+      "exportName": "TERRARIA_DEBUFF_ON_FIRE",
+      "source": "assets/source/terraria-debuff-on-fire.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file On Fire!.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-bleeding", "exportName": "TERRARIA_DEBUFF_BLEEDING",
-      "source": "assets/source/terraria-debuff-bleeding.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Bleeding.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-bleeding",
+      "exportName": "TERRARIA_DEBUFF_BLEEDING",
+      "source": "assets/source/terraria-debuff-bleeding.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Bleeding.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-confused", "exportName": "TERRARIA_DEBUFF_CONFUSED",
-      "source": "assets/source/terraria-debuff-confused.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Confused.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-confused",
+      "exportName": "TERRARIA_DEBUFF_CONFUSED",
+      "source": "assets/source/terraria-debuff-confused.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Confused.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-slow", "exportName": "TERRARIA_DEBUFF_SLOW",
-      "source": "assets/source/terraria-debuff-slow.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Slow.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-slow",
+      "exportName": "TERRARIA_DEBUFF_SLOW",
+      "source": "assets/source/terraria-debuff-slow.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Slow.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-weak", "exportName": "TERRARIA_DEBUFF_WEAK",
-      "source": "assets/source/terraria-debuff-weak.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Weak.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-weak",
+      "exportName": "TERRARIA_DEBUFF_WEAK",
+      "source": "assets/source/terraria-debuff-weak.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Weak.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-silenced", "exportName": "TERRARIA_DEBUFF_SILENCED",
-      "source": "assets/source/terraria-debuff-silenced.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Silenced.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-silenced",
+      "exportName": "TERRARIA_DEBUFF_SILENCED",
+      "source": "assets/source/terraria-debuff-silenced.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Silenced.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-broken-armor", "exportName": "TERRARIA_DEBUFF_BROKEN_ARMOR",
-      "source": "assets/source/terraria-debuff-broken-armor.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Broken Armor.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-broken-armor",
+      "exportName": "TERRARIA_DEBUFF_BROKEN_ARMOR",
+      "source": "assets/source/terraria-debuff-broken-armor.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Broken Armor.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
     {
-      "id": "terraria-debuff-suffocation", "exportName": "TERRARIA_DEBUFF_SUFFOCATION",
-      "source": "assets/source/terraria-debuff-suffocation.png", "kind": "icon",
-      "attribution": { "creator": "Re-Logic and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Official Terraria Wiki file Suffocation.png" }, "geometry": { "edgePolicy": "allow" }
+      "id": "terraria-debuff-suffocation",
+      "exportName": "TERRARIA_DEBUFF_SUFFOCATION",
+      "source": "assets/source/terraria-debuff-suffocation.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Re-Logic and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Official Terraria Wiki file Suffocation.png"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
     },
-    {"id": "isaac-blue-spider-walk", "exportName": "ISAAC_BLUE_SPIDER_WALK", "source": "assets/source/isaac-blue-spider-walk.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "003.073_blue spider.anm2 Walk crops and per-frame tint"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "isaac-blue-spider", "exportName": "ISAAC_BLUE_SPIDER", "source": "assets/source/isaac-blue-spider.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "003.073_blue spider.anm2 Walk frame 2"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "isaac-tarot-card", "exportName": "ISAAC_TAROT_CARD", "source": "assets/source/isaac-tarot-card.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "005.301_tarot card.anm2 Idle body frame"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "isaac-slot-icon-05", "exportName": "ISAAC_SLOT_ICON_05", "source": "assets/source/isaac-slot-icon-05.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Slot machine original insect reel symbol"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "steam-achievement", "exportName": "STEAM_ACHIEVEMENT", "source": "assets/source/steam-achievement.wav", "kind": "audio", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam steamui/sounds/desktop_toast_default.wav"}},
-    {"id": "steam-achievement-mask-root", "exportName": "STEAM_ACHIEVEMENT_MASK_ROOT", "source": "assets/source/steam-achievement-mask-root.png", "kind": "icon", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam CSS RareAchievementIconGlowContainerRoot embedded PNG mask"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "steam-achievement-mask-rotate", "exportName": "STEAM_ACHIEVEMENT_MASK_ROTATE", "source": "assets/source/steam-achievement-mask-rotate.png", "kind": "icon", "attribution": {"creator": "Valve Corporation", "license": "All rights reserved; private non-commercial fan use only", "source": "Installed Steam CSS RareAchievementIconGlowContainer embedded PNG mask"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "isaac-troll-bomb-timeline", "exportName": "ISAAC_TROLL_BOMB_TIMELINE", "source": "assets/source/isaac-troll-bomb-timeline.png", "kind": "icon", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "004.003_troll bomb.anm2 Appear/Pulse/Explode + 1000.001_bomb explosion.anm2 Explosion; original layers, interpolated transforms, tints and 30 FPS delays"}, "geometry": {"edgePolicy": "allow"}},
-    {"id": "isaac-bomb-drop-0", "exportName": "ISAAC_BOMB_DROP_0", "source": "assets/source/isaac-bomb-drop-0.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 40: sfx/fetus land.wav"}},
-    {"id": "isaac-bomb-drop-1", "exportName": "ISAAC_BOMB_DROP_1", "source": "assets/source/isaac-bomb-drop-1.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 40: sfx/fetus land 1.wav"}},
-    {"id": "isaac-bomb-explode-0", "exportName": "ISAAC_BOMB_EXPLODE_0", "source": "assets/source/isaac-bomb-explode-0.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss explosions 0.wav"}},
-    {"id": "isaac-bomb-explode-1", "exportName": "ISAAC_BOMB_EXPLODE_1", "source": "assets/source/isaac-bomb-explode-1.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss explosions 1.wav"}},
-    {"id": "isaac-bomb-explode-2", "exportName": "ISAAC_BOMB_EXPLODE_2", "source": "assets/source/isaac-bomb-explode-2.wav", "kind": "audio", "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "Isaac sounds.xml sound 182: sfx/boss expolsions 2.wav"}},
-    {"id": "isaac-tarot-fronts", "exportName": "ISAAC_TAROT_FRONTS", "source": "assets/source/isaac-tarot-fronts.png", "kind": "icon", "geometry": {"edgePolicy": "allow"}, "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "ui/ui_cardfronts.anm2 first 22 named tarot frames"}},
-    {"id": "isaac-slot-broken", "exportName": "ISAAC_SLOT_BROKEN", "source": "assets/source/isaac-slot-broken.png", "kind": "icon", "geometry": {"edgePolicy": "allow"}, "attribution": {"creator": "Nicalis, Edmund McMillen and respective rights holders", "license": "All rights reserved; private non-commercial fan use only", "source": "006.001_slot machine.anm2 Broken body frame"}}
+    {
+      "id": "isaac-blue-spider-walk",
+      "exportName": "ISAAC_BLUE_SPIDER_WALK",
+      "source": "assets/source/isaac-blue-spider-walk.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "003.073_blue spider.anm2 Walk crops and per-frame tint"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "isaac-blue-spider",
+      "exportName": "ISAAC_BLUE_SPIDER",
+      "source": "assets/source/isaac-blue-spider.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "003.073_blue spider.anm2 Walk frame 2"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "isaac-tarot-card",
+      "exportName": "ISAAC_TAROT_CARD",
+      "source": "assets/source/isaac-tarot-card.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "005.301_tarot card.anm2 Idle body frame"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "isaac-slot-icon-05",
+      "exportName": "ISAAC_SLOT_ICON_05",
+      "source": "assets/source/isaac-slot-icon-05.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Slot machine original insect reel symbol"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "steam-achievement",
+      "exportName": "STEAM_ACHIEVEMENT",
+      "source": "assets/source/steam-achievement.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Valve Corporation",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Installed Steam steamui/sounds/desktop_toast_default.wav"
+      }
+    },
+    {
+      "id": "steam-achievement-mask-root",
+      "exportName": "STEAM_ACHIEVEMENT_MASK_ROOT",
+      "source": "assets/source/steam-achievement-mask-root.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Valve Corporation",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Installed Steam CSS RareAchievementIconGlowContainerRoot embedded PNG mask"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "steam-achievement-mask-rotate",
+      "exportName": "STEAM_ACHIEVEMENT_MASK_ROTATE",
+      "source": "assets/source/steam-achievement-mask-rotate.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Valve Corporation",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Installed Steam CSS RareAchievementIconGlowContainer embedded PNG mask"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "isaac-troll-bomb-timeline",
+      "exportName": "ISAAC_TROLL_BOMB_TIMELINE",
+      "source": "assets/source/isaac-troll-bomb-timeline.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "004.003_troll bomb.anm2 Appear/Pulse/Explode + 1000.001_bomb explosion.anm2 Explosion; original layers, interpolated transforms, tints and 30 FPS delays"
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    },
+    {
+      "id": "isaac-bomb-drop-0",
+      "exportName": "ISAAC_BOMB_DROP_0",
+      "source": "assets/source/isaac-bomb-drop-0.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Isaac sounds.xml sound 40: sfx/fetus land.wav"
+      }
+    },
+    {
+      "id": "isaac-bomb-drop-1",
+      "exportName": "ISAAC_BOMB_DROP_1",
+      "source": "assets/source/isaac-bomb-drop-1.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Isaac sounds.xml sound 40: sfx/fetus land 1.wav"
+      }
+    },
+    {
+      "id": "isaac-bomb-explode-0",
+      "exportName": "ISAAC_BOMB_EXPLODE_0",
+      "source": "assets/source/isaac-bomb-explode-0.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Isaac sounds.xml sound 182: sfx/boss explosions 0.wav"
+      }
+    },
+    {
+      "id": "isaac-bomb-explode-1",
+      "exportName": "ISAAC_BOMB_EXPLODE_1",
+      "source": "assets/source/isaac-bomb-explode-1.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Isaac sounds.xml sound 182: sfx/boss explosions 1.wav"
+      }
+    },
+    {
+      "id": "isaac-bomb-explode-2",
+      "exportName": "ISAAC_BOMB_EXPLODE_2",
+      "source": "assets/source/isaac-bomb-explode-2.wav",
+      "kind": "audio",
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "Isaac sounds.xml sound 182: sfx/boss expolsions 2.wav"
+      }
+    },
+    {
+      "id": "isaac-tarot-fronts",
+      "exportName": "ISAAC_TAROT_FRONTS",
+      "source": "assets/source/isaac-tarot-fronts.png",
+      "kind": "icon",
+      "geometry": {
+        "edgePolicy": "allow"
+      },
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "ui/ui_cardfronts.anm2 first 22 named tarot frames"
+      }
+    },
+    {
+      "id": "isaac-slot-broken",
+      "exportName": "ISAAC_SLOT_BROKEN",
+      "source": "assets/source/isaac-slot-broken.png",
+      "kind": "icon",
+      "geometry": {
+        "edgePolicy": "allow"
+      },
+      "attribution": {
+        "creator": "Nicalis, Edmund McMillen and respective rights holders",
+        "license": "All rights reserved; private non-commercial fan use only",
+        "source": "006.001_slot machine.anm2 Broken body frame"
+      }
+    },
+    {
+      "id": "ngo-icon-plugins-generated",
+      "exportName": "NGO_ICON_PLUGINS",
+      "source": "assets/source/ngo-icon-plugins-generated.png",
+      "kind": "icon",
+      "attribution": {
+        "creator": "Internet Angel Desktop contributors with OpenAI image generation",
+        "license": "Original project contribution; see NOTICE.md",
+        "source": "Generated for the plugin-manager desktop shortcut, 2026-09-28; pastel pixel expansion cartridge with aqua puzzle emblem, purple outline and transparent background. No existing icon was enlarged."
+      },
+      "geometry": {
+        "edgePolicy": "allow"
+      }
+    }
   ]
 }

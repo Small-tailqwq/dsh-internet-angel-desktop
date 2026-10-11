@@ -56,6 +56,13 @@ interface ThemeBridge {
 
 export interface LightModeLock {
   syncSettings(): void
+  isRebooting(): boolean
+  /**
+   * Run once the boot decision is known: the host preference was adopted (or
+   * its grace period ran out) and any forced-light boot already owns the
+   * screen. Returns a disposer for a callback that has not run yet.
+   */
+  whenThemeSettled(callback: () => void): () => void
   restart(): void
   shutdown(): void
   crashWebcam(): void
@@ -108,7 +115,7 @@ function makeTooltip(): HTMLDivElement {
   balloon.append(copy)
   const cat = document.createElement('img')
   cat.className = css.brightTooltipCat ?? ''
-  cat.src = NGO_PIEN_TUTORIAL.dataUri
+  cat.src = NGO_PIEN_TUTORIAL.url
   cat.alt = ''
   cat.setAttribute('aria-hidden', 'true')
   tooltip.append(balloon, cat)
@@ -128,20 +135,20 @@ function makeBootOverlay(dshVersion: string): HTMLDivElement {
 
   const fontFace = document.createElement('style')
   fontFace.dataset.bootFont = 'press-start-2p'
-  fontFace.textContent = `@font-face{font-family:'NgoPressStart2P';src:url(${JSON.stringify(NGO_FONT_PRESS_START_2P.dataUri)}) format('woff2');font-style:normal;font-weight:400;font-display:block}`
+  fontFace.textContent = `@font-face{font-family:'NgoPressStart2P';src:url(${JSON.stringify(NGO_FONT_PRESS_START_2P.url)}) format('woff2');font-style:normal;font-weight:400;font-display:block}`
   overlay.append(fontFace)
 
   const bios = document.createElement('div')
   bios.className = css.bootFrame ?? ''
   bios.dataset.bootPart = 'bios'
   const biosImage = document.createElement('img')
-  biosImage.src = NGO_BOOT_BIOS.dataUri
+  biosImage.src = NGO_BOOT_BIOS.url
   biosImage.alt = ''
   biosImage.setAttribute('aria-hidden', 'true')
   const biosLogo = document.createElement('img')
   biosLogo.className = css.bootBiosLogo ?? ''
   biosLogo.dataset.bootBiosLogo = ''
-  biosLogo.src = NGO_BOOT_BIOS_LOGO.dataUri
+  biosLogo.src = NGO_BOOT_BIOS_LOGO.url
   biosLogo.alt = ''
   biosLogo.setAttribute('aria-hidden', 'true')
   const biosVersion = document.createElement('span')
@@ -162,7 +169,7 @@ function makeBootOverlay(dshVersion: string): HTMLDivElement {
   splash.setAttribute('aria-hidden', 'true')
   const splashImage = document.createElement('img')
   splashImage.className = css.bootSplashImage ?? ''
-  splashImage.src = NGO_BOOT_BACKGROUND.dataUri
+  splashImage.src = NGO_BOOT_BACKGROUND.url
   splashImage.alt = ''
   splash.append(splashImage)
   overlay.append(splash)
@@ -175,7 +182,7 @@ function makeBootOverlay(dshVersion: string): HTMLDivElement {
   caution.setAttribute('aria-labelledby', 'ngo-boot-caution-title')
   const cautionBackground = document.createElement('img')
   cautionBackground.className = css.bootCautionBackground ?? ''
-  cautionBackground.src = NGO_BOOT_CAUTION_BACKGROUND.dataUri
+  cautionBackground.src = NGO_BOOT_CAUTION_BACKGROUND.url
   cautionBackground.alt = ''
   cautionBackground.setAttribute('aria-hidden', 'true')
   const cautionWindow = document.createElement('div')
@@ -189,7 +196,7 @@ function makeBootOverlay(dshVersion: string): HTMLDivElement {
   const cautionHeading = document.createElement('div')
   cautionHeading.className = css.bootCautionHeading ?? ''
   const cautionIcon = document.createElement('img')
-  cautionIcon.src = NGO_BOOT_CAUTION_ICON.dataUri
+  cautionIcon.src = NGO_BOOT_CAUTION_ICON.url
   cautionIcon.alt = ''
   cautionIcon.setAttribute('aria-hidden', 'true')
   const cautionTitle = document.createElement('h2')
@@ -197,6 +204,9 @@ function makeBootOverlay(dshVersion: string): HTMLDivElement {
   setText(cautionTitle, () => isChinese() ? '！使用声明！' : 'Usage Notice!')
   cautionHeading.append(cautionIcon, cautionTitle)
   const cautionCopy = document.createElement('p')
+  cautionCopy.dataset.bootCautionCopy = ''
+  cautionCopy.tabIndex = 0
+  cautionCopy.setAttribute('aria-labelledby', cautionTitle.id)
   setText(cautionCopy, () => isChinese() ? CAUTION_COPY_ZH : CAUTION_COPY_EN)
   const cautionActions = document.createElement('div')
   cautionActions.className = css.bootCautionActions ?? ''
@@ -248,7 +258,40 @@ Refresh this tab to restart Windose20.`
  * Locks the official appearance control to the game's intentionally bright
  * desktop. All preference writes still go through DSH's theme service.
  */
-export function installLightModeLock(ctx: Context, sfx?: Sfx): LightModeLock {
+const PACKAGE_ID = '@smalltailqwq/dsh-client-ui-skin-internet-angel-desktop'
+const STARTUP_BOOT_KEY = Symbol.for(`${PACKAGE_ID}:startup-boot`)
+type StartupBootWindow = Window & { [STARTUP_BOOT_KEY]?: 'pending' | 'done' }
+
+/**
+ * The opening BIOS plays once per freshly opened page: not after a reload
+ * (the in-skin restart already played it before reloading), not when the skin
+ * is switched in mid-page, and not twice in one document. An activation that
+ * replaces one whose opening was cut short resumes it.
+ */
+function claimStartupBoot(): boolean {
+  const target = window as StartupBootWindow
+  const state = target[STARTUP_BOOT_KEY]
+  if (state !== undefined) return state === 'pending'
+  const navigation = performance.getEntriesByType?.('navigation')[0] as PerformanceNavigationTiming | undefined
+  const boot = (window as { __DSH_BOOT__?: { entries?: { id: string }[] } }).__DSH_BOOT__
+  const freshOpen = navigation?.type === 'navigate'
+    && (boot?.entries === undefined || boot.entries.some(entry => entry.id === PACKAGE_ID))
+  target[STARTUP_BOOT_KEY] = freshOpen ? 'pending' : 'done'
+  return freshOpen
+}
+
+function finishStartupBoot(): void {
+  (window as StartupBootWindow)[STARTUP_BOOT_KEY] = 'done'
+}
+
+export function installLightModeLock(
+  ctx: Context,
+  sfx?: Sfx,
+  options: {
+    /** Overrides fresh-page detection (tests). */
+    startupBoot?: boolean
+  } = {},
+): LightModeLock {
   const body = document.body
   const tooltip = makeTooltip()
   body.append(tooltip)
@@ -259,6 +302,9 @@ export function installLightModeLock(ctx: Context, sfx?: Sfx): LightModeLock {
   const dshVersion = typeof __DSH_VERSION__ === 'string' ? __DSH_VERSION__ : 'DSH'
   let tooltipTimer: number | null = null
   let themeAdoptionTimer: number | null = null
+  let themeAdoptionForDark = false
+  let themeSettled = false
+  const settledListeners = new Set<() => void>()
   const timers = new Set<number>()
   let tooltipPointer = { x: 0, y: 0 }
 
@@ -327,8 +373,7 @@ export function installLightModeLock(ctx: Context, sfx?: Sfx): LightModeLock {
   }
 
   const syncSettings = (): void => {
-    const dialog = document.querySelector<HTMLElement>("[data-slot='sidebar.settings'] [role='dialog']")
-      ?? document.querySelector<HTMLElement>("[role='dialog']")
+    const dialog = document.querySelector<HTMLElement>("[role='dialog'][data-shortcut-modal='settings']")
     if (dialog === null) return
 
     const buttons = [...dialog.querySelectorAll<HTMLButtonElement>('button')]
@@ -348,13 +393,17 @@ export function installLightModeLock(ctx: Context, sfx?: Sfx): LightModeLock {
 
   }
 
-  const startBootSequence = (forceLight: boolean, outcome: 'restart' | 'shutdown' | 'webcam-bomb' = 'restart'): void => {
+  const startBootSequence = (
+    forceLight: boolean,
+    outcome: 'restart' | 'startup' | 'shutdown' | 'webcam-bomb' = 'restart',
+  ): void => {
     if (rebooting) return
     if (themeAdoptionTimer !== null) {
       window.clearTimeout(themeAdoptionTimer)
       themeAdoptionTimer = null
     }
     rebooting = true
+    sfx?.stopBgm()
     bootOverlay = makeBootOverlay(dshVersion)
     body.append(bootOverlay)
     if (outcome !== 'webcam-bomb') sfx?.play('biosPiko')
@@ -419,16 +468,32 @@ Remove all bombs from the camera area before restarting Windose20.`)
         return
       }
       clearBootTimers()
-      if (forceLight || navigator.userAgent.toLowerCase().includes('jsdom')) {
+      if (outcome === 'startup') {
+        finishStartupBoot()
+        // A dark scheme that survived the whole opening is a real one: apply
+        // the light lock here instead of replaying the sequence for it.
+        const theme = ctx.get('theme') as ThemeBridge | undefined
+        const snapshot = theme?.getTheme?.()
+        const dark = snapshot?.active !== undefined
+          ? snapshot.active.colorScheme === 'dark'
+          : body.hasAttribute(DARK_THEME_ATTRIBUTE)
+        if (dark) {
+          if (theme !== undefined) theme.setTheme('light')
+          else document.querySelector<HTMLButtonElement>(`[${THEME_CHOICE}='light']`)?.click()
+        }
+      }
+      if (forceLight || outcome === 'startup' || navigator.userAgent.toLowerCase().includes('jsdom')) {
         bootOverlay?.remove()
         bootOverlay = null
         rebooting = false
+        if (sfx && sfx.getBgmVolume() > 0) sfx.startBgm()
         return
       }
       window.location.reload()
     }
     const decline = (): void => {
       sfx?.play('piporo')
+      if (outcome === 'startup') finishStartupBoot()
       if (outcome === 'shutdown') {
         showShutdownBlueScreen()
         return
@@ -488,32 +553,74 @@ Remove all bombs from the camera area before restarting Windose20.`)
       else if (outcome === 'shutdown') showShutdownBlueScreen()
       else if (currentStage !== 'caution') showCaution()
     }
+    const cautionCopy = bootOverlay.querySelector<HTMLElement>('[data-boot-caution-copy]')!
+    let scrollingCaution = false
+    const acceptCaution = (): void => {
+      const remaining = cautionCopy.scrollHeight - cautionCopy.clientHeight - cautionCopy.scrollTop
+      if (remaining <= 1) {
+        finish()
+        return
+      }
+      if (scrollingCaution) return
+      scrollingCaution = true
+      const startedAt = performance.now()
+      let previousTime = startedAt
+      const scrollStep = (): void => {
+        if (bootOverlay === null) return
+        const now = performance.now()
+        // Keep long notices readable and measure the current bottom after layout changes.
+        cautionCopy.scrollTop += (now - previousTime) * 0.12
+        previousTime = now
+        if (cautionCopy.scrollHeight - cautionCopy.clientHeight - cautionCopy.scrollTop <= 1) {
+          scrollingCaution = false
+          return
+        }
+        schedule(scrollStep, 16)
+      }
+      schedule(scrollStep, 16)
+    }
     bootOverlay.querySelectorAll<HTMLButtonElement>('[data-boot-action]').forEach((button) => {
       button.addEventListener('click', (event) => {
         event.stopPropagation()
         if (button.dataset.bootAction === 'decline') decline()
-        else finish()
+        else acceptCaution()
       })
     })
     bootOverlay.addEventListener('click', skipBoot)
   }
 
+  const settleTheme = (): void => {
+    if (themeSettled) return
+    themeSettled = true
+    for (const listener of [...settledListeners]) listener()
+    settledListeners.clear()
+  }
+  const clearThemeAdoption = (): void => {
+    if (themeAdoptionTimer !== null) window.clearTimeout(themeAdoptionTimer)
+    themeAdoptionTimer = null
+  }
+
   const enforceLightMode = (allowInitialSystemSnapshot = false): void => {
-    const snapshot = (ctx.get('theme') as ThemeBridge | undefined)?.getTheme?.()
+    const themeService = ctx.get('theme') as ThemeBridge | undefined
+    const snapshot = themeService?.getTheme?.()
     const isDark = snapshot?.active !== undefined
       ? snapshot.active.colorScheme === 'dark'
       : body.hasAttribute(DARK_THEME_ATTRIBUTE)
-    if (!isDark) {
-      if (themeAdoptionTimer !== null) window.clearTimeout(themeAdoptionTimer)
-      themeAdoptionTimer = null
-      return
-    }
-
-    const awaitingHostPreference = snapshot?.preference === 'system'
-      && snapshot.revision === 0
-      && typeof snapshot.fontSize === 'number'
-    if (awaitingHostPreference && !allowInitialSystemSnapshot) {
-      if (themeAdoptionTimer === null) {
+    // Until the host settings read lands, the snapshot reports `system` and
+    // the OS scheme. On a cold desktop start (0.2.0-rc.2) the skin mounts
+    // before the theme service exists, and the service's first snapshot is
+    // already revision 1 (system/dark) with the saved preference arriving at
+    // revision 2 one millisecond later. Neither state is a user choice, so
+    // both wait out the grace period; only an explicit dark preference, or a
+    // dark scheme that outlasts the grace period, forces the light reboot.
+    // The daily calendar waits for this decision instead of racing ahead.
+    const awaitingHostPreference = !allowInitialSystemSnapshot
+      && (themeService === undefined || snapshot?.preference === 'system')
+    if (awaitingHostPreference) {
+      // The grace period counts from the current scheme, as before for dark.
+      if (themeAdoptionTimer === null || themeAdoptionForDark !== isDark) {
+        clearThemeAdoption()
+        themeAdoptionForDark = isDark
         themeAdoptionTimer = window.setTimeout(() => {
           themeAdoptionTimer = null
           enforceLightMode(true)
@@ -521,24 +628,40 @@ Remove all bombs from the camera area before restarting Windose20.`)
       }
       return
     }
-
-    startBootSequence(true)
+    clearThemeAdoption()
+    if (isDark) startBootSequence(true)
+    settleTheme()
   }
 
   const darkObserver = new MutationObserver(() => {
     enforceLightMode()
   })
   darkObserver.observe(body, { attributes: true, attributeFilter: [DARK_THEME_ATTRIBUTE] })
+  // A preference adopted without a scheme flip changes no body attribute.
+  const stopThemeChange = (ctx as unknown as { on(name: string, listener: () => void): () => void })
+    .on('theme/change', () => { enforceLightMode() })
 
   document.addEventListener('pointerover', onPointerOver, true)
   document.addEventListener('pointermove', onPointerMove, true)
   document.addEventListener('pointerout', onPointerOut, true)
   document.addEventListener('click', blockDarkChoice, true)
   syncSettings()
+  const startupBoot = options.startupBoot
+    ?? (!navigator.userAgent.toLowerCase().includes('jsdom') && claimStartupBoot())
+  if (startupBoot) startBootSequence(false, 'startup')
   enforceLightMode()
 
   return {
     syncSettings,
+    isRebooting: () => rebooting,
+    whenThemeSettled(callback: () => void): () => void {
+      if (themeSettled) {
+        callback()
+        return () => {}
+      }
+      settledListeners.add(callback)
+      return () => { settledListeners.delete(callback) }
+    },
     restart(): void {
       startBootSequence(false)
     },
@@ -550,6 +673,8 @@ Remove all bombs from the camera area before restarting Windose20.`)
     },
     dispose(): void {
       darkObserver.disconnect()
+      stopThemeChange()
+      settledListeners.clear()
       for (const timer of timers) window.clearTimeout(timer)
       timers.clear()
       if (tooltipTimer !== null) window.clearTimeout(tooltipTimer)

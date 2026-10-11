@@ -12,9 +12,10 @@
     "non-commercial"
   ],
   "accent": "#5227ff",
+  "desktopIcon": "assets/icons/internet-angel.ico",
   "bodyAttr": "data-dsh-internet-angel-desktop",
-  "dshCompatibility": "0.1.2rc1",
-  "package": "@deepseek-ai/dsh-client-ui-skin-internet-angel-desktop",
+  "dshCompatibility": "0.2.0rc2",
+  "package": "@smalltailqwq/dsh-client-ui-skin-internet-angel-desktop",
   "wiring": {
     "id": "ui-skin-internet-angel-desktop",
     "bundleWired": false

@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process'
 import { Rolldown, type UserConfig } from 'tsdown'
 import { clientBundle } from './build/tsdown.client.ts'
 
-const ID = '@deepseek-ai/dsh-client-ui-skin-internet-angel-desktop'
+const ID = '@smalltailqwq/dsh-client-ui-skin-internet-angel-desktop'
 
 function dshVersion(): string {
   try {

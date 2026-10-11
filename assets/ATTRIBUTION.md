@@ -30,6 +30,9 @@ Resource names, versions and hashes below remain available for attribution and c
   Sound effects and `BGM_mainloop_normal` originate from AudioClips in `sharedassets0` and are decoded/transcoded
   for browser playback. The application icon is extracted from `Windose.exe`; larger variants use nearest-neighbor scaling.
   Community reference copies are cross-checked against the corresponding game resources where recorded.
+- `assets/source/ngo-bgm-mainloop.ogg` has sample-level attenuation of 0.08 (approximately -22 dB),
+  applied on 2026-10-03 with FFmpeg `volume=0.08,asetpts=N/SR/TB` and `libvorbis -q:a 5`.
+  The attenuation is baked into the audio so it also applies before player volume settings take effect.
 - Isaac animation identifiers and frame triggers are preserved in private provenance records and generated frame metadata.
   Cropping, original layer transforms/tints and nearest-neighbor scaling retain the source pixel style.
   Original sound groups include 40 and 182; sound variants are copied from the corresponding game samples.
@@ -41,7 +44,7 @@ Resource names, versions and hashes below remain available for attribution and c
 - Steam's notification sample is `desktop_toast_default.wav`. Its visual masks are extracted from the installed
   client stylesheet. Project-created desktop notifications are not real Steam achievements or platform records.
 - Zpix v3.1.11 WOFF2 SHA-256: `ad5f0649090e476f9944ce19cbb174bc56aabf6c0ad8bb405bd5d56b522f2154`.
-  The supplied WOFF2 is embedded unchanged. The community font has a separate, unverified permission chain.
+  The supplied WOFF2 is shipped unchanged. The community font has a separate, unverified permission chain.
 
 Per-asset identifiers and source descriptions are retained in the repository's asset manifest.
 Private source locations use the category notation above. Research and extraction utilities are maintained privately and are not included in this repository.
@@ -55,3 +58,14 @@ for public redistribution. Font permissions and third-party asset clearance requ
 Source visibility, project ownership, third-party asset ownership and permission to redistribute are separate matters.
 The project makes no claim of affiliation or endorsement and grants no third-party commercial-use rights.
 Rights holders may request an attribution correction or asset removal through the repository issue tracker.
+
+## Plugin identity and desktop shortcut
+
+- `assets/icons/internet-angel.ico` packages the existing `ngo-web-icon.png` (32px) and `ngo-web-icon-192.png` (192px) as PNG-compressed ICO entries, without changing their pixels. Rebuild with `pnpm build:desktop-icon`; the same original game application icon attribution and non-commercial restrictions apply.
+
+- `assets/plugin-icon.png` is a byte-identical distribution copy of `assets/source/ngo-web-icon.png`, the existing Windose application icon. Its original rights-holder attribution above remains applicable.
+- `assets/source/ngo-icon-plugins-generated.png` was newly generated with OpenAI image generation on 2026-09-28 for the Plugin Manager shortcut. It depicts a pastel pixel expansion cartridge with an aqua puzzle emblem, purple stepped outlines and transparent background; it does not enlarge an existing desktop or taskbar icon. The production prompt and generated-file provenance are recorded in `assets/plugin-icon-prompt.md`.
+# Native desktop tool icons
+
+The terminal, browser and file-explorer shortcut icons in `src/client/native-apps.ts` are original
+32 × 32 SVG pixel-grid drawings created for this skin on 2026-09-29. They use the existing desktop palette.

@@ -33,8 +33,8 @@ afterEach(async () => {
   vi.restoreAllMocks()
 })
 
-describe('webcam and LIVE surfaces', () => {
-  it('keeps the webcam role viewport separate from the DSH LIVE feed', async () => {
+describe('webcam surfaces', () => {
+  it('keeps the webcam role viewport separate from the conversation projections', async () => {
     document.body.innerHTML = `
       <div id="root">
         <div data-phase="active">
@@ -52,15 +52,9 @@ describe('webcam and LIVE surfaces', () => {
     fiber = await mount()
 
     const webcam = document.querySelector<HTMLElement>('[data-window-id="webcam"]')!
-    const live = document.querySelector<HTMLElement>('[data-window-id="live"]')!
     expect(webcam.textContent).toContain('webcam')
-    expect(live.textContent).toContain('LIVE')
     expect(webcam.querySelector('[data-webcam-role]')).not.toBeNull()
-    expect(webcam.querySelector('[data-skin-surface="live-feed"]')).toBeNull()
-    expect(live.querySelector('[data-skin-surface="live-feed"]')?.textContent)
-      .toEqual(expect.stringContaining('正在梳理请求'))
-    expect(live.querySelector('[data-live-kind="think"]')).not.toBeNull()
-    expect(live.querySelector('[data-live-kind="update"]')).toBeNull()
+    expect(document.querySelector('[data-window-id="live"]')).toBeNull()
     expect(document.querySelector('[data-skin-surface="jine-feed"]')?.textContent).toContain('中间更新')
     expect(document.querySelector('[data-skin-surface="jine-feed"]')?.textContent).toContain('最终正文')
     expect(document.querySelector('[data-skin-surface="jine-feed"]')?.textContent).not.toContain('糖糖说')
@@ -69,30 +63,23 @@ describe('webcam and LIVE surfaces', () => {
     expect(document.querySelector('[data-skin-surface="tweet-feed"]')?.textContent).not.toContain('最终正文')
   })
 
-  it('registers independent webcam and LIVE taskbar controls', async () => {
+  it('registers the webcam taskbar control and keeps the stream icon windowless', async () => {
     document.body.innerHTML = '<div id="root"><div data-phase="hero"></div></div>'
     fiber = await mount()
+    const open = vi.spyOn(window, 'open').mockReturnValue(null)
 
     const webcam = document.querySelector<HTMLElement>('[data-window-id="webcam"]')!
-    const live = document.querySelector<HTMLElement>('[data-window-id="live"]')!
     const webcamTask = document.querySelector<HTMLButtonElement>('[data-window-task="webcam"]')!
-    const liveTask = document.querySelector<HTMLButtonElement>('[data-window-task="live"]')!
     const streamShortcut = Array.from(document.querySelectorAll<HTMLButtonElement>('button'))
       .find(button => button.textContent?.trim() === '直播')!
     expect(webcam.dataset.windowState).toBe('open')
-    expect(live.dataset.windowState).toBe('closed')
-    expect(liveTask.hidden).toBe(true)
 
     webcam.querySelector<HTMLButtonElement>('[data-window-action="close"]')!.click()
     expect(webcam.dataset.windowState).toBe('closed')
     expect(webcamTask.hidden).toBe(true)
-    expect(live.dataset.windowState).toBe('closed')
     streamShortcut.click()
-    expect(live.dataset.windowState).toBe('open')
-    expect(liveTask.hidden).toBe(false)
-    live.querySelector<HTMLButtonElement>('[data-window-action="close"]')!.click()
-    expect(live.dataset.windowState).toBe('closed')
-    expect(liveTask.hidden).toBe(true)
+    expect(open).toHaveBeenCalledOnce()
+    expect(webcam.dataset.windowState).toBe('closed')
   })
 
   it('restores the webcam head-pat interaction without changing DSH state', async () => {
@@ -106,8 +93,8 @@ describe('webcam and LIVE surfaces', () => {
     expect(hitbox.getAttribute('aria-label')).toBe('摸摸糖糖的头')
     expect(hitbox.dataset.webcamPatCount).toBe('0')
     expect(document.body.style.getPropertyValue('--ngo-webcam-hand'))
-      .toMatch(/^url\("data:image\/png;base64,/)
-    expect(getComputedStyle(hitbox).cursor).toContain('data:image/png;base64')
+      .toMatch(/^url\("http:\/\/[^"]+\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png"\)/)
+    expect(getComputedStyle(hitbox).cursor).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
 
     hitbox.click()
     expect(stage.hasAttribute('data-webcam-patting')).toBe(true)

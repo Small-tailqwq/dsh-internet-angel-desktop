@@ -103,13 +103,23 @@ export function getDesktopLayoutRect(element: HTMLElement): DOMRect {
   }
 }
 
+/**
+ * Height of the DSH Windows caption row that the desktop must stay below.
+ * The desktop shell publishes it on <html>; full screen hides the caption.
+ */
+export function desktopChromeTop(): number {
+  const root = document.documentElement
+  if (!root.hasAttribute('data-windows-titlebar') || root.hasAttribute('data-fullscreen')) return 0
+  return Number.parseFloat(root.style.getPropertyValue('--dsh-windows-titlebar-height')) || 0
+}
+
 function defaultBounds(): WindowBounds {
   const side = window.innerWidth >= 900
     ? Math.min(242, window.innerWidth * 242 / 1920)
     : 0
   return {
     left: side,
-    top: 0,
+    top: desktopChromeTop(),
     right: window.innerWidth - side,
     bottom: window.innerHeight - 48,
   }

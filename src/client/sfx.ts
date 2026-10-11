@@ -1,8 +1,8 @@
 /**
  * Tiny non-blocking WebAudio/HTMLAudio SFX manager for the game-faithful
- * desktop feedback. All clips are embedded data-URI OGG files already decoded
- * from NEEDY GIRL OVERDOSE's sharedassets0 AudioClips; no external network is
- * used and every source is retracted on skin unload.
+ * desktop feedback. All clips are packaged OGG/WAV files already decoded from
+ * NEEDY GIRL OVERDOSE's sharedassets0 AudioClips, served by this skin's own
+ * route; no external network is used and every source is retracted on unload.
  */
 
 export type SfxName =
@@ -97,8 +97,10 @@ export function createSfx(
       }
       void glitchContext.resume().catch(() => {})
       if (!glitchBuffers.has(name)) {
-        const bytes = Uint8Array.from(atob(src.slice(src.indexOf(',') + 1)), char => char.charCodeAt(0))
-        const decoding = glitchContext.decodeAudioData(bytes.buffer)
+        const context = glitchContext
+        const decoding = fetch(src)
+          .then(response => response.ok ? response.arrayBuffer() : Promise.reject(new Error(`HTTP ${response.status}`)))
+          .then(bytes => context.decodeAudioData(bytes))
         glitchBuffers.set(name, decoding)
         void decoding.catch(() => { glitchBuffers.delete(name) })
       }

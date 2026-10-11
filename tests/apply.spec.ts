@@ -34,7 +34,7 @@ async function mount(): Promise<Fiber> {
 function fixture(): void {
   document.body.innerHTML = `
     <div id="root">
-      <div data-phase="active">
+      <div data-slot="main"><div data-slot="main.conversation"><div data-phase="active">
         <div data-chat-flow>
           <div data-chat-flow-kind="user">
             <div data-actions-reveal="always">
@@ -69,19 +69,29 @@ function fixture(): void {
             </div>
           </div>
         </div>
-        <div data-slot="conversation.session.header"><header>
+        <div data-slot="conversation.header"><header><div data-slot="conversation.session.header">
           <div data-slot="conversation.session.header.actions">
             <div data-schedule-fixture><button type="button" aria-expanded="false" aria-label="1 个提醒"><svg></svg><span>1 个提醒</span><svg></svg></button></div>
           </div>
-        </header></div>
+        </div></header></div>
         <div role="tree"><div role="treeitem" aria-selected="true">Day 1</div><div role="treeitem" aria-selected="false">Day 2</div></div>
         <div data-slot="sidebar.settings"><div class="_triggerRow_fixture"><button type="button" aria-haspopup="dialog">设置</button><button type="button" data-phase="disconnected">重新连接</button></div></div>
         <div data-testid="chat-stats"><span>2 轮 · 8 步</span> | <span data-testid="cache-stat">缓存命中 90%</span> | <span>输入 1.2K tok · 输出 300 tok</span></div>
         <button type="button" aria-label="上下文已用 25%">上下文</button>
         <button type="button" aria-label="访问模式，当前：Workspace Write">Workspace Write</button>
-      </div>
+      </div></div></div>
     </div>
   `
+}
+
+function mountSettingsPortal(dialog: HTMLElement): HTMLElement {
+  const overlay = document.createElement('div')
+  overlay.setAttribute('role', 'presentation')
+  const mask = document.createElement('div')
+  mask.setAttribute('aria-hidden', 'true')
+  overlay.append(mask, dialog)
+  document.body.append(overlay)
+  return overlay
 }
 
 afterEach(async () => {
@@ -182,9 +192,6 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect([...document.querySelectorAll('[data-jine-time]')].map(node => node.textContent)).toEqual(['15:38', '16:19'])
     expect(document.querySelectorAll('[data-jine-receipt]')).toHaveLength(1)
     expect(document.querySelector('[data-jine-message]')?.textContent).not.toContain('15:38')
-    expect(document.querySelector('[data-skin-surface="live-feed"]')?.textContent).toContain('正在读取素材')
-    expect(document.querySelector('[data-skin-surface="live-feed"]')?.textContent).not.toContain('中间播报')
-    expect(document.querySelector('[data-skin-surface="live-feed"]')?.textContent).toContain('读取文件完成')
     const taskFeed = document.querySelector<HTMLElement>('[data-skin-surface="task-manager-feed"]')!
     expect(taskFeed.textContent).toContain('正在读取素材')
     expect(taskFeed.textContent).toContain('中间播报')
@@ -257,21 +264,22 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(clockLabel).toMatch(/^\d{2}:\d{2}$/)
     const clockIcon = document.querySelector<HTMLImageElement>('[data-clock-period]')!
     expect(['noon', 'evening', 'night']).toContain(clockIcon.dataset.clockPeriod)
-    expect(clockIcon.src.startsWith('data:image/png;base64,')).toBe(true)
+    expect(clockIcon.src).toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
     expect(document.body.getAttribute('data-ngo-side-scene')).toBe(clockIcon.dataset.clockPeriod)
     expect(document.querySelectorAll('[class*="sideBackdrop"]').length).toBe(2)
     expect(document.querySelector('[class*="startMenuBrand"]')?.textContent).toBe('Needy Girl Overdose')
     expect(document.body.style.getPropertyValue('--ngo-jine-feed-bottom')).toBe('170px')
-    expect(document.querySelectorAll('[data-quick-launch]')).toHaveLength(3)
+    expect(document.querySelectorAll('[data-quick-launch]')).toHaveLength(4)
+    expect(document.querySelector('[data-quick-launch="terminal"]')?.previousElementSibling?.getAttribute('data-quick-launch')).toBe('任务管理器')
     const webcamStage = document.querySelector<HTMLElement>('[data-skin-surface="webcam-stage"]')!
     expect(webcamStage.querySelectorAll('img')).toHaveLength(8)
     expect(webcamStage.querySelector<HTMLImageElement>('[data-webcam-screensaver]')?.src)
-      .toMatch(/^data:image\/png;base64,/)
+      .toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
     expect(webcamStage.dataset.webcamPoseRollCount).toBe('1')
     const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
     expect(favicon?.dataset.skinChrome).toBe('favicon')
     expect(favicon?.type).toBe('image/png')
-    expect(favicon?.href.startsWith('data:image/png;base64,')).toBe(true)
+    expect(favicon?.href).toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
 
     const think = document.querySelector<HTMLElement>("[data-variant='think']")!
     think.dataset.state = 'running'
@@ -292,10 +300,11 @@ describe('Internet Angel Desktop lifecycle', () => {
     const selectedBeforeSettings = document.querySelector<HTMLElement>("[role='treeitem'][aria-selected='true']")!
     const settingsDialog = document.createElement('div')
     settingsDialog.setAttribute('role', 'dialog')
+    settingsDialog.setAttribute('data-shortcut-modal', 'settings')
     const volume = document.createElement('input')
     volume.type = 'range'
     settingsDialog.append(volume)
-    document.querySelector("[data-slot='sidebar.settings']")!.append(settingsDialog)
+    mountSettingsPortal(settingsDialog)
     volume.addEventListener('input', () => {
       selectedBeforeSettings.replaceWith(selectedBeforeSettings.cloneNode(true))
     })
@@ -575,19 +584,20 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(start.getAttribute('aria-expanded')).toBe('true')
     buttons.find(button => button.textContent === '控制面板')?.click()
     expect(onSettings).toHaveBeenCalledOnce()
-    expect(document.body.hasAttribute('data-ngo-settings-open')).toBe(true)
+    expect(document.body.hasAttribute('data-ngo-settings-open')).toBe(false)
     expect(document.querySelector('[data-window-id="settings"]')?.getAttribute('data-window-state')).toBe('open')
     expect(document.querySelector('[data-window-id="settings"]')?.textContent).not.toContain('正在连接系统设置')
 
     const dialog = document.createElement('div')
     dialog.setAttribute('role', 'dialog')
-    settings.closest("[data-slot='sidebar.settings']")?.append(dialog)
+    dialog.setAttribute('data-shortcut-modal', 'settings')
+    const settingsOverlay = mountSettingsPortal(dialog)
     await vi.waitFor(() => expect(document.body.hasAttribute('data-ngo-settings-open')).toBe(true))
     expect(document.body.hasAttribute('data-ngo-settings-active')).toBe(true)
     expect(dialog.style.left).toBe('8px')
     expect(dialog.style.top).toBe('42px')
 
-    document.querySelector<HTMLElement>('[data-window-id="live"]')
+    document.querySelector<HTMLElement>('[data-window-id="webcam"]')
       ?.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, button: 0 }))
     expect(document.body.hasAttribute('data-ngo-settings-active')).toBe(false)
     expect(Number(document.body.style.getPropertyValue('--ngo-settings-layer')))
@@ -595,7 +605,7 @@ describe('Internet Angel Desktop lifecycle', () => {
     dialog.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, button: 0 }))
     expect(document.body.hasAttribute('data-ngo-settings-active')).toBe(true)
 
-    dialog.remove()
+    settingsOverlay.remove()
     await vi.waitFor(() => expect(document.body.hasAttribute('data-ngo-settings-open')).toBe(false))
     expect(document.querySelector('[data-window-id="settings"]')?.getAttribute('data-window-state')).toBe('closed')
 
@@ -713,9 +723,9 @@ describe('Internet Angel Desktop lifecycle', () => {
 
   it('renames and locks appearance to light with the original full-cat hover hint', async () => {
     fixture()
-    const settingsRoot = document.querySelector<HTMLElement>("[data-slot='sidebar.settings']")!
     const dialog = document.createElement('section')
     dialog.setAttribute('role', 'dialog')
+    dialog.setAttribute('data-shortcut-modal', 'settings')
     dialog.innerHTML = `
       <h2>设置</h2>
       <nav><button type="button">通用设置</button></nav>
@@ -731,7 +741,7 @@ describe('Internet Angel Desktop lifecycle', () => {
     const onDark = vi.fn()
     lightBeforeMount.addEventListener('click', onLight)
     darkBeforeMount.addEventListener('click', onDark)
-    settingsRoot.append(dialog)
+    mountSettingsPortal(dialog)
     fiber = await mount()
 
     const light = document.querySelector<HTMLButtonElement>("[data-ngo-theme-choice='light']")!
@@ -749,8 +759,8 @@ describe('Internet Angel Desktop lifecycle', () => {
     await vi.waitFor(() => expect(tooltip.hasAttribute('data-visible')).toBe(true))
     expect(tooltip.textContent).toContain('你的前途是光明的。')
     expect(tooltip.querySelector('[class*="brightTooltipCatBody"]')).toBeNull()
-    expect(tooltip.querySelector<HTMLImageElement>('[class*="brightTooltipCat"]')?.src).toContain('data:image/png;base64')
-    expect(tooltip.querySelector<HTMLElement>('[class*="brightTooltipBalloon"]')?.style.borderImageSource).toContain('data:image/png;base64')
+    expect(tooltip.querySelector<HTMLImageElement>('[class*="brightTooltipCat"]')?.src).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
+    expect(tooltip.querySelector<HTMLElement>('[class*="brightTooltipBalloon"]')?.style.borderImageSource).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     const follower = document.querySelector<HTMLElement>('[data-ngo-bright-tooltip="tutorial_follower"]')!
     follower.dispatchEvent(new MouseEvent('pointerover', { bubbles: true, clientX: 420, clientY: 240 }))
     await vi.waitFor(() => expect(tooltip.textContent).toContain('这是我们一路消耗的 TOKEN 数。'))
@@ -759,7 +769,8 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(onDark).not.toHaveBeenCalled()
 
     document.body.setAttribute('data-ds-dark-theme', '')
-    await vi.waitFor(() => expect(document.querySelector('[data-ngo-light-boot]')).not.toBeNull())
+    // Without a theme service the lock waits out the host-adoption grace period.
+    await vi.waitFor(() => expect(document.querySelector('[data-ngo-light-boot]')).not.toBeNull(), { timeout: 3000 })
     expect(onLight).toHaveBeenCalledOnce()
     expect(document.body.hasAttribute('data-ds-dark-theme')).toBe(false)
     expect(document.querySelectorAll('[data-ngo-light-boot] [data-boot-part]')).toHaveLength(4)
@@ -767,23 +778,23 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(document.querySelector('[data-ngo-light-boot]')?.getAttribute('data-boot-stage')).toBe('bios')
     expect(document.querySelector('[data-ngo-light-boot] [data-boot-copy]')?.textContent)
       .toBe('Booting Windose20')
-    expect(document.querySelector<HTMLImageElement>('[data-boot-bios-logo]')?.src).toContain('data:image/png;base64')
+    expect(document.querySelector<HTMLImageElement>('[data-boot-bios-logo]')?.src).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     expect(document.querySelector('[data-boot-bios-version]')?.textContent).toBe('DSH')
     expect(document.querySelector<HTMLImageElement>("[data-ngo-light-boot] [data-boot-part='splash'] img")?.src)
-      .toContain('data:image/png;base64')
+      .toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
   })
 
   it('uses Light and Darkness for the English appearance choices', async () => {
     fixture()
     document.documentElement.lang = 'en'
-    const settingsRoot = document.querySelector<HTMLElement>("[data-slot='sidebar.settings']")!
     const dialog = document.createElement('section')
     dialog.setAttribute('role', 'dialog')
+    dialog.setAttribute('data-shortcut-modal', 'settings')
     dialog.innerHTML = `
       <h2>Settings</h2><button type="button">General settings</button>
       <div><span>Appearance</span><button type="button">Light</button><button type="button">Dark</button></div>
     `
-    settingsRoot.append(dialog)
+    mountSettingsPortal(dialog)
     fiber = await mount()
 
     expect(document.querySelector("[data-ngo-theme-choice='light']")?.textContent).toBe('Light')
@@ -842,22 +853,22 @@ describe('Internet Angel Desktop lifecycle', () => {
   it('provides working window controls, taskbar restore and shortcut reopen', async () => {
     fixture()
     fiber = await mount()
-    const live = document.querySelector<HTMLElement>('[data-window-id="live"]')!
+    const live = document.querySelector<HTMLElement>('[data-window-id="computer"]')!
     const minimize = live.querySelector<HTMLButtonElement>('[data-window-action="minimize"]')!
     const close = live.querySelector<HTMLButtonElement>('[data-window-action="close"]')!
-    const task = document.querySelector<HTMLButtonElement>('[data-window-task="live"]')!
+    const task = document.querySelector<HTMLButtonElement>('[data-window-task="computer"]')!
 
     expect(live.dataset.windowState).toBe('closed')
     expect(task.hidden).toBe(true)
     expect(getComputedStyle(task).display).toBe('none')
     const shortcut = [...document.querySelectorAll<HTMLButtonElement>('[data-skin-chrome="scene"] button')]
-      .find(button => button.textContent === '直播')!
+      .find(button => button.textContent === '此电脑')!
     shortcut.click()
     expect(task.getAttribute('aria-pressed')).toBe('true')
     expect(task.querySelector('[aria-hidden="true"]')).not.toBeNull()
-    expect(task.textContent).toBe('LIVE')
-    expect(document.body.style.getPropertyValue('--ngo-taskbar-window')).toContain('data:image/png;base64')
-    expect(document.body.style.getPropertyValue('--ngo-taskbar-window-pressed')).toContain('data:image/png;base64')
+    expect(task.textContent).toBe('此电脑')
+    expect(document.body.style.getPropertyValue('--ngo-taskbar-window')).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
+    expect(document.body.style.getPropertyValue('--ngo-taskbar-window-pressed')).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     minimize.click()
     expect(live.dataset.windowState).toBe('minimized')
     expect(task.getAttribute('aria-pressed')).toBe('false')
@@ -914,32 +925,30 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(document.body.hasAttribute('data-ngo-power-pill')).toBe(false)
   })
 
-  it('opens Internet independently, routes Chinese users to bilibili and jumps from search to JINE', async () => {
+  it('routes the stream icon to the official channel and searches JINE from its magnifier', async () => {
     document.documentElement.lang = 'zh-CN'
     fixture()
     fiber = await mount()
-
-    const internet = document.querySelector<HTMLElement>('[data-window-id="internet"]')!
-    const tweet = document.querySelector<HTMLElement>('[data-window-id="tweet"]')!
-    const jine = document.querySelector<HTMLElement>('[data-window-id="jine"]')!
+    // Without the host browser component the official channel opens in a new tab.
+    const open = vi.spyOn(window, 'open').mockReturnValue(null)
     const shortcut = [...document.querySelectorAll<HTMLButtonElement>('[data-skin-chrome="scene"] button')]
-      .find(button => button.textContent === '因特网')!
-    expect(internet.dataset.windowState).toBe('closed')
+      .find(button => button.textContent === '直播')!
     shortcut.click()
-    expect(internet.dataset.windowState).toBe('open')
-    expect(tweet.dataset.windowState).toBe('closed')
+    expect(open).toHaveBeenCalledWith('https://space.bilibili.com/1365540467', '_blank', 'noopener,noreferrer')
+    expect(document.querySelector('[data-window-id="live"]')).toBeNull()
+    expect(document.querySelector('[data-window-id="internet"]')).toBeNull()
 
-    const official = internet.querySelector<HTMLAnchorElement>('[data-internet-official]')!
-    expect(official.dataset.internetOfficial).toBe('bilibili')
-    expect(official.href).toBe('https://space.bilibili.com/1365540467')
-    expect(official.target).toBe('_blank')
-    expect(official.rel).toContain('noopener')
+    const search = document.querySelector<HTMLElement>('[data-window-id="jine-search"]')!
+    const jine = document.querySelector<HTMLElement>('[data-window-id="jine"]')!
+    expect(search.dataset.windowState).toBe('closed')
+    jine.querySelector<HTMLButtonElement>('[data-jine-search-toggle]')!.click()
+    expect(search.dataset.windowState).toBe('open')
 
-    const input = internet.querySelector<HTMLInputElement>('[aria-label="搜索 JINE 聊天记录"]')!
+    const input = search.querySelector<HTMLInputElement>('[aria-label="搜索 JINE 聊天记录"]')!
     input.value = '首版'
     input.closest('form')!.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
-    expect(internet.querySelector('[aria-live="polite"]')?.textContent).toBe('找到 1 条记录')
-    const result = internet.querySelector<HTMLButtonElement>('[data-internet-search-result]')!
+    expect(search.querySelector('[aria-live="polite"]')?.textContent).toBe('找到 1 条记录')
+    const result = search.querySelector<HTMLButtonElement>('[data-internet-search-result]')!
     expect(result.textContent).toBe('JINE首版正文')
     result.click()
     expect(jine.dataset.windowState).toBe('open')
@@ -948,15 +957,15 @@ describe('Internet Angel Desktop lifecycle', () => {
       ?.hasAttribute('data-jine-search-hit')).toBe(true)
   })
 
-  it('routes non-Chinese Internet users to the official YouTube channel', async () => {
+  it('routes non-Chinese stream clicks to the official YouTube channel', async () => {
     document.documentElement.lang = 'en-US'
     fixture()
     fiber = await mount()
-
-    const official = document.querySelector<HTMLAnchorElement>('[data-internet-official]')!
-    expect(official.dataset.internetOfficial).toBe('youtube')
-    expect(official.href).toBe('https://www.youtube.com/@wssplayground')
-    expect(official.textContent).toContain('OFFICIAL CHANNEL')
+    const open = vi.spyOn(window, 'open').mockReturnValue(null)
+    const shortcut = [...document.querySelectorAll<HTMLButtonElement>('[data-skin-chrome="scene"] button')]
+      .find(button => button.textContent === 'Stream')!
+    shortcut.click()
+    expect(open).toHaveBeenCalledWith('https://www.youtube.com/@wssplayground', '_blank', 'noopener,noreferrer')
   })
 
   it('projects DSH Todo into a Sticky window with original three-state game glyphs', async () => {
@@ -987,7 +996,7 @@ describe('Internet Angel Desktop lifecycle', () => {
       '任务3',
     ])
     expect(document.querySelector<HTMLImageElement>('[data-todo-glyph="completed"]')?.src)
-      .toContain('data:image/png;base64')
+      .toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     expect(document.querySelector('[data-todo-glyph="pending"]')).not.toBeNull()
     expect(document.querySelector('[data-todo-glyph="in_progress"]')?.querySelectorAll('img')).toHaveLength(8)
 
@@ -1383,15 +1392,19 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(stage.getAttribute('data-phase')).toBe('hidden')
   })
 
-  it('opens the MyPicture album from the Start menu entry', async () => {
+  it('keeps desktop apps out of Start and reaches the MyPicture album inside My Computer', async () => {
     fixture()
     fiber = await mount()
     const startMenu = document.querySelector<HTMLElement>('[aria-controls="ngo-start-menu"]')!
     startMenu.click()
-    const entry = [...document.querySelectorAll<HTMLButtonElement>('[data-skin-chrome="scene"] button')]
-      .find(button => button.textContent === '我的图片')!
-    entry.click()
-    expect(document.querySelector('[data-window-id="pictures"]')?.getAttribute('data-window-state')).toBe('open')
+    expect([...document.querySelectorAll<HTMLButtonElement>('#ngo-start-menu button')].map(button => button.textContent))
+      .toEqual(['从头开始', '继续游戏', '控制面板', '重新启动', '关机'])
+    const shortcut = [...document.querySelectorAll<HTMLButtonElement>('[data-skin-chrome="scene"] button')]
+      .find(button => button.textContent === '此电脑')!
+    shortcut.click()
+    expect(document.querySelector('[data-window-id="computer"]')?.getAttribute('data-window-state')).toBe('open')
+    document.querySelector<HTMLButtonElement>('[data-explorer-place-button="pictures"]')!.click()
+    expect(document.querySelector<HTMLElement>('[data-skin-surface="explorer"]')?.dataset.explorerPlace).toBe('pictures')
   })
 
   it('replaces the host favicon and restores it at its original position on unload', async () => {
@@ -1446,7 +1459,7 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(manifest.start_url).toBe(`${window.location.origin}/`)
     expect(manifest.icons).toHaveLength(4)
     expect(manifest.icons[0]).toMatchObject({ sizes: '512x512', type: 'image/png', purpose: 'any' })
-    expect(manifest.icons[0].src).toContain('data:image/png;base64,')
+    expect(manifest.icons[0].src).toMatch(/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png/)
     expect(manifest.icons[1]).toMatchObject({ sizes: '192x192', type: 'image/png' })
     expect(manifest.icons[2]).toMatchObject({ sizes: '32x32', type: 'image/png' })
     expect(manifest.icons[3]).toMatchObject({ sizes: 'any', type: 'image/svg+xml' })
@@ -1630,11 +1643,11 @@ describe('Internet Angel Desktop lifecycle', () => {
       '[data-ngo-question-option-portal]',
     )).toBeNull())
     expect(seat.querySelector<HTMLImageElement>('[data-ngo-question-avatar]')?.src)
-      .toMatch(/^data:image\/png;base64,/)
+      .toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
     expect(confirm.getAttribute('data-ngo-question-confirm-label')).toBe('确定 ✓')
     const notice = document.querySelector<HTMLButtonElement>('[data-desktop-notice]')!
     expect(notice.textContent).toContain('正在等你回复')
-    expect(notice.querySelector('img')?.getAttribute('src')).toMatch(/^data:image\/png;base64,/)
+    expect(notice.querySelector('img')?.getAttribute('src')).toMatch(/\/skin-assets\/internet-angel-desktop\/[0-9a-f]{64}\.png$/)
     expect(document.querySelector('[data-window-task="jine"]')?.hasAttribute('data-window-attention')).toBe(true)
     notice.click()
     expect(notice.hidden).toBe(true)
@@ -2023,15 +2036,15 @@ describe('Internet Angel Desktop lifecycle', () => {
     expect(loginButtons[1]?.getAttribute('data-ngo-onboarding-action')).toBe('login')
     expect(loginButtons[1]?.dataset.ngoOnboardingLabel).toBe('输入 API KEY')
 
-    const settings = document.querySelector<HTMLElement>("[data-slot='sidebar.settings']")!
     const dialog = document.createElement('div')
     dialog.setAttribute('role', 'dialog')
+    dialog.setAttribute('data-shortcut-modal', 'settings')
     dialog.innerHTML = `
       <ul><li><div><div>DeepSeek</div><div><span>API Key</span>
         <input type="password" aria-label="API Key" /></div><details></details><div>
         <button type="button">取消</button><button type="button">应用</button></div></div></li></ul>
     `
-    settings.append(dialog)
+    mountSettingsPortal(dialog)
     const key = dialog.querySelector<HTMLInputElement>('input')!
     await vi.waitFor(() => expect(key.hasAttribute('data-ngo-login-api-key')).toBe(true))
     expect(key.closest('li')?.hasAttribute('data-ngo-login-card')).toBe(true)

@@ -1,4 +1,4 @@
-.medicineWindow { z-index: 58; top: 12vh; left: 31vw; width: min(430px, 46vw); height: min(430px, 65vh); }
+.medicineWindow { z-index: 58; top: calc(var(--ngo-chrome-top) + 12vh); left: 31vw; width: min(430px, 46vw); height: min(430px, 65vh); }
 .medicineWindow [class*='windowBody'] { overflow: hidden; background: #211715; }
 .medicineSurface {
   position: absolute; inset: 0; display: flex; min-width: 0; min-height: 0; align-items: center;

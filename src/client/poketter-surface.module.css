@@ -1,6 +1,6 @@
 .window.window {
   z-index: 45;
-  top: 3vh;
+  top: calc(var(--ngo-chrome-top) + 3vh);
   right: calc(var(--ngo-side-width) + 1vw);
   width: var(--ngo-poketter-width);
   height: var(--ngo-poketter-height);

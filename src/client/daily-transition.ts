@@ -281,13 +281,16 @@ export function installDailyTransition(
   sfx: Sfx,
   heartSrc: string,
   options: () => DailyTransitionOptions,
+  /** Defers the first attempt until the boot decision is known (see LightModeLock). */
+  waitForTheme?: (ready: () => void) => () => void,
 ): () => void {
   let disposed = false
   let disposePassage: (() => void) | undefined
+  let themeReady = waitForTheme === undefined
   const observer = new MutationObserver(() => tryStart())
 
   const tryStart = (): void => {
-    if (disposed || disposePassage !== undefined) return
+    if (disposed || disposePassage !== undefined || !themeReady) return
     // The forced-light boot/caution sequence owns the screen first. Waiting for
     // its removal also covers the delayed system-theme adoption path.
     if (document.body.hasAttribute('data-ds-dark-theme')
@@ -305,10 +308,15 @@ export function installDailyTransition(
     childList: true,
     subtree: true,
   })
+  const stopWaiting = waitForTheme?.(() => {
+    themeReady = true
+    tryStart()
+  })
   tryStart()
 
   return () => {
     disposed = true
+    stopWaiting?.()
     observer.disconnect()
     disposePassage?.()
   }

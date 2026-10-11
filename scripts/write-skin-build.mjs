@@ -40,6 +40,8 @@ if (!skinRootArg || !repository || !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(re
     hash.update(normalized)
   }
 
+  hashRuntimeAssets(hash, skinRoot)
+
   const output = `${JSON.stringify({
     schema: 1,
     fingerprint: hash.digest('hex'),
@@ -51,4 +53,27 @@ if (!skinRootArg || !repository || !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(re
   const temporary = `${target}.tmp`
   writeFileSync(temporary, output)
   renameSync(temporary, target)
+}
+
+/**
+ * Packaged runtime files are fingerprinted like dsh-deep-whale's
+ * `scripts/skin-asset-inputs.mjs`, which the skin manager uses to recompute
+ * an installed skin's fingerprint: the manifest text, then every listed file
+ * in sorted order, each verified against its content-hash name.
+ */
+function hashRuntimeAssets(hash, skinRoot) {
+  const manifest = 'assets/runtime/manifest.json'
+  if (!existsSync(resolve(skinRoot, manifest))) return
+  const text = readFileSync(resolve(skinRoot, manifest), 'utf8').replaceAll('\r\n', '\n')
+  const files = JSON.parse(text)
+  if (!Array.isArray(files) || files.some(file => typeof file !== 'string' || !/^[a-f0-9]{64}\.(webp|png|ogg|wav|woff2)$/.test(file))) {
+    throw new Error('Invalid skin runtime asset manifest')
+  }
+  hash.update(`${manifest}\0${Buffer.byteLength(text)}\0`).update(text)
+  for (const file of [...new Set(files)].sort()) {
+    const input = `assets/runtime/${file}`
+    const bytes = readFileSync(resolve(skinRoot, input))
+    if (createHash('sha256').update(bytes).digest('hex') !== file.split('.')[0]) throw new Error(`Runtime asset content hash mismatch: ${file}`)
+    hash.update(`${input}\0${bytes.length}\0`).update(bytes)
+  }
 }

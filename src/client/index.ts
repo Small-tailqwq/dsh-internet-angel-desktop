@@ -6,6 +6,8 @@ import { t, setText, setAttr, isChinese, resolveText, installLocale, onLocaleCha
  * is copied back into DSH and every observer/listener is retracted on unload.
  */
 import type { Context } from 'cordis'
+import { COMPUTER_ICON, NATIVE_APPS, installNativeApps, type NativeAppEntry } from './native-apps.ts'
+import { buildExplorer, installExplorer, type ExplorerController, type ExplorerSurface } from './explorer.ts'
 import {
   NGO_BALLOON,
   NGO_CHAT_BACKGROUND,
@@ -17,6 +19,7 @@ import {
   NGO_ICON_INTERNET,
   NGO_ICON_JINE,
   NGO_ICON_MEDICINE,
+  NGO_ICON_PLUGINS,
   NGO_ICON_SLEEP,
   NGO_ICON_STREAM,
   NGO_ICON_TODO,
@@ -213,14 +216,6 @@ import { SEQUENCES } from './webcam-sequences.ts'
 import { installSkinCustomization } from './customization.ts'
 import css from './skin.module.css'
 import {
-  buildLiveComment,
-  buildLiveEmpty,
-  buildLiveSurface,
-  setLiveState,
-  type LiveSurface,
-} from './live-surface.ts'
-import liveCss from './live-surface.module.css'
-import {
   createPoketterHeader,
   decoratePoketterStage,
   poketterCss,
@@ -252,6 +247,9 @@ const BODY_ATTRIBUTE = 'data-dsh-internet-angel-desktop'
 const SAVE_ATTRIBUTE = 'data-ngo-save-open'
 const START_ATTRIBUTE = 'data-ngo-start-open'
 const SETTINGS_ATTRIBUTE = 'data-ngo-settings-open'
+const SETTINGS_DIALOG = "[role='dialog'][data-shortcut-modal='settings']"
+const SETTINGS_LAUNCH_ATTRIBUTE = 'data-ngo-settings-launching'
+const MAIN_PANEL = "[data-slot='main']:not(:has(> [data-slot='main.conversation']))"
 const SETTINGS_ACTIVE_ATTRIBUTE = 'data-ngo-settings-active'
 const FONT_ATTRIBUTE = 'data-ngo-font'
 const PHASE_ATTRIBUTE = 'data-ngo-phase'
@@ -276,10 +274,11 @@ interface SubagentAddress {
 }
 
 interface SubagentCatalogEntry {
-  kind: 'child' | 'diagnostic'
+  /** 0.1.x only; 0.2.0 catalogs list children without a kind. */
+  kind?: 'child' | 'diagnostic'
   id: string
   label?: string
-  mode?: SubagentMode
+  mode?: SubagentMode | 'unknown'
   activity?: 'running' | 'inactive'
 }
 
@@ -290,6 +289,9 @@ interface SubagentCatalogSnapshot {
 
 interface SessionSummary {
   id: string
+  cwd?: string
+  /** 0.2.0: the open main Session is the one retained by `mainView`. */
+  retainedBy?: Readonly<Partial<Record<string, number>>>
   displayTitle: string
   parentId?: string
   origin?: 'subagent'
@@ -303,13 +305,21 @@ interface SessionSummary {
   }
 }
 
+interface SessionProjectionSnapshot {
+  values: { subagentCatalog?: readonly SubagentCatalogEntry[] }
+  state?: 'idle' | 'loading' | 'ready' | 'error'
+}
+
+/** 0.1.x carried `current`, `currentAddress` and `subagentsByParent`; 0.2.0
+ * replaces them with `retainedBy.mainView` and per-Session projections. */
 interface SessionListSnapshot {
   ids?: readonly string[]
   byId: Readonly<Record<string, SessionSummary>>
   current?: string
   phase?: 'pending' | 'ready'
   currentAddress?: SubagentAddress
-  subagentsByParent: Readonly<Record<string, SubagentCatalogSnapshot>>
+  subagentsByParent?: Readonly<Record<string, SubagentCatalogSnapshot>>
+  projectionsBySession?: Readonly<Record<string, SessionProjectionSnapshot>>
 }
 
 interface SnapshotStore<T> {
@@ -319,11 +329,34 @@ interface SnapshotStore<T> {
 
 interface SessionsBridge {
   list: SnapshotStore<SessionListSnapshot>
-  open(id: string): void
   refresh?(): Promise<void>
-  openSubagent(address: SubagentAddress): void
-  refreshSubagents(parentSessionId: string): Promise<void>
-  setSubagentCatalogOpen(parentSessionId: string, open: boolean): void
+  /** 0.1.x catalog controls; 0.2.0 navigates children through uiWorkspace. */
+  openSubagent?(address: SubagentAddress): void
+  refreshSubagents?(parentSessionId: string): Promise<void>
+  setSubagentCatalogOpen?(parentSessionId: string, open: boolean): void
+  /** 0.2.0 re-reads a Session's projections, the subagent catalog included. */
+  refreshProjections?(sessionId: string): Promise<void>
+}
+
+/** The Session open in the main view, in either list snapshot generation. */
+function currentSessionId(snapshot: SessionListSnapshot): string | undefined {
+  if (snapshot.current !== undefined) return snapshot.current
+  for (const summary of Object.values(snapshot.byId)) {
+    if ((summary.retainedBy?.mainView ?? 0) > 0) return summary.id
+  }
+  return undefined
+}
+
+function subagentCatalog(snapshot: SessionListSnapshot, parentSessionId: string): SubagentCatalogSnapshot | undefined {
+  const legacy = snapshot.subagentsByParent?.[parentSessionId]
+  if (legacy !== undefined) return legacy
+  const projection = snapshot.projectionsBySession?.[parentSessionId]
+  if (projection === undefined) return undefined
+  const entries = projection.values.subagentCatalog
+  const state = projection.state === 'error' ? 'error'
+    : projection.state === 'ready' || (projection.state !== 'loading' && entries !== undefined) ? 'ready'
+      : 'loading'
+  return { entries: entries ?? [], state }
 }
 
 interface WorkspaceSummary {
@@ -343,6 +376,8 @@ interface WorkspacesBridge {
 }
 
 interface UiWorkspaceBridge {
+  /** 0.2.0 also accepts a subagent address. */
+  openSession(target: string | SubagentAddress): void
   startSession(workspaceId?: string): void
 }
 
@@ -373,8 +408,6 @@ const SUBAGENT_POKETTER_AVATAR = NGO_WEBCAM_CHO_IDLE_0.cssUrl
 
 interface DesktopSurfaces {
   scene: HTMLDivElement
-  liveFeed: HTMLDivElement
-  liveSurface: LiveSurface
   tweetFeed: HTMLDivElement
   jineFeed: HTMLDivElement
   jineSessionToggle: HTMLButtonElement
@@ -400,7 +433,14 @@ interface DesktopSurfaces {
   startRestartButton: HTMLButtonElement
   startShutdownButton: HTMLButtonElement
   settingsWindow: HTMLElement
-  pictureWindow: HTMLElement
+  pluginsWindow: HTMLElement
+  pluginsShortcut: HTMLButtonElement
+  nativeApps: NativeAppEntry[]
+  nativeAppInsets(): { left: number; right: number }
+  explorer: ExplorerSurface
+  streamShortcut: HTMLButtonElement
+  computerShortcut: HTMLButtonElement
+  jineSearchToggle: HTMLButtonElement
   pictureGrid: HTMLElement
   pictureEmpty: HTMLElement
   imageViewerWindow: HTMLElement
@@ -507,13 +547,13 @@ interface WebcamCharacterSet {
 const WEBCAM_CHARACTERS: Record<WebcamCharacter, WebcamCharacterSet> = {
   ame: {
     label: '糖糖',
-    idle: [NGO_WEBCAM_IDLE_0.dataUri, NGO_WEBCAM_IDLE_1.dataUri],
-    smile: [NGO_WEBCAM_SMILE_0.dataUri, NGO_WEBCAM_SMILE_1.dataUri, NGO_WEBCAM_SMILE_2.dataUri],
+    idle: [NGO_WEBCAM_IDLE_0.url, NGO_WEBCAM_IDLE_1.url],
+    smile: [NGO_WEBCAM_SMILE_0.url, NGO_WEBCAM_SMILE_1.url, NGO_WEBCAM_SMILE_2.url],
   },
   cho: {
     label: '超天酱',
-    idle: [NGO_WEBCAM_CHO_IDLE_0.dataUri, NGO_WEBCAM_CHO_IDLE_1.dataUri],
-    smile: [NGO_WEBCAM_CHO_SMILE_0.dataUri, NGO_WEBCAM_CHO_SMILE_1.dataUri, NGO_WEBCAM_CHO_SMILE_2.dataUri],
+    idle: [NGO_WEBCAM_CHO_IDLE_0.url, NGO_WEBCAM_CHO_IDLE_1.url],
+    smile: [NGO_WEBCAM_CHO_SMILE_0.url, NGO_WEBCAM_CHO_SMILE_1.url, NGO_WEBCAM_CHO_SMILE_2.url],
   },
 }
 
@@ -596,21 +636,21 @@ const AME_HENOJI_POSE = AME_POSES.find(pose => pose.id === 'henoji')!
 const AME_BREAK_POSE: WebcamPose = {
   id: 'pomodoro-leave',
   frames: [
-    { src: NGO_WEBCAM_AME_IDLENORMAL_000.dataUri, ms: 83 },
-    { src: NGO_WEBCAM_AME_OUT_000.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_001.dataUri, ms: 84 },
-    { src: NGO_WEBCAM_AME_OUT_002.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_003.dataUri, ms: 133 },
-    { src: NGO_WEBCAM_AME_OUT_004.dataUri, ms: 83 },
-    { src: NGO_WEBCAM_AME_OUT_005.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_006.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_007.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_008.dataUri, ms: 84 },
-    { src: NGO_WEBCAM_AME_OUT_009.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_010.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_011.dataUri, ms: 83 },
-    { src: NGO_WEBCAM_AME_OUT_012.dataUri, ms: 100 },
-    { src: NGO_WEBCAM_AME_OUT_013.dataUri, ms: 750 },
+    { src: NGO_WEBCAM_AME_IDLENORMAL_000.url, ms: 83 },
+    { src: NGO_WEBCAM_AME_OUT_000.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_001.url, ms: 84 },
+    { src: NGO_WEBCAM_AME_OUT_002.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_003.url, ms: 133 },
+    { src: NGO_WEBCAM_AME_OUT_004.url, ms: 83 },
+    { src: NGO_WEBCAM_AME_OUT_005.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_006.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_007.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_008.url, ms: 84 },
+    { src: NGO_WEBCAM_AME_OUT_009.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_010.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_011.url, ms: 83 },
+    { src: NGO_WEBCAM_AME_OUT_012.url, ms: 100 },
+    { src: NGO_WEBCAM_AME_OUT_013.url, ms: 750 },
   ],
   end: 'hold',
   weight: 0,
@@ -780,8 +820,8 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   const fontFace = element('style', '')
   fontFace.dataset.skinFont = 'interface'
   setText(fontFace, [
-    `@font-face{font-family:'NgoDinkieBitmap9';src:url(${JSON.stringify(NGO_FONT_DINKIE_9PX.dataUri)}) format('woff2');font-style:normal;font-weight:400;font-display:swap}`,
-    `@font-face{font-family:'NgoZpix';src:url(${JSON.stringify(NGO_FONT_ZPIX.dataUri)}) format('woff2');font-style:normal;font-weight:400;font-display:swap}`,
+    `@font-face{font-family:'NgoDinkieBitmap9';src:url(${JSON.stringify(NGO_FONT_DINKIE_9PX.url)}) format('woff2');font-style:normal;font-weight:400;font-display:swap}`,
+    `@font-face{font-family:'NgoZpix';src:url(${JSON.stringify(NGO_FONT_ZPIX.url)}) format('woff2');font-style:normal;font-weight:400;font-display:swap}`,
   ].join(''))
 
   const sideLeft = element('div', `${css.sideBackdrop ?? ''} ${css.sideLeft ?? ''}`)
@@ -790,33 +830,48 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   sideRight.setAttribute('aria-hidden', 'true')
 
   const shortcuts = element('div', css.shortcuts ?? '')
-  const streamShortcut = makeShortcut(() => t('直播'), NGO_ICON_STREAM.dataUri)
-  const jineShortcut = makeShortcut('JINE', NGO_ICON_JINE.dataUri)
-  const internetShortcut = makeShortcut(() => t('因特网'), NGO_ICON_INTERNET.dataUri)
-  const todoShortcut = makeShortcut(() => t('代办'), NGO_ICON_TODO.dataUri)
-  const pomodoroShortcut = makeShortcut(() => t('番茄钟'), NGO_ICON_SLEEP.dataUri)
-  const medicineShortcut = makeShortcut(() => t('吃药'), NGO_ICON_MEDICINE.dataUri)
+  const streamShortcut = makeShortcut(() => t('直播'), NGO_ICON_STREAM.url)
+  const jineShortcut = makeShortcut('JINE', NGO_ICON_JINE.url)
+  // The host browser supersedes the old Internet window and keeps its icon.
+  const browserShortcut = makeShortcut(() => t('浏览器'), NGO_ICON_INTERNET.url)
+  browserShortcut.dataset.ngoNativeApp = 'browser'
+  const todoShortcut = makeShortcut(() => t('代办'), NGO_ICON_TODO.url)
+  const pomodoroShortcut = makeShortcut(() => t('番茄钟'), NGO_ICON_SLEEP.url)
+  const medicineShortcut = makeShortcut(() => t('吃药'), NGO_ICON_MEDICINE.url)
+  const pluginsShortcut = makeShortcut(() => t('插件管理器'), NGO_ICON_PLUGINS.url)
+  const computerShortcut = makeShortcut(() => t('此电脑'), COMPUTER_ICON)
+  const nativeApps: NativeAppEntry[] = NATIVE_APPS.map((app) => {
+    // Same mark + label anatomy as the desktop's own taskbar items.
+    const task = element('button', css.taskItem ?? '')
+    task.type = 'button'
+    task.hidden = true
+    const mark = element('span', css.taskItemMark ?? '')
+    mark.setAttribute('aria-hidden', 'true')
+    task.append(mark, element('span', css.taskItemLabel ?? '', () => t(app.label)))
+    return { kind: app.kind, launchers: app.kind === 'browser' ? [browserShortcut] : [], task }
+  })
   shortcuts.append(
     streamShortcut,
     jineShortcut,
-    internetShortcut,
+    browserShortcut,
     todoShortcut,
     pomodoroShortcut,
     medicineShortcut,
+    pluginsShortcut,
+    computerShortcut,
   )
 
   // Rebuild the original webcam from the supplied community reference's
-  // verified 696x454 room and idle frames. Transcript projection remains in
-  // the independent LIVE surface below.
+  // verified 696x454 room and idle frames.
   const webcam = makeWindow('webcam', 'webcam', css.liveWindow ?? '')
   const webcamStage = element('div', css.liveStage ?? '')
   const webcamBackground = element('img', css.webcamLayer ?? '')
-  webcamBackground.src = NGO_WEBCAM_BACKGROUND.dataUri
+  webcamBackground.src = NGO_WEBCAM_BACKGROUND.url
   webcamBackground.alt = ''
   const webcamScreensavers = [
-    NGO_WEBCAM_SCREENSAVER_1.dataUri,
-    NGO_WEBCAM_SCREENSAVER_2.dataUri,
-    NGO_WEBCAM_SCREENSAVER_3.dataUri,
+    NGO_WEBCAM_SCREENSAVER_1.url,
+    NGO_WEBCAM_SCREENSAVER_2.url,
+    NGO_WEBCAM_SCREENSAVER_3.url,
   ] as const
   const webcamScreensaver = element('img', `${css.webcamLayer ?? ''} ${css.webcamScreensaver ?? ''}`)
   webcamScreensaver.alt = ''
@@ -830,23 +885,23 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   // full-canvas transparent monitor overlays with Random.Range(0, 3).
   randomizeWebcamScreensaver()
   const streamer = element('img', `${css.webcamLayer ?? ''} ${css.streamer ?? ''}`)
-  streamer.src = NGO_WEBCAM_IDLE_0.dataUri
+  streamer.src = NGO_WEBCAM_IDLE_0.url
   streamer.alt = ''
   streamer.dataset.webcamRole = ''
   const streamerBlink = element('img', `${css.webcamLayer ?? ''} ${css.streamer ?? ''} ${css.streamerBlink ?? ''}`)
-  streamerBlink.src = NGO_WEBCAM_IDLE_1.dataUri
+  streamerBlink.src = NGO_WEBCAM_IDLE_1.url
   streamerBlink.alt = ''
   streamerBlink.setAttribute('aria-hidden', 'true')
   const smileBase = element('img', `${css.webcamLayer ?? ''} ${css.streamerReaction ?? ''} ${css.streamerReactionBase ?? ''}`)
-  smileBase.src = NGO_WEBCAM_SMILE_0.dataUri
+  smileBase.src = NGO_WEBCAM_SMILE_0.url
   smileBase.alt = ''
   smileBase.setAttribute('aria-hidden', 'true')
   const smileBlink = element('img', `${css.webcamLayer ?? ''} ${css.streamerReaction ?? ''} ${css.streamerReactionBlink ?? ''}`)
-  smileBlink.src = NGO_WEBCAM_SMILE_1.dataUri
+  smileBlink.src = NGO_WEBCAM_SMILE_1.url
   smileBlink.alt = ''
   smileBlink.setAttribute('aria-hidden', 'true')
   const smileHappy = element('img', `${css.webcamLayer ?? ''} ${css.streamerReaction ?? ''} ${css.streamerReactionHappy ?? ''}`)
-  smileHappy.src = NGO_WEBCAM_SMILE_2.dataUri
+  smileHappy.src = NGO_WEBCAM_SMILE_2.url
   smileHappy.alt = ''
   smileHappy.setAttribute('aria-hidden', 'true')
   const headHitbox = element('button', css.webcamHeadHitbox ?? '')
@@ -908,7 +963,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     patCount += 1
     headHitbox.dataset.webcamPatCount = String(patCount)
     if (patAudio === null && typeof Audio !== 'undefined') {
-      patAudio = new Audio(NGO_WEBCAM_PAT_AUDIO.dataUri)
+      patAudio = new Audio(NGO_WEBCAM_PAT_AUDIO.url)
       patAudio.preload = 'auto'
       patAudio.volume = 0.2
     }
@@ -940,10 +995,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     headHitbox,
   )
   webcam.body.append(webcamStage)
-
-  const live = makeWindow('live', 'LIVE', liveCss.liveWindow ?? '')
-  const liveSurface = buildLiveSurface()
-  live.body.append(liveSurface.surface)
 
   const tweet = makeWindow('tweet', () => t('推博'), poketterCss.window ?? '')
   const tweetHeader = createPoketterHeader()
@@ -978,26 +1029,17 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   jineSessionMenu.setAttribute('role', 'menu')
   jine.window.append(jineSessionMenu)
 
-  // AppType.Internet is kept as a lightweight homage rather than recreating
-  // the original game's mature action system. It promotes WSS Playground and
-  // gives DSH a useful, local-only JINE history search surface.
-  const internet = makeWindow('internet', () => t('因特网'), css.internetWindow ?? '')
+  // JINE history search lives in its own secondary window, opened from the
+  // magnifier in JINE's title bar (the old Internet window's search half).
+  const jineSearchToggle = element('button', `${css.windowControl ?? ''} ${css.jineSearchToggle ?? ''}`)
+  jineSearchToggle.type = 'button'
+  jineSearchToggle.dataset.jineSearchToggle = ''
+  jineSearchToggle.dataset.windowAction = 'search'
+  setAttr(jineSearchToggle, 'aria-label', () => t('搜索 JINE 聊天记录'))
+  setAttr(jineSearchToggle, 'title', () => t('搜索'))
+  jineControls?.insertBefore(jineSearchToggle, jineControls.firstChild)
+  const internet = makeWindow('jine-search', () => t('JINE 搜索'), css.internetWindow ?? '')
   const internetHome = element('div', css.internetHome ?? '')
-  const internetHeading = element('div', css.internetHeading ?? '', 'INTERNET ANGEL LINK')
-  const internetIntro = element('p', css.internetIntro ?? '', () => t('连接官方频道，或在这段回忆里寻找一句话。'))
-  const officialChannel = element('a', css.internetOfficial ?? '')
-  setAttr(officialChannel, 'href', () => isChinese() ? WSS_BILIBILI_URL : WSS_YOUTUBE_URL)
-  officialChannel.target = '_blank'
-  officialChannel.rel = 'noopener noreferrer'
-  setAttr(officialChannel, 'data-internet-official', () => isChinese() ? 'bilibili' : 'youtube')
-  const officialMark = element('span', css.internetOfficialMark ?? '', '▶')
-  officialMark.setAttribute('aria-hidden', 'true')
-  const officialCopy = element('span', css.internetOfficialCopy ?? '')
-  officialCopy.append(
-    element('strong', '', () => t('官方直播间')),
-    element('small', '', () => t('前往 WSS Playground · bilibili')),
-  )
-  officialChannel.append(officialMark, officialCopy)
   const internetSearch = element('form', css.internetSearch ?? '')
   internetSearch.dataset.internetSearch = ''
   const internetSearchLabel = element('label', css.internetSearchLabel ?? '', () => t('对话搜索'))
@@ -1015,7 +1057,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   const internetSearchResults = element('div', css.internetSearchResults ?? '')
   internetSearchResults.dataset.internetSearchResults = ''
   internetSearch.append(internetSearchLabel, internetSearchRow, internetSearchStatus, internetSearchResults)
-  internetHome.append(internetHeading, internetIntro, officialChannel, internetSearch)
+  internetHome.append(internetSearch)
   internet.body.append(internetHome)
 
   const todo = makeWindow('todo', () => t('代办'), css.todoWindow ?? '')
@@ -1102,7 +1144,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   taskManagerTabs.append(taskProcessTab, taskStatsTab)
   taskStats.append(
     makeStatusRow(
-      NGO_STATUS_FOLLOWER.dataUri,
+      NGO_STATUS_FOLLOWER.url,
       'tokens',
       () => t('TOKEN数'),
       '0',
@@ -1111,7 +1153,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
       'The TOKENs we have spent together. Every chat leaves the number a little bigger!',
     ),
     makeStatusRow(
-      NGO_STATUS_LOVE.dataUri,
+      NGO_STATUS_LOVE.url,
       'cache',
       () => t('缓存命中率'),
       '--',
@@ -1120,7 +1162,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
       'This is how in sync we are. The higher it gets, the better I remember our rhythm!',
     ),
     makeStatusRow(
-      NGO_STATUS_STRESS.dataUri,
+      NGO_STATUS_STRESS.url,
       'context',
       () => t('上下文占用'),
       '0 / 100',
@@ -1129,7 +1171,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
       'How full my head is right now. If it gets too crowded, it is time to tidy things up.',
     ),
     makeStatusRow(
-      NGO_STATUS_YAMI.dataUri,
+      NGO_STATUS_YAMI.url,
       'access',
       () => t('权限深度'),
       '--',
@@ -1151,20 +1193,20 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   terrariaBuffBar.hidden = true
   medicineBuffTray.append(minecraftBuffBar, terrariaBuffBar)
   const medicineBuffIcons: Record<MedicineBuffId, string> = {
-    'minecraft-blindness': MINECRAFT_EFFECT_BLINDNESS.dataUri,
-    'minecraft-nausea': MINECRAFT_EFFECT_NAUSEA.dataUri,
-    'terraria-gravity': TERRARIA_BUFF_GRAVITATION.dataUri,
-    'terraria-poisoned': TERRARIA_DEBUFF_POISONED.dataUri,
-    'terraria-darkness': TERRARIA_DEBUFF_DARKNESS.dataUri,
-    'terraria-cursed': TERRARIA_DEBUFF_CURSED.dataUri,
-    'terraria-on-fire': TERRARIA_DEBUFF_ON_FIRE.dataUri,
-    'terraria-bleeding': TERRARIA_DEBUFF_BLEEDING.dataUri,
-    'terraria-confused': TERRARIA_DEBUFF_CONFUSED.dataUri,
-    'terraria-slow': TERRARIA_DEBUFF_SLOW.dataUri,
-    'terraria-weak': TERRARIA_DEBUFF_WEAK.dataUri,
-    'terraria-silenced': TERRARIA_DEBUFF_SILENCED.dataUri,
-    'terraria-broken-armor': TERRARIA_DEBUFF_BROKEN_ARMOR.dataUri,
-    'terraria-suffocation': TERRARIA_DEBUFF_SUFFOCATION.dataUri,
+    'minecraft-blindness': MINECRAFT_EFFECT_BLINDNESS.url,
+    'minecraft-nausea': MINECRAFT_EFFECT_NAUSEA.url,
+    'terraria-gravity': TERRARIA_BUFF_GRAVITATION.url,
+    'terraria-poisoned': TERRARIA_DEBUFF_POISONED.url,
+    'terraria-darkness': TERRARIA_DEBUFF_DARKNESS.url,
+    'terraria-cursed': TERRARIA_DEBUFF_CURSED.url,
+    'terraria-on-fire': TERRARIA_DEBUFF_ON_FIRE.url,
+    'terraria-bleeding': TERRARIA_DEBUFF_BLEEDING.url,
+    'terraria-confused': TERRARIA_DEBUFF_CONFUSED.url,
+    'terraria-slow': TERRARIA_DEBUFF_SLOW.url,
+    'terraria-weak': TERRARIA_DEBUFF_WEAK.url,
+    'terraria-silenced': TERRARIA_DEBUFF_SILENCED.url,
+    'terraria-broken-armor': TERRARIA_DEBUFF_BROKEN_ARMOR.url,
+    'terraria-suffocation': TERRARIA_DEBUFF_SUFFOCATION.url,
   }
   const medicineBuffTimes = new Set<HTMLElement>()
   const updateMedicineBuffTimes = (): void => {
@@ -1203,18 +1245,18 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   let medicineEffectsStorage: Storage | undefined
   try { medicineEffectsStorage = window.localStorage } catch {}
   const medicineEffects = createMedicineEffects(medicineCss, {
-    gamekidSprite: ISAAC_GAMEKID.dataUri,
+    gamekidSprite: ISAAC_GAMEKID.url,
     medicineRoot: medicine.body,
     medicineLauncher: medicineShortcut,
-    cursorSprite: NGO_CURSOR.dataUri,
+    cursorSprite: NGO_CURSOR.url,
     onBuffsChange: renderMedicineBuffs,
     ...(medicineEffectsStorage === undefined ? {} : { storage: medicineEffectsStorage }),
     powerConsumableSprites: [
-      NGO_POWER_ITEM_PIEN.dataUri,
-      NGO_POWER_ITEM_HEART.dataUri,
-      NGO_POWER_ITEM_BEAR.dataUri,
-      NGO_POWER_ITEM_MENDAKO.dataUri,
-      NGO_POWER_ITEM_TEA.dataUri,
+      NGO_POWER_ITEM_PIEN.url,
+      NGO_POWER_ITEM_HEART.url,
+      NGO_POWER_ITEM_BEAR.url,
+      NGO_POWER_ITEM_MENDAKO.url,
+      NGO_POWER_ITEM_TEA.url,
     ],
     onPowerConsume: () => sfx?.play('isaacGamekidChew'),
   })
@@ -1242,16 +1284,16 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     medicineEffects.activate(medicineDefinition.id)
   }
   const slotRewards = createSlotRewards(rewardCss, {
-    desktop: scene, internet: internetShortcut, origin: medicineShortcut,
-    spiderSprite: ISAAC_BLUE_SPIDER_WALK.dataUri,
-    webIcon: WEB_ICON, cardSprite: ISAAC_TAROT_FRONTS.dataUri, bombSprite: ISAAC_TROLL_BOMB_TIMELINE.dataUri,
+    desktop: scene, internet: browserShortcut, origin: medicineShortcut,
+    spiderSprite: ISAAC_BLUE_SPIDER_WALK.url,
+    webIcon: WEB_ICON, cardSprite: ISAAC_TAROT_FRONTS.url, bombSprite: ISAAC_TROLL_BOMB_TIMELINE.url,
     machine: () => medicineSlot,
     webcam: webcamStage,
     onWebcamBomb,
     onBombGrab: () => {
       for (const name of ['isaacBombExplode0', 'isaacBombExplode1', 'isaacBombExplode2'] as const) sfx?.prepareStutter(name)
     },
-    achievementMasks: [STEAM_ACHIEVEMENT_MASK_ROOT.dataUri, STEAM_ACHIEVEMENT_MASK_ROTATE.dataUri],
+    achievementMasks: [STEAM_ACHIEVEMENT_MASK_ROOT.url, STEAM_ACHIEVEMENT_MASK_ROTATE.url],
     onAchievement: () => sfx?.play('steamAchievement'),
     onBombSound: event => {
       const sounds = event === 'drop'
@@ -1264,26 +1306,26 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   })
   const medicineSlot = buildMedicineSlot(medicineCss, {
     assets: {
-      brokenBody: ISAAC_SLOT_BROKEN.dataUri,
-      bodies: [ISAAC_SLOT_BODY_0.dataUri, ISAAC_SLOT_BODY_1.dataUri, ISAAC_SLOT_BODY_2.dataUri],
+      brokenBody: ISAAC_SLOT_BROKEN.url,
+      bodies: [ISAAC_SLOT_BODY_0.url, ISAAC_SLOT_BODY_1.url, ISAAC_SLOT_BODY_2.url],
       icons: {
-        0: ISAAC_SLOT_ICON_00.dataUri,
-        2: ISAAC_SLOT_ICON_02.dataUri,
-        5: ISAAC_SLOT_ICON_05.dataUri,
-        8: ISAAC_SLOT_ICON_08.dataUri,
-        9: ISAAC_SLOT_ICON_09.dataUri,
-        10: ISAAC_SLOT_ICON_10.dataUri,
-        11: ISAAC_SLOT_ICON_11.dataUri,
-        12: ISAAC_SLOT_ICON_12.dataUri,
-        13: ISAAC_SLOT_ICON_13.dataUri,
+        0: ISAAC_SLOT_ICON_00.url,
+        2: ISAAC_SLOT_ICON_02.url,
+        5: ISAAC_SLOT_ICON_05.url,
+        8: ISAAC_SLOT_ICON_08.url,
+        9: ISAAC_SLOT_ICON_09.url,
+        10: ISAAC_SLOT_ICON_10.url,
+        11: ISAAC_SLOT_ICON_11.url,
+        12: ISAAC_SLOT_ICON_12.url,
+        13: ISAAC_SLOT_ICON_13.url,
       },
-      pillSheet: ISAAC_PILL_SHEET.dataUri,
-      rewardIcons: { card: ISAAC_TAROT_CARD.dataUri, spiders: ISAAC_BLUE_SPIDER.dataUri, bomb: ISAAC_SLOT_ICON_02.dataUri },
+      pillSheet: ISAAC_PILL_SHEET.url,
+      rewardIcons: { card: ISAAC_TAROT_CARD.url, spiders: ISAAC_BLUE_SPIDER.url, bomb: ISAAC_SLOT_ICON_02.url },
       medicineIcons: {
-        'gravity-potion': TERRARIA_GRAVITY_POTION.dataUri,
-        'suspicious-stew': MINECRAFT_SUSPICIOUS_STEW.dataUri,
-        'red-potion': TERRARIA_RED_POTION.dataUri,
-        'milk-bucket': MINECRAFT_MILK_BUCKET.dataUri,
+        'gravity-potion': TERRARIA_GRAVITY_POTION.url,
+        'suspicious-stew': MINECRAFT_SUSPICIOUS_STEW.url,
+        'red-potion': TERRARIA_RED_POTION.url,
+        'milk-bucket': MINECRAFT_MILK_BUCKET.url,
       },
     },
     sounds: {
@@ -1394,15 +1436,15 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   }
 
   const settings = makeWindow('settings', () => t('控制面板'), css.settingsWindow ?? '')
+  const plugins = makeWindow('plugins', () => t('插件管理器'), css.pluginsWindow ?? '')
 
   // 「我的图片」: album grid window (MyPicture). Clicking a thumb opens the
   // separate ImageViewer window below (MyPictureContentView.cs:26-28:
   // NewWindow(AppType.ImageViewer) + SetData).
-  const pictures = makeWindow('pictures', () => t('我的图片'), css.picturesWindow ?? '')
-  const pictureGrid = element('div', css.pictureGrid ?? '')
-  pictureGrid.dataset.skinSurface = 'picture-grid'
-  const pictureEmpty = element('div', css.pictureEmpty ?? '', () => t('相册为空——点击 JINE 消息中的图片查看'))
-  pictures.body.append(pictureGrid, pictureEmpty)
+  const computer = makeWindow('computer', () => t('此电脑'), css.computerWindow ?? '')
+  const explorer = buildExplorer()
+  const { pictureGrid, pictureEmpty } = explorer
+  computer.body.append(explorer.root)
 
   // ImageViewer 700x480 (apps_table), black stage, 1s mask-reveal animation
   // (ImageViewer.cs Show(): padding height->0, Ease.InCubic).
@@ -1437,7 +1479,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   startMenuBrand.setAttribute('aria-hidden', 'true')
   const startNewButton = element('button', css.startMenuButton ?? '', () => t('从头开始'))
   const startContinueButton = element('button', css.startMenuButton ?? '', () => t('继续游戏'))
-  const startPicturesButton = element('button', css.startMenuButton ?? '', () => t('我的图片'))
   const startControlButton = element('button', css.startMenuButton ?? '', () => t('控制面板'))
   const startRestartButton = element('button', css.startMenuButton ?? '', () => t('重新启动'))
   const startShutdownButton = element('button', css.startMenuButton ?? '', () => t('关机'))
@@ -1445,7 +1486,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   for (const button of [
     startNewButton,
     startContinueButton,
-    startPicturesButton,
     startControlButton,
     startRestartButton,
     startShutdownButton,
@@ -1454,7 +1494,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     startMenuBrand,
     startNewButton,
     startContinueButton,
-    startPicturesButton,
     startControlButton,
     startRestartButton,
     startShutdownButton,
@@ -1479,10 +1518,14 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     button.append(image)
     return button
   }
-  const poketterQuickLaunch = makeQuickLaunch(() => t('推博'), NGO_TASKBAR_POKETTER.dataUri)
-  const jineQuickLaunch = makeQuickLaunch('JINE', NGO_TASKBAR_JINE.dataUri)
-  const statusQuickLaunch = makeQuickLaunch(() => t('任务管理器'), NGO_TASKBAR_TASKMANAGER.dataUri)
-  quickLaunch.append(poketterQuickLaunch, jineQuickLaunch, statusQuickLaunch)
+  const poketterQuickLaunch = makeQuickLaunch(() => t('推博'), NGO_TASKBAR_POKETTER.url)
+  const jineQuickLaunch = makeQuickLaunch('JINE', NGO_TASKBAR_JINE.url)
+  const statusQuickLaunch = makeQuickLaunch(() => t('任务管理器'), NGO_TASKBAR_TASKMANAGER.url)
+  // The terminal is a utility, not a desktop app: it sits beside Task Manager.
+  const terminalQuickLaunch = makeQuickLaunch(() => t('终端'), NATIVE_APPS.find(app => app.kind === 'terminal')!.icon)
+  terminalQuickLaunch.dataset.quickLaunch = 'terminal'
+  nativeApps.find(app => app.kind === 'terminal')!.launchers.push(terminalQuickLaunch)
+  quickLaunch.append(poketterQuickLaunch, jineQuickLaunch, statusQuickLaunch, terminalQuickLaunch)
   const tasks = element('div', css.taskItems ?? '')
   const makeTaskItem = (label: UiText): HTMLButtonElement => {
     const button = element('button', css.taskItem ?? '')
@@ -1495,10 +1538,10 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   const statusTask = makeTaskItem(() => t('任务管理器'))
   const jineTask = makeTaskItem('JINE')
   const webcamTask = makeTaskItem('webcam')
-  const liveTask = makeTaskItem('LIVE')
-  const internetTask = makeTaskItem(() => t('因特网'))
+  const searchTask = makeTaskItem(() => t('JINE 搜索'))
   const tweetTask = makeTaskItem(() => t('推博'))
   const settingsTask = makeTaskItem(() => t('控制面板'))
+  const pluginsTask = makeTaskItem(() => t('插件管理器'))
   const todoTask = makeTaskItem(() => t('代办'))
   const pomodoroTask = makeTaskItem(() => t('番茄钟'))
   const medicineTask = makeTaskItem(() => t('吃药'))
@@ -1507,17 +1550,19 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   pomodoroTray.type = 'button'
   pomodoroTray.hidden = true
   setAttr(pomodoroTray, 'title', () => t('番茄钟'))
-  const pictureTask = makeTaskItem(() => t('我的图片'))
+  const computerTask = makeTaskItem(() => t('此电脑'))
   const imageViewerTask = makeTaskItem(() => t('图片'))
   const saveTask = makeTaskItem(() => t('继续游戏'))
-  tasks.append(statusTask, jineTask, webcamTask, liveTask, internetTask, tweetTask, todoTask, pomodoroTask, medicineTask, settingsTask, pictureTask, imageViewerTask, saveTask)
+  tasks.append(statusTask, jineTask, webcamTask, searchTask, tweetTask, todoTask, pomodoroTask, medicineTask, settingsTask, computerTask, imageViewerTask, saveTask)
+  tasks.append(pluginsTask)
+  tasks.append(...nativeApps.map(app => app.task))
   const clockButton = element('button', css.dayButton ?? '')
   clockButton.type = 'button'
   clockButton.setAttribute('aria-controls', 'ngo-save-manager')
   clockButton.setAttribute('aria-expanded', 'false')
   setAttr(clockButton, 'title', () => t('打开会话与存档'))
   const clockIcon = element('img', css.dayIcon ?? '')
-  clockIcon.src = NGO_WATCH_NOON.dataUri
+  clockIcon.src = NGO_WATCH_NOON.url
   clockIcon.alt = ''
   clockIcon.setAttribute('aria-hidden', 'true')
   const clockLabel = element('span', css.dayLabel ?? '', '--:--')
@@ -1561,7 +1606,7 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   desktopNotice.hidden = true
   desktopNotice.dataset.desktopNotice = ''
   const desktopNoticeIcon = element('img', css.desktopNoticeMark ?? '')
-  desktopNoticeIcon.src = NGO_ICON_JINE.dataUri
+  desktopNoticeIcon.src = NGO_ICON_JINE.url
   desktopNoticeIcon.alt = ''
   desktopNoticeIcon.setAttribute('aria-hidden', 'true')
   const desktopNoticeText = element('span', css.desktopNoticeText ?? '')
@@ -1573,7 +1618,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     sideRight,
     shortcuts,
     webcam.window,
-    live.window,
     internet.window,
     tweet.window,
     jine.window,
@@ -1583,7 +1627,8 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     medicineConsent,
     status.window,
     settings.window,
-    pictures.window,
+    plugins.window,
+    computer.window,
     imageViewer.window,
     save.window,
     startMenu,
@@ -1593,8 +1638,6 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
   )
   return {
     scene,
-    liveFeed: liveSurface.feed,
-    liveSurface,
     tweetFeed,
     jineFeed,
     jineSessionToggle,
@@ -1620,7 +1663,14 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
     startRestartButton,
     startShutdownButton,
     settingsWindow: settings.window,
-    pictureWindow: pictures.window,
+    pluginsWindow: plugins.window,
+    pluginsShortcut,
+    nativeApps,
+    nativeAppInsets: () => ({ left: sideLeft.getBoundingClientRect().width, right: sideRight.getBoundingClientRect().width }),
+    explorer,
+    streamShortcut,
+    computerShortcut,
+    jineSearchToggle,
     pictureGrid,
     pictureEmpty,
     imageViewerWindow: imageViewer.window,
@@ -1700,18 +1750,11 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
         },
       },
       {
-        id: 'live',
-        element: live.window,
-        taskButton: liveTask,
-        initialState: 'closed',
-        openers: [streamShortcut],
-      },
-      {
-        id: 'internet',
+        id: 'jine-search',
         element: internet.window,
-        taskButton: internetTask,
+        taskButton: searchTask,
         initialState: 'closed',
-        openers: [internetShortcut],
+        openers: [jineSearchToggle],
       },
       {
         id: 'tweet',
@@ -1754,15 +1797,23 @@ function buildDesktop(sfx: Sfx | undefined, onWebcamBomb: () => void): DesktopSu
         taskButton: settingsTask,
         initialState: 'closed',
         openers: [startControlButton],
-        followerSelector: "[data-slot='sidebar.settings'] [role='dialog']",
+        followerSelector: SETTINGS_DIALOG,
         followerInset: { top: 42, right: 12, bottom: 22, left: 8 },
       },
       {
-        id: 'pictures',
-        element: pictures.window,
-        taskButton: pictureTask,
+        id: 'plugins',
+        element: plugins.window,
+        taskButton: pluginsTask,
         initialState: 'closed',
-        openers: [startPicturesButton],
+        followerSelector: MAIN_PANEL,
+        followerInset: { top: 42, right: 12, bottom: 22, left: 8 },
+      },
+      {
+        id: 'computer',
+        element: computer.window,
+        taskButton: computerTask,
+        initialState: 'closed',
+        openers: [computerShortcut],
       },
       {
         id: 'image-viewer',
@@ -1860,7 +1911,7 @@ function decorateQuestionComposers(): void {
       if (avatar === null) {
         avatar = element('img', css.questionAvatar ?? '')
         avatar.dataset.ngoQuestionAvatar = ''
-        avatar.src = NGO_JINE_AME.dataUri
+        avatar.src = NGO_JINE_AME.url
         avatar.alt = ''
         avatar.setAttribute('aria-hidden', 'true')
         header.prepend(avatar)
@@ -2331,8 +2382,11 @@ function stepIsRunning(step: Element): boolean {
     || step.querySelector("[data-state='running'], [data-streaming='true']") !== null
 }
 
+// Reasoning and tool rows carry data-variant; their Markdown (an expanded Think
+// body, tool output) is process detail, never a reply bubble.
 function stepMarkdowns(step: Element): Element[] {
   return [...step.querySelectorAll("[class*='_markdown_']")]
+    .filter(markdown => markdown.closest('[data-variant]') === null)
 }
 
 function collectConversationTurns(): ConversationTurn[] {
@@ -2376,7 +2430,7 @@ function collectConversationTurns(): ConversationTurn[] {
     } else if (kind === 'turn-tail') {
       current ??= { assistantSteps: [], flowRows: [] }
       current.turnTail = row
-    } else if (kind !== 'steering' && kind !== 'turn-tail') {
+    } else if (kind !== 'steering' && kind !== 'question-reply') {
       current ??= { assistantSteps: [], flowRows: [] }
       current.flowRows.push(row)
     }
@@ -2649,7 +2703,7 @@ function appendAmeTextJine(
     ? element('img', css.jineAssistantAvatar ?? '')
     : element('span', `${css.jineAssistantAvatar ?? ''} ${css.subagentIdentityAvatar ?? ''}`)
   if (avatar instanceof HTMLImageElement) {
-    avatar.src = NGO_JINE_AME.dataUri
+    avatar.src = NGO_JINE_AME.url
     avatar.alt = ''
   } else {
     avatar.style.backgroundImage = SUBAGENT_POKETTER_AVATAR
@@ -2743,6 +2797,10 @@ function projectJine(
       previousTime = appendJineTime(surface, message.time, previousTime)
       appendUserJine(surface, row)
       lastCommittedHuman = row
+    } else if (kind === 'question-reply') {
+      // 0.2.0 late answers to a continued question replace their user row with
+      // this node; the host bubble's label and answer summary read as the reply.
+      appendUserJine(surface, row)
     } else if (kind === 'assistant-step') {
       // Once an assistant Markdown has appeared in JINE it remains part of the
       // conversation. A later summary/final answer appends another bubble;
@@ -2795,7 +2853,7 @@ const GOAL_ACTION_ICONS = {
   delete: NGO_GOAL_DELETE,
   save: NGO_GOAL_SAVE,
   cancel: NGO_GOAL_CANCEL,
-} as const satisfies Record<GoalActionKind, { dataUri: string }>
+} as const satisfies Record<GoalActionKind, { url: string }>
 
 interface TodoProjectionPresence {
   todo: boolean
@@ -2817,7 +2875,7 @@ function todoStatus(row: Element): TodoStatus {
 function buildTodoGlyph(status: TodoStatus): HTMLElement {
   if (status === 'completed') {
     const image = element('img', css.todoCompleted ?? '')
-    image.src = NGO_TODO_COMPLETED.dataUri
+    image.src = NGO_TODO_COMPLETED.url
     image.alt = ''
     image.dataset.todoGlyph = status
     return image
@@ -2828,7 +2886,7 @@ function buildTodoGlyph(status: TodoStatus): HTMLElement {
     animation.setAttribute('aria-hidden', 'true')
     TODO_PROGRESS_FRAMES.forEach((frame, index) => {
       const image = element('img', css.todoProgressFrame ?? '')
-      image.src = frame.dataUri
+      image.src = frame.url
       image.alt = ''
       image.style.setProperty('--ngo-todo-frame-index', String(index))
       animation.append(image)
@@ -2875,7 +2933,7 @@ function appendGoalProjection(
   if (sourceBar.title !== '') item.title = sourceBar.title
   const header = element('div', css.todoGoalHeader ?? '')
   const target = element('img', css.todoGoalTarget ?? '')
-  target.src = NGO_GOAL_TARGET.dataUri
+  target.src = NGO_GOAL_TARGET.url
   target.alt = ''
   target.setAttribute('aria-hidden', 'true')
   header.append(target, element('strong', css.todoGoalTitle ?? '', 'CURRENT GOAL'))
@@ -2897,7 +2955,7 @@ function appendGoalProjection(
       proxy.title = label
     }
     const icon = element('img', css.todoGoalActionIcon ?? '')
-    icon.src = GOAL_ACTION_ICONS[kind].dataUri
+    icon.src = GOAL_ACTION_ICONS[kind].url
     icon.alt = ''
     icon.setAttribute('aria-hidden', 'true')
     proxy.append(icon)
@@ -3303,33 +3361,6 @@ function projectTaskManager(surface: HTMLElement, turns: readonly ConversationTu
   }
 }
 
-function projectLive(surface: HTMLElement, liveSurface: LiveSurface): void {
-  surface.replaceChildren()
-  const entries: Element[] = [
-    ...document.querySelectorAll("[data-chat-flow-kind='assistant-step'] [data-variant='think']"),
-    ...document.querySelectorAll("[data-chat-flow-kind]:not([data-chat-flow-kind='user']):not([data-chat-flow-kind='assistant-step']):not([data-chat-flow-kind='turn-tail'])"),
-  ]
-  entries.sort((left, right) => left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1)
-  let hasEntries = false
-  for (const entry of entries.slice(-10)) {
-    const text = normalizedText(entry)
-    if (text === '') continue
-    const flowKind = entry.closest('[data-chat-flow-kind]')?.getAttribute('data-chat-flow-kind')
-    const kind = entry.matches('[data-variant="think"]')
-      ? 'think'
-      : flowKind === 'tool' ? 'tool' : 'update'
-    surface.append(buildLiveComment(text.slice(0, 180), kind))
-    hasEntries = true
-  }
-  const running = document.querySelector("[data-chat-flow-kind='assistant-step'] [data-state='running'], [data-chat-flow-kind='assistant-step'] [data-streaming='true']")
-  if (running !== null) {
-    surface.append(buildLiveComment(() => t('● LIVE · 思考中…'), 'think', true))
-    hasEntries = true
-  }
-  if (!hasEntries) surface.append(buildLiveEmpty(() => t('直播尚未开始')))
-  setLiveState(liveSurface, running !== null, hasEntries)
-}
-
 function subagentPoketterIdentity(identity?: SubagentIdentity): PoketterIdentity | undefined {
   return identity === undefined ? undefined : {
     avatarCssUrl: SUBAGENT_POKETTER_AVATAR,
@@ -3410,7 +3441,7 @@ function subagentIdentity(
   entry: SubagentCatalogEntry,
   summary: SessionSummary | undefined,
 ): SubagentIdentity | undefined {
-  if (entry.kind !== 'child' || entry.mode === undefined) return undefined
+  if (entry.kind === 'diagnostic' || (entry.mode !== 'one-shot' && entry.mode !== 'continuable')) return undefined
   const label = entry.label?.trim() || summary?.displayTitle.trim() || entry.id
   return {
     parentSessionId,
@@ -3428,9 +3459,18 @@ function projectSubagentView(sessions?: SessionsBridge): SubagentViewModel {
     return { rootLabel: t('主代理'), catalogState: 'unavailable', contacts: [] }
   }
   const snapshot = sessions.list.getSnapshot()
-  const currentId = snapshot.current
+  const currentId = currentSessionId(snapshot)
   const currentSummary = currentId === undefined ? undefined : snapshot.byId[currentId]
-  const currentAddress = snapshot.currentAddress
+  let currentAddress = snapshot.currentAddress
+  if (currentAddress === undefined && currentId !== undefined
+    && currentSummary?.origin === 'subagent' && currentSummary.parentId !== undefined) {
+    const mode = subagentCatalog(snapshot, currentSummary.parentId)?.entries.find(entry => entry.id === currentId)?.mode
+    currentAddress = {
+      parentSessionId: currentSummary.parentId,
+      childSessionId: currentId,
+      mode: mode === 'continuable' ? 'continuable' : 'one-shot',
+    }
+  }
   const parentSessionId = currentAddress?.parentSessionId
     ?? (currentSummary?.origin === 'subagent' ? currentSummary.parentId : currentId)
   if (parentSessionId === undefined) {
@@ -3445,7 +3485,7 @@ function projectSubagentView(sessions?: SessionsBridge): SubagentViewModel {
     rootSessionId = summary.parentId
   }
   const rootLabel = snapshot.byId[rootSessionId]?.displayTitle ?? t('主代理')
-  const catalog = snapshot.subagentsByParent[parentSessionId]
+  const catalog = subagentCatalog(snapshot, parentSessionId)
   const contacts = (catalog?.entries ?? [])
     .map(entry => subagentIdentity(parentSessionId, entry, snapshot.byId[entry.id]))
     .filter((identity): identity is SubagentIdentity => identity !== undefined)
@@ -3633,9 +3673,9 @@ function createProjectionSoundLedger(storage?: Storage): (kind: string, identity
 function updateTaskbarClock(surfaces: DesktopSurfaces, now: Date = new Date()): void {
   const clock = taskbarClockModel(now)
   const icons: Record<TaskbarClockPeriod, string> = {
-    noon: NGO_WATCH_NOON.dataUri,
-    evening: NGO_WATCH_EVENING.dataUri,
-    night: NGO_WATCH_NIGHT.dataUri,
+    noon: NGO_WATCH_NOON.url,
+    evening: NGO_WATCH_EVENING.url,
+    night: NGO_WATCH_NIGHT.url,
   }
   setText(surfaces.clockLabel, clock.text)
   surfaces.clockIcon.src = icons[clock.period]
@@ -3692,7 +3732,6 @@ function applyProjection(
   syncWebcamPoseSession(surfaces)
   projectJine(surfaces.jineFeed, turns, questionTranscripts, subagents.selected)
   projectTaskManager(surfaces.taskFeed, turns)
-  projectLive(surfaces.liveFeed, surfaces.liveSurface)
   projectTweets(surfaces.tweetFeed, turns, subagents.selected)
   renderPictureGrid(surfaces)
 }
@@ -3768,7 +3807,7 @@ export function apply(ctx: Context): void {
   const favicon = document.createElement('link')
   favicon.rel = 'icon'
   favicon.type = 'image/png'
-  favicon.href = NGO_WEB_ICON.dataUri
+  favicon.href = NGO_WEB_ICON.url
   favicon.setAttribute('sizes', '32x32')
   favicon.dataset.skinChrome = 'favicon'
   document.head.append(favicon)
@@ -3785,13 +3824,14 @@ export function apply(ctx: Context): void {
     { source: NGO_WEB_ICON_512, sizes: '512x512' },
     { source: NGO_WEB_ICON_192, sizes: '192x192' },
     { source: NGO_WEB_ICON, sizes: '32x32' },
-  ].map(({ source, sizes }) => ({ src: source.dataUri, sizes, type: 'image/png', purpose: 'any' }))
+  ].map(({ source, sizes }) => ({ src: source.url, sizes, type: 'image/png', purpose: 'any' }))
   manifestIcons.push({ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' })
   // Chromium's manifest parser must resolve every URL and accepts only
   // http(s) or data schemes; blob: manifests are rejected ("invalid scheme")
   // and relative paths cannot resolve against a blob: base. A data: manifest
-  // with absolute start_url/scope and data: icons is verified via CDP
-  // Page.getAppManifest (zero errors, installable).
+  // with absolute start_url/scope was verified via CDP Page.getAppManifest
+  // (zero errors, installable) when its icons were data: URLs; the icons are
+  // now absolute URLs of this skin's asset route.
   const manifestUrl = `data:application/manifest+json,${encodeURIComponent(JSON.stringify({
     ...DSH_MANIFEST_HEAD,
     start_url: `${window.location.origin}/`,
@@ -3811,50 +3851,50 @@ export function apply(ctx: Context): void {
   body.setAttribute(BODY_ATTRIBUTE, '')
 
   const sfx = createSfx({
-    poko: NGO_SE_POKO.dataUri,
-    kari: NGO_SE_KARI.dataUri,
-    pirodown: NGO_SE_PIRODOWN.dataUri,
-    windowClose: NGO_SE_WINDOW_CLOSE.dataUri,
-    commandExecute: NGO_SE_COMMAND_EXECUTE.dataUri,
-    popTooltip: NGO_SE_POP_TOOLTIP.dataUri,
-    popTutorial: NGO_SE_POP_TUTORIAL.dataUri,
-    pillGuiiin: NGO_SE_PILL_GUIIIN.dataUri,
-    per: NGO_SE_PER.dataUri,
-    biosPiko: NGO_SE_BIOS_PIKO.dataUri,
-    biosHdd: NGO_SE_BIOS_HDD.dataUri,
-    boot: NGO_SE_BOOT.dataUri,
-    bootCaution: NGO_SE_BOOT_CAUTION.dataUri,
-    piporo: NGO_SE_PIPORO.dataUri,
-    jineReceive: NGO_SE_JINE_RECIEVE.dataUri,
-    tweetLoad: NGO_SE_TWEET_LOAD.dataUri,
-    tweetChangeTop: NGO_SE_TWEET_CHANGE_TOP.dataUri,
-    tweetKusorep: NGO_SE_TWEET_KUSOREP.dataUri,
-    statusUp: NGO_SE_STATUS_UP.dataUri,
-    statusDown: NGO_SE_STATUS_DOWN.dataUri,
-    statusShowDiff: NGO_SE_STATUS_SHOWDIFF.dataUri,
-    haisinSuperchat: NGO_SE_HAISIN_SUPERCHAT.dataUri,
-    jineSendStamp: NGO_SE_JINE_SEND_STAMP.dataUri,
-    nadenade1: NGO_SE_NADENADE_1.dataUri,
-    notification: NGO_SE_NOTIFICATION.dataUri,
-    piyo: NGO_SE_PIYO.dataUri,
-    isaacSlotCoin: ISAAC_SLOT_COIN.dataUri,
-    isaacSlotPull: ISAAC_SLOT_PULL.dataUri,
-    isaacSlotSpin: ISAAC_SLOT_SPIN_LOOP.dataUri,
-    isaacSlotStop: ISAAC_SLOT_STOP.dataUri,
-    isaacSlotSpawn: ISAAC_SLOT_SPAWN.dataUri,
-    isaacBombDrop0: ISAAC_BOMB_DROP_0.dataUri,
-    isaacBombDrop1: ISAAC_BOMB_DROP_1.dataUri,
-    isaacBombExplode0: ISAAC_BOMB_EXPLODE_0.dataUri,
-    isaacBombExplode1: ISAAC_BOMB_EXPLODE_1.dataUri,
-    isaacBombExplode2: ISAAC_BOMB_EXPLODE_2.dataUri,
-    steamAchievement: STEAM_ACHIEVEMENT.dataUri,
-    isaacVoicePowerPill: ISAAC_VOICE_POWER_PILL.dataUri,
-    isaacVoiceRetroVision: ISAAC_VOICE_RETRO_VISION.dataUri,
-    isaacGamekidChew: ISAAC_GAMEKID_CHEW.dataUri,
-    terrariaGravityPotionUse: TERRARIA_GRAVITY_POTION_USE.dataUri,
-    minecraftSuspiciousStewEat: MINECRAFT_SUSPICIOUS_STEW_EAT.dataUri,
-    minecraftDrink: MINECRAFT_DRINK.dataUri,
-  }, NGO_BGM_MAINLOOP.dataUri)
+    poko: NGO_SE_POKO.url,
+    kari: NGO_SE_KARI.url,
+    pirodown: NGO_SE_PIRODOWN.url,
+    windowClose: NGO_SE_WINDOW_CLOSE.url,
+    commandExecute: NGO_SE_COMMAND_EXECUTE.url,
+    popTooltip: NGO_SE_POP_TOOLTIP.url,
+    popTutorial: NGO_SE_POP_TUTORIAL.url,
+    pillGuiiin: NGO_SE_PILL_GUIIIN.url,
+    per: NGO_SE_PER.url,
+    biosPiko: NGO_SE_BIOS_PIKO.url,
+    biosHdd: NGO_SE_BIOS_HDD.url,
+    boot: NGO_SE_BOOT.url,
+    bootCaution: NGO_SE_BOOT_CAUTION.url,
+    piporo: NGO_SE_PIPORO.url,
+    jineReceive: NGO_SE_JINE_RECIEVE.url,
+    tweetLoad: NGO_SE_TWEET_LOAD.url,
+    tweetChangeTop: NGO_SE_TWEET_CHANGE_TOP.url,
+    tweetKusorep: NGO_SE_TWEET_KUSOREP.url,
+    statusUp: NGO_SE_STATUS_UP.url,
+    statusDown: NGO_SE_STATUS_DOWN.url,
+    statusShowDiff: NGO_SE_STATUS_SHOWDIFF.url,
+    haisinSuperchat: NGO_SE_HAISIN_SUPERCHAT.url,
+    jineSendStamp: NGO_SE_JINE_SEND_STAMP.url,
+    nadenade1: NGO_SE_NADENADE_1.url,
+    notification: NGO_SE_NOTIFICATION.url,
+    piyo: NGO_SE_PIYO.url,
+    isaacSlotCoin: ISAAC_SLOT_COIN.url,
+    isaacSlotPull: ISAAC_SLOT_PULL.url,
+    isaacSlotSpin: ISAAC_SLOT_SPIN_LOOP.url,
+    isaacSlotStop: ISAAC_SLOT_STOP.url,
+    isaacSlotSpawn: ISAAC_SLOT_SPAWN.url,
+    isaacBombDrop0: ISAAC_BOMB_DROP_0.url,
+    isaacBombDrop1: ISAAC_BOMB_DROP_1.url,
+    isaacBombExplode0: ISAAC_BOMB_EXPLODE_0.url,
+    isaacBombExplode1: ISAAC_BOMB_EXPLODE_1.url,
+    isaacBombExplode2: ISAAC_BOMB_EXPLODE_2.url,
+    steamAchievement: STEAM_ACHIEVEMENT.url,
+    isaacVoicePowerPill: ISAAC_VOICE_POWER_PILL.url,
+    isaacVoiceRetroVision: ISAAC_VOICE_RETRO_VISION.url,
+    isaacGamekidChew: ISAAC_GAMEKID_CHEW.url,
+    terrariaGravityPotionUse: TERRARIA_GRAVITY_POTION_USE.url,
+    minecraftSuspiciousStewEat: MINECRAFT_SUSPICIOUS_STEW_EAT.url,
+    minecraftDrink: MINECRAFT_DRINK.url,
+  }, NGO_BGM_MAINLOOP.url)
   const surfaces = buildDesktop(sfx, () => {
     closeStartMenu()
     lightModeLock.crashWebcam()
@@ -3941,7 +3981,14 @@ export function apply(ctx: Context): void {
   const disposeHarnessFailureBlueScreen = installHarnessFailureBlueScreen()
   const lightModeLock = installLightModeLock(ctx, sfx)
   let sessions: SessionsBridge | undefined
+  let explorerController: ExplorerController | undefined
   let workspaces: WorkspacesBridge | undefined
+  let hostLayout: { selectPanel(id: string | null): void } | undefined
+  ctx.inject(['layout'], (serviceCtx: Context) => {
+    const layout = serviceCtx.get('layout') as NonNullable<typeof hostLayout>
+    hostLayout = layout
+    return () => { if (hostLayout === layout) hostLayout = undefined }
+  })
   const jineWindow = surfaces.windows.find(managedWindow => managedWindow.id === 'jine')
   if (jineWindow !== undefined) {
     jineWindow.followerSelector = '[data-composer-seat]'
@@ -3957,6 +4004,21 @@ export function apply(ctx: Context): void {
   if (settingsWindow !== undefined) {
     settingsWindow.onActiveChange = active => body.toggleAttribute(SETTINGS_ACTIVE_ATTRIBUTE, active)
     settingsWindow.onStackChange = layer => body.style.setProperty('--ngo-settings-layer', String(layer + 1))
+  }
+  const pluginsWindow = surfaces.windows.find(managedWindow => managedWindow.id === 'plugins')
+  const previousPluginsLayer = body.style.getPropertyValue('--ngo-plugins-layer')
+  let pluginsLayer = ''
+  ctx.effect(() => () => {
+    if (body.style.getPropertyValue('--ngo-plugins-layer') === pluginsLayer) {
+      if (previousPluginsLayer) body.style.setProperty('--ngo-plugins-layer', previousPluginsLayer)
+      else body.style.removeProperty('--ngo-plugins-layer')
+    }
+  })
+  if (pluginsWindow !== undefined) {
+    pluginsWindow.onStackChange = layer => {
+      pluginsLayer = String(layer + 1)
+      body.style.setProperty('--ngo-plugins-layer', pluginsLayer)
+    }
   }
   const windowManager = createDesktopWindowManager(
     undefined,
@@ -4100,8 +4162,8 @@ export function apply(ctx: Context): void {
     surfaces.desktopNotice.dataset.noticeKind = kind
     surfaces.desktopNotice.dataset.windowTarget = target
     surfaces.desktopNoticeIcon.src = target === 'jine'
-      ? NGO_ICON_JINE.dataUri
-      : target === 'pomodoro' ? NGO_ICON_SLEEP.dataUri : NGO_TASKBAR_TASKMANAGER.dataUri
+      ? NGO_ICON_JINE.url
+      : target === 'pomodoro' ? NGO_ICON_SLEEP.url : NGO_TASKBAR_TASKMANAGER.url
     setText(surfaces.desktopNoticeText, text)
     surfaces.jineTaskButton.toggleAttribute('data-window-attention', target === 'jine')
     surfaces.statusTaskButton.toggleAttribute('data-window-attention', target === 'status')
@@ -4282,7 +4344,7 @@ export function apply(ctx: Context): void {
       sfx.setSeVolume(se)
       // Desktop BGM follows the game's after-login mainloop_normal loop;
       // 0 keeps the whole easter-egg sound layer silent.
-      if (bgm > 0) sfx.startBgm()
+      if (bgm > 0 && !lightModeLock.isRebooting()) sfx.startBgm()
       else sfx.stopBgm()
       body.style.setProperty('--ngo-bgm-volume', String(bgm))
       body.style.setProperty('--ngo-sfx-volume', String(se))
@@ -4307,12 +4369,12 @@ export function apply(ctx: Context): void {
       dailyTransitionEmphasisColor = emphasisColor
     },
   })
-  const disposeDailyTransition = installDailyTransition(sfx, NGO_DAY_PASSING_HEART.dataUri, () => ({
+  const disposeDailyTransition = installDailyTransition(sfx, NGO_DAY_PASSING_HEART.url, () => ({
     showWeekday: dailyTransitionShowWeekday,
     emphasis: dailyTransitionEmphasis,
     emphasizedWeekdays: dailyTransitionEmphasizedWeekdays,
     emphasisColor: dailyTransitionEmphasisColor,
-  }))
+  }), ready => lightModeLock.whenThemeSettled(ready))
 
   // ImageViewer preview: clicking a JINE image (or an album thumb) opens the
   // separate game viewer window; the picture slides in with the 1s reveal
@@ -4326,7 +4388,7 @@ export function apply(ctx: Context): void {
     setImageViewerPhase('hidden')
     imageViewerImage.onload = () => {
       // Commit the hidden clip-path before revealing, so a same-frame load
-      // (cached/data-URI images) still plays the 1s scan transition.
+      // (cached images) still plays the 1s scan transition.
       void imageViewerImage.offsetWidth
       setImageViewerPhase('reveal')
     }
@@ -4510,6 +4572,62 @@ export function apply(ctx: Context): void {
     surfaces.startButton.setAttribute('aria-expanded', String(open))
   }
 
+  const openPlugins = (): void => {
+    closeStartMenu()
+    hostLayout?.selectPanel('plugins')
+    windowManager.setOpen('plugins', true)
+  }
+  surfaces.pluginsShortcut.addEventListener('click', openPlugins)
+  const hostWindows = installNativeApps(ctx, surfaces.nativeApps, surfaces.nativeAppInsets, () => hostLayout?.selectPanel(null), closeStartMenu)
+  // 直播 opens the official WSS Playground channel in the host browser; Web
+  // profiles without the browser component fall back to a new browser tab.
+  const openOfficialStream = (): void => {
+    closeStartMenu()
+    const url = isChinese() ? WSS_BILIBILI_URL : WSS_YOUTUBE_URL
+    if (!hostWindows.openBrowser(url)) window.open(url, '_blank', 'noopener,noreferrer')
+  }
+  surfaces.streamShortcut.addEventListener('click', openOfficialStream)
+  explorerController = installExplorer(ctx, surfaces.explorer, {
+    session: () => {
+      const snapshot = sessions?.list.getSnapshot()
+      const id = snapshot === undefined ? undefined : currentSessionId(snapshot)
+      return id === undefined ? undefined : { id, cwd: snapshot?.byId[id]?.cwd }
+    },
+    openFile: address => hostWindows.openResource(address),
+    renderPictures: () => renderPictureGrid(surfaces),
+  })
+  const showWorkspace = (): void => explorerController?.showPlace('workspace')
+  surfaces.computerShortcut.addEventListener('click', showWorkspace)
+  ctx.effect(() => () => {
+    surfaces.streamShortcut.removeEventListener('click', openOfficialStream)
+    surfaces.computerShortcut.removeEventListener('click', showWorkspace)
+    explorerController?.dispose()
+    explorerController = undefined
+  })
+  let nativePanel: Element | null = null
+  const syncPluginsWindow = (): void => {
+    const next = document.querySelector(MAIN_PANEL)
+    if (next !== nativePanel) {
+      nativePanel = next
+      if (next !== null) windowManager.setOpen('plugins', true)
+      else if (surfaces.pluginsWindow.dataset.windowState === 'open') windowManager.setOpen('plugins', false)
+      if (next !== null) windowManager.refresh('plugins')
+    }
+  }
+  // The host owns a single main outlet. Dismissal returns to the conversation;
+  // restoring the task reopens the host page instead of moving React nodes.
+  const pluginsStateObserver = new MutationObserver(() => {
+    if (surfaces.pluginsWindow.dataset.windowState === 'open') {
+      if (document.querySelector(MAIN_PANEL) === null) hostLayout?.selectPanel('plugins')
+    } else if (document.querySelector(MAIN_PANEL) !== null) hostLayout?.selectPanel(null)
+  })
+  pluginsStateObserver.observe(surfaces.pluginsWindow, { attributes: true, attributeFilter: ['data-window-state'] })
+  ctx.effect(() => () => {
+    pluginsStateObserver.disconnect()
+    surfaces.pluginsShortcut.removeEventListener('click', openPlugins)
+  })
+  syncPluginsWindow()
+
   const toggleSaveManager = (): void => {
     closeStartMenu()
     const open = surfaces.saveWindow.dataset.windowState !== 'open'
@@ -4525,7 +4643,7 @@ export function apply(ctx: Context): void {
   }
   const openSettings = (): void => {
     closeStartMenu()
-    const existing = document.querySelector("[data-slot='sidebar.settings'] [role='dialog']")
+    const existing = document.querySelector(SETTINGS_DIALOG)
     if (existing !== null) {
       body.setAttribute(SETTINGS_ATTRIBUTE, '')
       windowManager.setOpen('settings', true)
@@ -4533,9 +4651,69 @@ export function apply(ctx: Context): void {
       return
     }
     const trigger = document.querySelector<HTMLButtonElement>("[data-slot='sidebar.settings'] button[aria-haspopup='dialog']")
-    body.toggleAttribute(SETTINGS_ATTRIBUTE, trigger !== null)
-    trigger?.click()
+    if (trigger !== null) {
+      trigger.click()
+      return
+    }
+    openSettingsFromAccountMenu()
   }
+  // 0.2.0 desktop replaces the settings trigger with the account menu
+  // (ui-settings-account's settings.launcher), and the shortcuts service no
+  // longer exposes a command invoker. Its first item, the one carrying the
+  // settings shortcut, is the host's own "open settings" path; the menu stays
+  // invisible for the few frames it is open.
+  let settingsLaunchTimer: number | undefined
+  const finishSettingsLaunch = (): void => {
+    window.clearTimeout(settingsLaunchTimer)
+    settingsLaunchTimer = undefined
+    body.removeAttribute(SETTINGS_LAUNCH_ATTRIBUTE)
+    if (document.querySelector(SETTINGS_DIALOG) === null) windowManager.setOpen('settings', false)
+  }
+  const openSettingsFromAccountMenu = (): void => {
+    const launcher = document.querySelector<HTMLButtonElement>("[data-slot='sidebar.settings'] button[aria-haspopup='menu']")
+    if (launcher === null) {
+      windowManager.setOpen('settings', false)
+      return
+    }
+    window.clearTimeout(settingsLaunchTimer)
+    body.setAttribute(SETTINGS_LAUNCH_ATTRIBUTE, '')
+    // Only a host menu that appears after this click is the account menu; the
+    // skin's own menus (JINE contacts) and stale host menus never qualify.
+    const alreadyOpen = launcher.getAttribute('aria-expanded') === 'true'
+    const earlier = new Set(alreadyOpen ? [] : document.querySelectorAll("[role='menu']"))
+    if (!alreadyOpen) launcher.click()
+    let frames = 0
+    const pick = (): void => {
+      if (document.querySelector(SETTINGS_DIALOG) !== null) {
+        finishSettingsLaunch()
+        return
+      }
+      const menu = [...document.querySelectorAll<HTMLElement>("[role='menu']")]
+        .filter(candidate => !earlier.has(candidate) && candidate.closest("[data-skin-chrome='scene']") === null).at(-1)
+      const items = menu === undefined ? [] : [...menu.querySelectorAll<HTMLButtonElement>("button[role='menuitem']:not([aria-haspopup='menu'])")]
+      const item = items.find(candidate => candidate.hasAttribute('aria-keyshortcuts')) ?? items[0]
+      if (item !== undefined && !item.disabled) {
+        item.click()
+        // The dialog mounts on the host's next render; poll briefly (timers, not
+        // animation frames, so a backgrounded page still settles).
+        let waited = 0
+        const settle = (): void => {
+          if (document.querySelector(SETTINGS_DIALOG) !== null || ++waited >= 12) finishSettingsLaunch()
+          else settingsLaunchTimer = window.setTimeout(settle, 30)
+        }
+        settingsLaunchTimer = window.setTimeout(settle, 30)
+      } else if (++frames < 12) settingsLaunchTimer = window.setTimeout(pick, 30)
+      else {
+        if (launcher.getAttribute('aria-expanded') === 'true') launcher.click()
+        finishSettingsLaunch()
+      }
+    }
+    settingsLaunchTimer = window.setTimeout(pick, 30)
+  }
+  ctx.effect(() => () => {
+    window.clearTimeout(settingsLaunchTimer)
+    body.removeAttribute(SETTINGS_LAUNCH_ATTRIBUTE)
+  })
   const openNewSession = (): void => {
     closeStartMenu()
     sfx.play('commandExecute')
@@ -4652,22 +4830,23 @@ export function apply(ctx: Context): void {
     const sessionList = sessionService.list.getSnapshot()
     const workspaceList = workspaceService.list.getSnapshot()
     const loading = sessionList.phase === 'pending'
+    const currentId = currentSessionId(sessionList)
     const archived = new Set(workspaceList.archivedSessionIds ?? [])
     const accounted = new Set<string>()
     const visible = (summary: SessionSummary): boolean => summary.origin !== 'subagent'
       && !archived.has(summary.id)
-      && (summary.blank !== true || summary.id === sessionList.current)
+      && (summary.blank !== true || summary.id === currentId)
     const projectSession = (summary: SessionSummary): SaveSessionProjection => {
       const status = saveStatusFromSummary(summary)
       return {
         id: summary.id,
         title: summary.blank === true ? t('新会话') : (summary.displayTitle || t('未命名会话')),
-        current: summary.id === sessionList.current,
+        current: summary.id === currentId,
         ...(status === undefined ? {} : { status }),
         ...((summary.projectionValues?.schedule?.length ?? 0) > 0 ? { scheduled: true } : {}),
         open: () => {
           sfx.play('commandExecute')
-          sessionService.open(summary.id)
+          ;(ctx.get('uiWorkspace') as UiWorkspaceBridge | undefined)?.openSession(summary.id)
         },
       }
     }
@@ -4833,7 +5012,7 @@ export function apply(ctx: Context): void {
         button.title = annotations.length === 0 ? title : `${title} · ${annotations.join(' · ')}`
         const iconWrap = element('span', css.saveFileIconWrap ?? '')
         const image = element('img', css.saveFileIcon ?? '')
-        image.src = NGO_SAVE_FILE.dataUri
+        image.src = NGO_SAVE_FILE.url
         image.alt = ''
         iconWrap.append(image)
         if (status !== undefined) {
@@ -4890,7 +5069,7 @@ export function apply(ctx: Context): void {
     if (body.hasAttribute(START_ATTRIBUTE)) surfaces.startShutdownButton.setAttribute('data-shutdown-dodged', '')
   }
   const closeOfficialSettings = (): void => {
-    const dialog = document.querySelector("[data-slot='sidebar.settings'] [role='dialog']")
+    const dialog = document.querySelector(SETTINGS_DIALOG)
     const buttons = dialog === null ? [] : [...dialog.querySelectorAll<HTMLButtonElement>('button')]
     buttons.find(button => /关闭|Close/i.test(button.getAttribute('aria-label') ?? '')
       || ['关闭', 'Close', '×', 'X'].includes(normalizedText(button)))?.click()
@@ -4992,15 +5171,9 @@ export function apply(ctx: Context): void {
   const onSettingsRangeInput = (event: Event): void => {
     const target = event.target
     if (target instanceof HTMLInputElement && target.type === 'range'
-      && target.closest("[data-slot='sidebar.settings']") !== null) {
+      && target.closest(`${SETTINGS_DIALOG}, ${MAIN_PANEL}, [data-sidebar-right-panel]`) !== null) {
       applyRangeFill(target)
       sfx.play('per')
-    }
-  }
-  const onLiveControlClick = (event: MouseEvent): void => {
-    const target = event.target
-    if (target instanceof Element && target.closest('[data-live-action="latest"]') !== null) {
-      sfx.play('poko')
     }
   }
   const onSaveTreeClick = (event: MouseEvent): void => {
@@ -5262,7 +5435,6 @@ export function apply(ctx: Context): void {
   document.addEventListener('pointerdown', onDesktopPointerDown)
   document.addEventListener('click', onComposerBlankClick)
   document.addEventListener('input', onSettingsRangeInput, true)
-  document.addEventListener('click', onLiveControlClick, true)
   document.addEventListener('click', onSaveTreeClick, true)
   document.addEventListener('click', onQuestionClick)
   document.addEventListener('input', onQuestionInput, true)
@@ -5287,6 +5459,13 @@ export function apply(ctx: Context): void {
   let lastPoketterPostCount = -1
   let lastQuestionKey = ''
   const syncProjectionSounds = (): void => {
+    // History that loads while the opening/restart boot owns the screen is
+    // baselined silently: on a cold start the skin mounts before the session
+    // list and transcript arrive, and the empty sessionStorage ledger would
+    // otherwise announce them as new JINE messages under the BIOS.
+    const muted = lightModeLock.isRebooting()
+    const play = (name: SfxName): void => { if (!muted) sfx.play(name) }
+    const notice = (...args: Parameters<typeof showDesktopNotice>): void => { if (!muted) showDesktopNotice(...args) }
     const turns = collectConversationTurns()
     const conversation = conversationNoticeSnapshot(turns)
     const previousConversation = lastConversationNotice
@@ -5310,8 +5489,8 @@ export function apply(ctx: Context): void {
       && conversation.finalText !== ''
       && conversationEventIsNew
       && (!lastConversationNotice.complete || lastConversationNotice.finalText !== conversation.finalText)) {
-      sfx.play('jineReceive')
-      showDesktopNotice('complete', conversation.finalText, 'jine')
+      play('jineReceive')
+      notice('complete', conversation.finalText, 'jine')
     }
     lastConversationNotice = conversation
 
@@ -5323,8 +5502,8 @@ export function apply(ctx: Context): void {
       if (initialized && eventIsNew && newlyCompleted === undefined) newlyCompleted = entry
     }
     if (newlyCompleted !== undefined) {
-      sfx.play('jineReceive')
-      showDesktopNotice('complete', () => t("{0} 已完成", newlyCompleted[1]), 'jine')
+      play('jineReceive')
+      notice('complete', () => t("{0} 已完成", newlyCompleted[1]), 'jine')
     }
     lastCompletedSessions = completedSessions
 
@@ -5333,8 +5512,8 @@ export function apply(ctx: Context): void {
       ? rememberProjectionSoundEvent('question', `${conversation.sessionKey}\u0000${questionKey}`)
       : false
     if (!sessionChanged && questionKey !== '' && questionKey !== lastQuestionKey && questionEventIsNew) {
-      sfx.play('jineReceive')
-      showDesktopNotice('question', () => t('糖糖正在等你回复，点击打开 JINE。'), 'jine')
+      play('jineReceive')
+      notice('question', () => t('糖糖正在等你回复，点击打开 JINE。'), 'jine')
     } else if (questionKey === '' && lastQuestionKey !== '') {
       if (unreadJineNotice?.kind === 'question') unreadJineNotice = undefined
       if (surfaces.desktopNotice.dataset.noticeKind === 'question') clearDesktopNotice()
@@ -5345,9 +5524,9 @@ export function apply(ctx: Context): void {
     const postEventIsNew = postCount > 0
       ? rememberProjectionSoundEvent('poketter-post-count', `${conversation.sessionKey}\u0000${postCount}`)
       : false
-    if (lastPoketterPostCount === -1 && postCount > 0 && postEventIsNew) sfx.play('tweetLoad')
+    if (lastPoketterPostCount === -1 && postCount > 0 && postEventIsNew) play('tweetLoad')
     else if (lastPoketterPostCount >= 0 && postCount > lastPoketterPostCount && postEventIsNew) {
-      sfx.play('tweetChangeTop')
+      play('tweetChangeTop')
     }
     lastPoketterPostCount = postCount
   }
@@ -5447,12 +5626,13 @@ export function apply(ctx: Context): void {
     const model = projectSubagentView(sessions)
     if (model.parentSessionId !== observedSubagentParent) {
       if (observedSubagentParent !== undefined) {
-        sessions.setSubagentCatalogOpen(observedSubagentParent, false)
+        sessions.setSubagentCatalogOpen?.(observedSubagentParent, false)
       }
       observedSubagentParent = model.parentSessionId
       if (observedSubagentParent !== undefined) {
-        sessions.setSubagentCatalogOpen(observedSubagentParent, true)
-        void sessions.refreshSubagents(observedSubagentParent)
+        sessions.setSubagentCatalogOpen?.(observedSubagentParent, true)
+        if (sessions.refreshSubagents !== undefined) void sessions.refreshSubagents(observedSubagentParent)
+        else void sessions.refreshProjections?.(observedSubagentParent)
       }
     }
     renderJineSessionMenu(surfaces.jineSessionMenu, model)
@@ -5480,6 +5660,7 @@ export function apply(ctx: Context): void {
   const syncSessionServices = (): void => {
     syncObservedSubagentCatalog()
     syncSaveProjection()
+    explorerController?.sessionChanged()
   }
   ctx.inject(['sessions', 'workspaces'], (serviceCtx: Context) => {
     const boundSessions = serviceCtx.get('sessions') as SessionsBridge
@@ -5493,7 +5674,7 @@ export function apply(ctx: Context): void {
       disposeSessionList()
       disposeWorkspaceList()
       if (sessions === boundSessions && observedSubagentParent !== undefined) {
-        boundSessions.setSubagentCatalogOpen(observedSubagentParent, false)
+        boundSessions.setSubagentCatalogOpen?.(observedSubagentParent, false)
         observedSubagentParent = undefined
         projectedSubagentIdentity = undefined
       }
@@ -5510,7 +5691,7 @@ export function apply(ctx: Context): void {
     if (sessions === undefined) return
     const rootSessionId = target.dataset.subagentRoot
     if (rootSessionId !== undefined) {
-      if (rootSessionId !== '') sessions.open(rootSessionId)
+      if (rootSessionId !== '') (ctx.get('uiWorkspace') as UiWorkspaceBridge | undefined)?.openSession(rootSessionId)
       closeJineSessionMenu()
       return
     }
@@ -5519,7 +5700,9 @@ export function apply(ctx: Context): void {
     const childSessionId = target.dataset.subagentChild
     const mode = target.dataset.subagentMode
     if (childSessionId !== undefined && (mode === 'one-shot' || mode === 'continuable')) {
-      sessions.openSubagent({ parentSessionId, childSessionId, mode })
+      const address: SubagentAddress = { parentSessionId, childSessionId, mode }
+      if (sessions.openSubagent !== undefined) sessions.openSubagent(address)
+      else (ctx.get('uiWorkspace') as UiWorkspaceBridge | undefined)?.openSession(address)
     }
     closeJineSessionMenu()
   }
@@ -5560,15 +5743,34 @@ export function apply(ctx: Context): void {
   document.addEventListener('pointerdown', closeJineSessionMenuFromOutside)
   let settingsDialogPresent = false
   const syncSettingsWindow = (): void => {
-    const present = document.querySelector("[data-slot='sidebar.settings'] [role='dialog']") !== null
+    const present = document.querySelector(SETTINGS_DIALOG) !== null
     body.toggleAttribute(SETTINGS_ATTRIBUTE, present)
     if (present !== settingsDialogPresent) windowManager.setOpen('settings', present)
     settingsDialogPresent = present
     windowManager.refresh('settings')
-    document.querySelectorAll<HTMLInputElement>("[data-slot='sidebar.settings'] input[type='range']")
+    document.querySelectorAll<HTMLInputElement>(`${SETTINGS_DIALOG} input[type='range']`)
       .forEach(applyRangeFill)
     lightModeLock.syncSettings()
   }
+  // Settings portals beside #root in rc.2. Observe only its current subtree;
+  // desktop animation and streaming mutations must not enter this callback.
+  const settingsObserver = new MutationObserver(syncSettingsWindow)
+  let observedSettings: Element | null = null
+  const watchSettingsPortal = (): void => {
+    const dialog = document.querySelector(SETTINGS_DIALOG)
+    if (dialog === observedSettings) return
+    settingsObserver.disconnect()
+    observedSettings = dialog
+    if (dialog !== null) settingsObserver.observe(dialog, {
+      childList: true, subtree: true, attributes: true,
+      attributeFilter: ['aria-current', 'aria-checked'],
+    })
+    syncSettingsWindow()
+  }
+  const settingsMountObserver = new MutationObserver(watchSettingsPortal)
+  ctx.effect(() => () => { settingsObserver.disconnect(); settingsMountObserver.disconnect() })
+  settingsMountObserver.observe(body, { childList: true })
+  watchSettingsPortal()
   let todoSourcePresent: boolean | undefined
   let goalSourcePresent: boolean | undefined
   const syncTodoWindow = (): void => {
@@ -5773,6 +5975,7 @@ export function apply(ctx: Context): void {
       }
     }
     questionTranscriptLedger.sync()
+    syncPluginsWindow()
     syncSettingsWindow()
     if (relevantMutations.some(mutationTouchesConnection)) syncConnectionSurface()
     syncTaskManagerStats()
@@ -5890,7 +6093,7 @@ export function apply(ctx: Context): void {
     windowManager.dispose()
     observer.disconnect()
     if (sessions !== undefined && observedSubagentParent !== undefined) {
-      sessions.setSubagentCatalogOpen(observedSubagentParent, false)
+      sessions.setSubagentCatalogOpen?.(observedSubagentParent, false)
     }
     saveWindowStateObserver.disconnect()
     disposeJineStretch()
@@ -5926,7 +6129,6 @@ export function apply(ctx: Context): void {
     document.removeEventListener('dragstart', onSkinDragStart, true)
     surfaces.scene.removeEventListener('dragstart', onSkinDragStart, true)
     document.removeEventListener('input', onSettingsRangeInput, true)
-    document.removeEventListener('click', onLiveControlClick, true)
     document.removeEventListener('click', onSaveTreeClick, true)
     document.removeEventListener('click', onQuestionClick)
     document.removeEventListener('input', onQuestionInput, true)

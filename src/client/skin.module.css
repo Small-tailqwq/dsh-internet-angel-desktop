@@ -14,6 +14,10 @@ body[data-dsh-internet-angel-desktop] {
   --ngo-ink: #3716b1;
   --ngo-shadow: #b676db;
   --ngo-taskbar-height: 48px;
+  /* The DSH Windows desktop keeps its caption row (window drag, 应用/编辑
+   * menu, native caption buttons) above the page; the desktop starts below. */
+  --ngo-chrome-top: 0px;
+  --ngo-caption-fill: #f7e1fb;
   --ngo-side-width: clamp(96px, 12.604vw, 242px);
   /* Unity's 1920x1080 desktop baseline, scaled without changing aspect. */
   --ngo-webcam-width: min(37.2917vw, 66.2963vh, 716px);
@@ -34,8 +38,8 @@ body[data-dsh-internet-angel-desktop] {
   --ngo-jine-feed-bottom: 170px;
   --ngo-task-manager-width: min(calc((100vw - var(--ngo-side-width) * 2) * 0.2785515), 37.037vh);
   --ngo-task-manager-height: min(calc((100vw - var(--ngo-side-width) * 2) * 0.2486072), 33.0556vh);
-  --ngo-control-panel-width: min(35.4167vw, 62.963vh, 680px);
-  --ngo-control-panel-height: min(36.4583vw, 64.8148vh, 700px);
+  --ngo-control-panel-width: min(960px, calc(100vw - 2 * var(--ngo-side-width) - 32px));
+  --ngo-control-panel-height: min(780px, calc(100vh - var(--ngo-chrome-top) - var(--ngo-taskbar-height) - 80px));
   --ngo-todo-width: min(23.9583vw, 42.5926vh, 460px);
   --ngo-todo-height: min(23.4375vw, 41.6667vh, 450px);
   --ngo-settings-layer: 90;
@@ -50,7 +54,7 @@ body[data-dsh-internet-angel-desktop] {
   --dsw-alias-label-primary: #28105f !important;
   --dsw-alias-border-l1: #9c6ee9 !important;
   --dsw-alias-border-l2: #744ce0 !important;
-  --dsw-specific-sidebar-fill: var(--ngo-pink) !important;
+  --dsw-specific-sidebar-fill: var(--ngo-caption-fill) !important;
 
   margin: 0;
   overflow: hidden;
@@ -132,15 +136,53 @@ body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$
   background: transparent !important;
 }
 
-body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$='_frame'] > [class$='_detailsCol'],
+/* 0.2.0 Windows desktop caption row. The host's frame::before is the window
+ * drag band; the frame itself is display: contents here, so the band is
+ * re-anchored to the viewport and painted as the desktop's top bar (mirroring
+ * the taskbar) above the side scenes. The desktop below starts at
+ * --ngo-chrome-top, so no skin window sits inside the drag geometry. */
+html[data-windows-titlebar]:not([data-fullscreen]) body[data-dsh-internet-angel-desktop] {
+  --ngo-chrome-top: var(--dsh-windows-titlebar-height, 0px);
+}
+
+html[data-windows-titlebar]:not([data-fullscreen]) body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$='_frame']::before {
+  position: fixed;
+  z-index: 330;
+  inset: 0 0 auto;
+  height: var(--ngo-chrome-top);
+  background: linear-gradient(to top, #8f67d5 0 1px, #fff 1px 3px, var(--ngo-caption-fill) 3px 100%);
+}
+
+html[data-windows-titlebar][data-fullscreen] body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$='_frame']::before {
+  display: none;
+}
+
+/* macOS desktop marks every [data-window-drag] as a native window drag row;
+ * the skin's own window title bars reuse that attribute for in-page moves. */
+body[data-dsh-internet-angel-desktop] [data-skin-chrome='scene'] [data-window-drag] {
+  -webkit-app-region: no-drag;
+}
+
+/* The host's 应用 / 编辑 menubar (a shadow host in body) reads these tokens;
+ * the sidebar it normally follows is hidden in this skin. */
+body[data-dsh-internet-angel-desktop] > [data-windows-menu] {
+  --dsh-windows-menu-start: 8px;
+  --dsw-alias-label-secondary: var(--ngo-ink);
+  --dsw-alias-label-primary: var(--ngo-purple);
+  --dsw-alias-interactive-bg-hover: rgb(81 39 255 / 14%);
+  --dsw-alias-state-business-primary: var(--ngo-purple);
+}
+
 body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$='_frame'] > [class$='_handle'],
 body[data-dsh-internet-angel-desktop] [data-plugin-surface],
 body[data-dsh-internet-angel-desktop] [class~='dsh-glass-quick'] {
   display: none !important;
 }
 
-body[data-dsh-internet-angel-desktop] [data-slot='conversation'],
-body[data-dsh-internet-angel-desktop] [data-slot='conversation'] > [data-phase] {
+body[data-dsh-internet-angel-desktop] [data-slot='main']:has(> [data-slot='main.conversation']),
+body[data-dsh-internet-angel-desktop] [data-slot='main.conversation'],
+body[data-dsh-internet-angel-desktop] [data-slot='main.conversation'] > [data-phase],
+body[data-dsh-internet-angel-desktop] [data-slot='main'] [data-conversation-content] {
   position: static !important;
   inset: auto !important;
   z-index: auto !important;
@@ -155,6 +197,32 @@ body[data-dsh-internet-angel-desktop] [data-conversation-scroll] {
   background: transparent !important;
 }
 
+/* The native main page follows the managed desktop app frame in place. */
+body[data-dsh-internet-angel-desktop] [data-slot='main']:not(:has(> [data-slot='main.conversation'])) {
+  /* 0.2.0 publishes the Windows caption as frame clearance; entry pages pad by
+     it, but this follower already sits inside a window below the caption. */
+  --dsh-frame-top-clearance: 0px;
+  position: fixed;
+  inset: auto;
+  z-index: var(--ngo-plugins-layer, 101);
+  display: flex !important;
+  flex-direction: column;
+  min-width: 0;
+  overflow: auto;
+  border: 0;
+  color: var(--ngo-ink);
+  background: var(--ngo-pink-soft);
+  box-shadow: none;
+  pointer-events: auto;
+  --dsw-radius-panel: 0px;
+  --dsw-radius-card: 0px;
+}
+
+body[data-dsh-internet-angel-desktop] [data-slot='conversation.chat.navigation'],
+body[data-dsh-internet-angel-desktop] [data-conversation-content] [data-width-handle] {
+  display: none !important;
+}
+
 body[data-dsh-internet-angel-desktop] [data-slot='conversation.view'],
 body[data-dsh-internet-angel-desktop] [data-phase='hero'] [class*='heroGlow'],
 body[data-dsh-internet-angel-desktop] [data-phase='hero'] [class*='headline'] {
@@ -162,7 +230,7 @@ body[data-dsh-internet-angel-desktop] [data-phase='hero'] [class*='headline'] {
 }
 
 /* The official transcript is the live projection source, not the visible layout. */
-body[data-dsh-internet-angel-desktop] [data-chat-flow] {
+body[data-dsh-internet-angel-desktop] [data-chat-flow]:not([data-step-process-content]) {
   position: fixed !important;
   inset: 0 auto auto -20000px !important;
   width: 900px !important;
@@ -176,13 +244,13 @@ body[data-dsh-internet-angel-desktop] [data-testid='todo-panel'] {
   display: none !important;
 }
 
-/* alpha.2 owns the schedule catalog in the otherwise hidden session header.
+/* The host owns the schedule catalog in the otherwise hidden resident header.
  * Keep its React node in place and expose only that host-owned action. */
 body[data-dsh-internet-angel-desktop] [data-slot='conversation.session.header'] {
   display: contents !important;
 }
 
-body[data-dsh-internet-angel-desktop] [data-slot='conversation.session.header'] > header {
+body[data-dsh-internet-angel-desktop] [data-slot='conversation.header'] > header {
   position: fixed !important;
   inset: auto !important;
   width: 0 !important;
@@ -392,12 +460,26 @@ body[data-dsh-internet-angel-desktop] [data-question-key] > section > header h2 
 }
 
 body[data-dsh-internet-angel-desktop] [data-question-key] > section > header button {
-  width: 20px !important;
   height: 20px !important;
   border: 1px solid #7650d4 !important;
   border-radius: 0 !important;
   color: #4d21cb !important;
   background: #edfaff !important;
+}
+
+/* Icon controls carry aria-label; 0.2.0's timed-question "take time" button is text. */
+body[data-dsh-internet-angel-desktop] [data-question-key] > section > header button[aria-label] {
+  width: 20px !important;
+}
+
+body[data-dsh-internet-angel-desktop] [data-question-key] > section > header button:not([aria-label]) {
+  width: auto !important;
+  min-height: 0 !important;
+  padding: 0 6px !important;
+  font-family: var(--ngo-pixel-font) !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  white-space: nowrap;
 }
 
 body[data-dsh-internet-angel-desktop] [data-question-scroll] {
@@ -832,7 +914,7 @@ body[data-dsh-internet-angel-desktop] [data-ngo-bright-tooltip-popup] img {
   /* Windows pass behind the side scenes; desktop notices, Start and the
    * taskbar remain above both. Window manager layers currently end at 220. */
   z-index: 300;
-  top: 0;
+  top: var(--ngo-chrome-top);
   bottom: 0;
   width: var(--ngo-side-width);
   background: var(--ngo-side-default) center / cover no-repeat;
@@ -1156,7 +1238,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-side-transition='day-release'] .s
 
 .liveWindow {
   z-index: 25;
-  top: 6vh;
+  top: calc(var(--ngo-chrome-top) + 6vh);
   left: 17vw;
   width: var(--ngo-webcam-width);
   height: var(--ngo-webcam-height);
@@ -1275,36 +1357,9 @@ body[data-dsh-internet-angel-desktop] .webcamHeadHitbox:focus-visible {
   animation: webcam-smile-happy 8417ms steps(1, end) infinite;
 }
 
-.liveFeed {
-  position: absolute;
-  z-index: 3;
-  inset: 48px 18px 18px 46%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 7px;
-  overflow: hidden;
-}
-
-.liveComment {
-  overflow: hidden;
-  padding: 5px 7px;
-  border-left: 4px solid var(--ngo-cyan);
-  color: #4b24a9;
-  background: rgb(255 245 255 / 82%);
-  font-size: clamp(11px, 0.9vw, 14px);
-  line-height: 1.35;
-  text-overflow: ellipsis;
-}
-
-.liveRunning {
-  border-left-color: #ff2ca8;
-  animation: live-blink 800ms steps(2, jump-none) infinite;
-}
-
 .tweetWindow {
   z-index: 45;
-  top: 3vh;
+  top: calc(var(--ngo-chrome-top) + 3vh);
   right: calc(var(--ngo-side-width) + 1vw);
   width: var(--ngo-poketter-width);
   height: var(--ngo-poketter-height);
@@ -1370,10 +1425,10 @@ body[data-dsh-internet-angel-desktop] .webcamHeadHitbox:focus-visible {
 
 .internetWindow {
   z-index: 64;
-  top: 35vh;
-  left: calc(var(--ngo-side-width) + (100vw - var(--ngo-side-width) * 2) * 0.12465);
+  top: calc(var(--ngo-chrome-top) + 30vh);
+  left: calc(var(--ngo-side-width) + (100vw - var(--ngo-side-width) * 2) * 0.2);
   width: var(--ngo-internet-width);
-  height: var(--ngo-internet-height);
+  height: min(var(--ngo-internet-height), 460px);
 }
 
 .internetWindow .windowBody {
@@ -1397,66 +1452,6 @@ body[data-dsh-internet-angel-desktop] .webcamHeadHitbox:focus-visible {
   padding: clamp(10px, 1.1vw, 18px);
   color: var(--ngo-ink);
   background: rgb(255 247 255 / 88%);
-}
-
-.internetHeading {
-  margin: 0;
-  padding-bottom: 7px;
-  border-bottom: 2px solid var(--ngo-purple);
-  color: var(--ngo-purple);
-  font-size: clamp(20px, 1.75vw, 30px);
-  letter-spacing: 1px;
-}
-
-.internetIntro {
-  margin: 0;
-  color: #7549bf;
-  font-size: clamp(12px, 0.8vw, 14px);
-  line-height: 1.45;
-}
-
-.internetOfficial {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 9px 12px;
-  border: 2px solid var(--ngo-purple);
-  color: #fff;
-  background: var(--ngo-purple);
-  box-shadow: inset -3px -3px 0 var(--ngo-purple-dark), inset 3px 3px 0 #a991ff;
-  font-size: clamp(13px, 0.9vw, 16px);
-  line-height: 1.3;
-  text-align: center;
-  text-decoration: none;
-  image-rendering: pixelated;
-  pointer-events: auto;
-}
-
-.internetOfficialMark {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.internetOfficialCopy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.internetOfficialCopy small {
-  margin-top: 2px;
-  font-size: 0.72em;
-  font-weight: 400;
-}
-
-.internetOfficial:hover,
-.internetOfficial:focus-visible {
-  color: var(--ngo-purple);
-  background: #ffccf1;
-  box-shadow: inset -3px -3px 0 #da86cf, inset 3px 3px 0 #fff4ff;
-  outline: 2px dotted var(--ngo-purple);
-  outline-offset: -6px;
 }
 
 .internetSearch {
@@ -1613,6 +1608,12 @@ body[data-dsh-internet-angel-desktop] .webcamHeadHitbox:focus-visible {
     inset 0 0 0 1px #fff,
     inset 0 0 0 2px #4d21cb,
     0 0 0 1px #ff8dcb;
+}
+
+.jineSearchToggle {
+  /* Same 10-unit outline sprite as minimize / maximize / close (20px, 2px
+   * strokes in the frame purple), with a magnifier in place of the glyph. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' shape-rendering='crispEdges'%3E%3Cpath fill='%234d23cf' d='M0 0h10v1H0zM0 1h1v1H0zM9 1h1v1H9zM0 2h1v1H0zM2 2h4v1H2zM9 2h1v1H9zM0 3h1v1H0zM2 3h1v1H2zM5 3h1v1H5zM9 3h1v1H9zM0 4h1v1H0zM2 4h1v1H2zM5 4h1v1H5zM9 4h1v1H9zM0 5h1v1H0zM2 5h4v1H2zM9 5h1v1H9zM0 6h1v1H0zM6 6h1v1H6zM9 6h1v1H9zM0 7h1v1H0zM7 7h1v1H7zM9 7h1v1H9zM0 8h1v1H0zM9 8h1v1H9zM0 9h10v1H0z'/%3E%3C/svg%3E");
 }
 
 .jineSessionMenu {
@@ -1964,17 +1965,293 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
   50% { filter: brightness(1.15); }
 }
 
-.picturesWindow {
-  top: 8vh;
-  left: 24vw;
-  width: min(52vw, 60vh, 760px);
-  height: min(66vh, 78vh, 620px);
+.computerWindow {
+  top: calc(var(--ngo-chrome-top) + 8vh);
+  left: calc(var(--ngo-side-width) + 6vw);
+  width: min(calc(100vw - 2 * var(--ngo-side-width) - 12vw), 860px);
+  height: min(72vh, 620px);
 }
 
-.picturesWindow [class*='windowBody'] {
+/* 「此电脑」: explorer anatomy (toolbar, address bar, places pane, view,
+ * status bar) drawn in the desktop's own window language — flat fills, hard
+ * 1-2px purple rules, square pixel keys — like the Task Manager and Save. */
+.explorer {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 0;
+  min-height: 0;
+  color: var(--ngo-ink);
+  background: var(--ngo-pink-soft);
+  font-family: var(--ngo-pixel-font);
+  font-size: 13px;
+}
+
+.explorerToolbar {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  padding: 4px 6px;
+  border-bottom: 2px solid #7650d4;
+  background: #f7e1fb;
+}
+
+.explorerTool {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 8px 0 3px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: var(--ngo-ink);
+  background: transparent;
+  font: inherit;
+  cursor: var(--ngo-cursor) 0 0, default;
+}
+
+.explorerTool:enabled:hover {
+  border-color: #7650d4;
+  background: #fff1ff;
+}
+
+.explorerTool:enabled:active {
+  background: #e8d2f4;
+  transform: translate(1px, 1px);
+}
+
+.explorerTool:disabled {
+  color: #b39fd2;
+}
+
+.explorerToolGlyph {
+  display: block;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #34316a;
+  background: var(--ngo-purple);
+}
+
+.explorerToolGlyph > img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.explorerTool[data-explorer-action='up'] .explorerToolGlyph,
+.explorerTool[data-explorer-action='refresh'] .explorerToolGlyph {
+  background: #fb7dd2;
+}
+
+.explorerTool:disabled .explorerToolGlyph {
+  border-color: #a58bd0;
+  background: #d7c4ee;
+}
+
+.explorerAddressRow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-bottom: 1px solid #b676db;
+  background: #fff1ff;
+}
+
+.explorerAddressLabel {
+  color: #7650d4;
+}
+
+.explorerAddress {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  padding: 2px 6px;
+  border: 1px solid #7650d4;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 #d7adea;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: text;
+}
+
+.explorerMain {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(140px, 28%) 1fr;
+}
+
+.explorerPane {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px;
+  border-right: 2px solid #7650d4;
+  background: #e8d2f4;
+  scrollbar-color: #7650d4 #efd5f6;
+  scrollbar-width: thin;
+}
+
+.explorerPaneGroup {
+  border: 1px solid #7650d4;
+  background: #fff1ff;
+  box-shadow: 2px 2px 0 rgb(81 39 255 / 22%);
+}
+
+.explorerPaneTitle {
+  margin: 0;
+  padding: 4px 8px 3px;
+  color: #fff;
+  background: #7650d4;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.explorerPlace {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 0;
+  color: var(--ngo-ink);
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: var(--ngo-cursor) 0 0, pointer;
+}
+
+.explorerPlace:hover,
+.explorerPlace:focus-visible {
+  outline: none;
+  color: var(--ngo-purple);
+  background: #f4d8ff;
+}
+
+.explorerPlace[aria-current='true'] {
+  color: var(--ngo-purple);
+  background: #bdf6ff;
+  box-shadow: inset 2px 0 0 var(--ngo-purple);
+}
+
+.explorerPlaceIcon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  image-rendering: pixelated;
+}
+
+.explorerView {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fffaff;
+}
+
+.explorerList {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  align-content: start;
+  gap: 2px 8px;
+  overflow-y: auto;
+  padding: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  scrollbar-color: #7650d4 #efd5f6;
+  scrollbar-width: thin;
+}
+
+.explorerItem {
+  display: grid;
+  align-items: center;
+  gap: 0 6px;
+  min-width: 0;
+  padding: 3px 4px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: var(--ngo-ink);
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: auto auto;
+  cursor: var(--ngo-cursor) 0 0, default;
+}
+
+.explorerItemIcon {
+  width: 32px;
+  height: 32px;
+  grid-row: 1 / 3;
+  image-rendering: pixelated;
+}
+
+.explorerItemName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.explorerItemMeta {
+  color: #8475a6;
+  font-size: 12px;
+}
+
+.explorerItem:hover {
+  border-color: #b676db;
+  background: #fff1ff;
+}
+
+.explorerItem[aria-selected='true'] {
+  border-color: #3716b1;
+  color: #fff;
+  background: var(--ngo-purple);
+}
+
+.explorerItem[aria-selected='true'] .explorerItemMeta {
+  color: #e4d4ff;
+}
+
+.explorerItem:focus-visible {
+  outline: 1px dotted var(--ngo-purple);
+  outline-offset: -2px;
+}
+
+/* Empty / loading / error states sit in the middle of the view instead of
+ * below an empty list. */
+.explorerMessage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 18px 12px;
+  color: #9866bd;
+  text-align: center;
+  place-items: center;
+  pointer-events: none;
+}
+
+.explorerMessage[hidden] {
+  display: none;
+}
+
+.explorerStatus {
+  flex: none;
+  min-height: 20px;
+  padding: 2px 8px;
+  border-top: 2px solid #7650d4;
+  color: var(--ngo-ink);
+  background: #f7e1fb;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.explorer[data-explorer-place='pictures'] :is(.explorerList, .explorerMessage),
+.explorer[data-explorer-place='workspace'] :is(.pictureGrid, .pictureEmpty) {
+  display: none !important;
 }
 
 .pictureGrid {
@@ -2019,7 +2296,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
 
 /* ImageViewer 700x480 (apps_table), black stage, 1s reveal (ImageViewer.cs). */
 .imageViewerWindow {
-  top: min(29vh, 300px);
+  top: calc(var(--ngo-chrome-top) + min(29vh, 300px));
   left: calc(50% - min(26vw, 30vh, 380px));
   width: min(52vw, 60vh, 700px);
   height: min(36.4583vw, 42vh, 480px);
@@ -2063,10 +2340,10 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
  * line is the only DSH-specific addition inside each original DataPrefab. */
 .saveWindow {
   z-index: 85;
-  top: 8vh;
+  top: calc(var(--ngo-chrome-top) + 8vh);
   left: 15.625vw;
   width: min(68.2813vw, 1311px);
-  height: min(82.6283vh, 918px);
+  height: min(calc(82.6283vh - var(--ngo-chrome-top)), 918px);
   min-width: 680px;
   min-height: 520px;
 }
@@ -2531,7 +2808,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
 
 .todoWindow {
   z-index: 58;
-  top: 16vh;
+  top: calc(var(--ngo-chrome-top) + 16vh);
   left: calc(var(--ngo-side-width) + 34vw);
   width: var(--ngo-todo-width);
   height: var(--ngo-todo-height);
@@ -2544,7 +2821,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
 
 .pomodoroWindow {
   z-index: 59;
-  top: 22vh;
+  top: calc(var(--ngo-chrome-top) + 22vh);
   left: calc(var(--ngo-side-width) + 42vw);
   width: 430px;
   height: 390px;
@@ -2916,7 +3193,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
 
 .statusWindow {
   z-index: 55;
-  top: 1.85185vh;
+  top: calc(var(--ngo-chrome-top) + 1.85185vh);
   right: var(--ngo-side-width);
   width: var(--ngo-task-manager-width);
   height: var(--ngo-task-manager-height);
@@ -3242,13 +3519,301 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
 .shortcuts {
   position: fixed;
   z-index: 80;
-  top: 5vh;
+  top: calc(var(--ngo-chrome-top) + 5vh);
   left: calc(var(--ngo-side-width) + 18px);
   display: flex;
   width: 82px;
   flex-direction: column;
+  flex-wrap: wrap;
+  max-height: calc(95vh - var(--ngo-chrome-top) - var(--ngo-taskbar-height) - 12px);
   gap: 19px;
   pointer-events: auto;
+}
+
+/* Native app content stays in its session-owned React seats. Float geometry,
+ * dragging, resizing and process cleanup remain owned by the host dock kit. */
+body[data-dsh-internet-angel-desktop] [data-rightbar-col] {
+  display: contents !important;
+}
+
+body[data-dsh-internet-angel-desktop] [data-sidebar-right-panel] {
+  position: absolute;
+  inset: 64px calc(var(--ngo-side-width) + 12px) 80px auto;
+  width: min(720px, calc(100vw - 2 * var(--ngo-side-width) - 24px)) !important;
+  pointer-events: none;
+  --dsh-dockkit-dock-layer: 89;
+  --dsh-dockkit-float-layer: 90;
+}
+
+body[data-dsh-internet-angel-desktop][data-ngo-native-foreground] [data-sidebar-right-panel] {
+  --dsh-dockkit-dock-layer: 240;
+  --dsh-dockkit-float-layer: 250;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-pane] {
+  box-sizing: border-box;
+  color: var(--ngo-ink);
+  background: var(--ngo-pink-soft);
+  border: 2px solid var(--ngo-purple);
+  border-radius: 0;
+  box-shadow: inset 2px 2px white, inset -2px -2px var(--ngo-shadow), 4px 4px 0 #5127ff40;
+}
+
+/* Native app floats wear the same nine-slice frame as the desktop's own
+ * windows (.window): the frame draws the title strip, the host header sits on
+ * it as the title row, and the page fills the frame's inner box. */
+body[data-dsh-internet-angel-desktop] [data-dockkit-float] {
+  box-sizing: border-box;
+  padding: 8px 14px 22px 8px;
+  color: var(--ngo-ink);
+  background: var(--ngo-pink-soft);
+  border: 0;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgb(81 39 255 / 12%);
+  font-family: var(--ngo-pixel-font);
+  font-synthesis: none;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float]::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 42px 14px 22px 70px;
+  border-image-source: var(--ngo-window-frame-inactive);
+  border-image-slice: 42 14 22 70;
+  border-image-width: 42px 14px 22px 70px;
+  border-image-repeat: stretch;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float][data-dockkit-float-active] {
+  box-shadow: 4px 4px 0 rgb(81 39 255 / 24%);
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float][data-dockkit-float-active]::before {
+  border-width: 42px 14px 22px 69px;
+  border-image-source: var(--ngo-window-frame);
+  border-image-slice: 42 14 22 69;
+  border-image-width: 42px 14px 22px 69px;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float] > :not([data-dockkit-float-resize]) {
+  position: relative;
+  z-index: 1;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float] > [data-dockkit-float-resize] {
+  z-index: 2;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] {
+  box-sizing: border-box;
+  height: 26px;
+  min-height: 26px;
+  margin: 0 6px 8px 0;
+  padding: 0;
+  gap: 0;
+  color: #8475a6;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: var(--ngo-cursor) 0 0, move !important;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-active] [data-dockkit-float-grip] {
+  color: var(--ngo-purple);
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-title] {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent !important;
+  font-family: var(--ngo-pixel-font);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* The title mark square of .titleMark. */
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-title]::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  margin: 0 11px 0 7px;
+  flex: 0 0 auto;
+  background: #9d8ab9;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-active] [data-dockkit-float-title]::before {
+  background: var(--ngo-purple);
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-title] :is(svg, img) {
+  display: none;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-title] * {
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header controls take the window-control artwork.
+ * !important: the shared control vocabulary below repaints every panel
+ * button (including :hover/:active backgrounds) with higher specificity. */
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button:is([data-dockkit-float-close], [data-dockkit-float-dock]) {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-left: 3px;
+  padding: 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px 20px !important;
+  image-rendering: pixelated;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button[data-dockkit-float-close] {
+  color: transparent !important;
+  background-image: var(--ngo-window-close) !important;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button[data-dockkit-float-close] svg {
+  visibility: hidden;
+}
+
+/* The dock control returns the float to the host's right sidebar column,
+ * which this desktop keeps collapsed: the window would just vanish (its
+ * taskbar item re-floats it). Desktop apps only float, so it is not offered. */
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button[data-dockkit-float-dock] {
+  display: none !important;
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button:is([data-dockkit-float-close], [data-dockkit-float-dock]):is(:hover, :focus-visible) {
+  filter: brightness(1.45) saturate(1.15);
+}
+
+body[data-dsh-internet-angel-desktop] [data-dockkit-float-grip] button:is([data-dockkit-float-close], [data-dockkit-float-dock]):active {
+  filter: brightness(0.78);
+  transform: translate(1px, 1px);
+}
+
+/* The page sits in the frame's inner box like .windowBody. */
+body[data-dsh-internet-angel-desktop] [data-dockkit-float] > :nth-child(2):not([data-dockkit-float-resize]) {
+  background: white;
+  box-shadow: inset 0 0 0 1px var(--ngo-shadow);
+}
+
+/* Terminal: the host's xterm DOM renderer paints rows in its own stack
+ * (ui-monospace, SFMono-Regular, Menlo, Consolas, monospace), none of which
+ * carries the Private Use Area glyphs of Nerd Font prompts (oh-my-posh,
+ * starship, powerlevel10k), so separators and icons render as boxes. The
+ * host's stack stays first so xterm's cell measurement is unchanged; locally
+ * installed Nerd Fonts are only fallbacks, Mono variants first to keep each
+ * icon inside one cell. */
+body[data-dsh-internet-angel-desktop] :global(.xterm) :global(.xterm-rows) {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Consolas,
+    'Symbols Nerd Font Mono', 'CaskaydiaCove Nerd Font Mono', 'CaskaydiaCove NFM',
+    'JetBrainsMono Nerd Font Mono', 'JetBrainsMono NFM', 'MesloLGS Nerd Font Mono', 'MesloLGS NF',
+    'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono', 'Symbols Nerd Font',
+    'CaskaydiaCove Nerd Font', 'JetBrainsMono Nerd Font', monospace;
+}
+
+/* One control vocabulary for Control Panel, Plugin Manager and native apps.
+ * Roles preserve switch/listbox semantics; terminal editor input is excluded. */
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) {
+  --dsw-radius-sm: 0px;
+  --dsw-radius-md: 0px;
+  --dsw-radius-lg: 0px;
+  --dsw-radius-card: 0px;
+  --dsw-radius-panel: 0px;
+  --dsw-alias-bg-base: var(--ngo-pink-soft);
+  --dsw-alias-bg-layer-1: #fffaff;
+  --dsw-alias-bg-layer-2: var(--ngo-pink);
+  --dsw-alias-interactive-bg-hover: var(--ngo-cyan);
+  --dsw-alias-label-secondary: #715696;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button {
+  border: 1px solid var(--ngo-shadow);
+  border-radius: 0 !important;
+  color: var(--ngo-ink);
+  background: var(--ngo-pink-soft);
+  box-shadow: inset 1px 1px white, inset -1px -1px #d7adea;
+  font-family: var(--ngo-pixel-font) !important;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button:enabled:hover {
+  background: var(--ngo-cyan);
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button:is(:active, [aria-current='true'], [aria-selected='true']) {
+  color: white;
+  background: var(--ngo-purple);
+  box-shadow: inset 1px 1px var(--ngo-purple-dark);
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) :is(button, input, select, textarea):focus-visible {
+  outline: 2px dotted var(--ngo-purple);
+  outline-offset: 2px;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) :is(button, input, select, textarea):disabled {
+  opacity: .5;
+  cursor: default;
+  box-shadow: none;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) :is(input:not([type='range']):not([type='checkbox']):not([type='radio']), select, textarea:not(:global(.xterm-helper-textarea)):not(:global(.inputarea))) {
+  border: 1px solid var(--ngo-shadow);
+  border-radius: 0 !important;
+  color: var(--ngo-ink);
+  background: #fffaff;
+  box-shadow: inset 1px 1px #d7adea;
+  font-family: var(--ngo-pixel-font);
+  accent-color: var(--ngo-purple);
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button[role='switch'] {
+  width: 38px;
+  height: 22px;
+  padding: 2px;
+  border: 1px solid var(--ngo-purple);
+  background: #dcc8ea !important;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button[role='switch'][aria-checked='true'] {
+  background: var(--ngo-purple) !important;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) button[role='switch'] > span {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  background: #fffaff;
+  box-shadow: inset -2px -2px #b676db;
+}
+
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel], [role='dialog']) input:is([type='checkbox'], [type='radio']) {
+  accent-color: var(--ngo-purple);
 }
 
 .shortcut {
@@ -3888,12 +4453,14 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
   box-sizing: border-box;
   display: flex;
   width: 212px;
-  height: 240px;
+  height: auto;
+  max-height: calc(100dvh - var(--ngo-taskbar-height) - 16px);
   margin: 0;
   padding: 0 0 0 12px;
   flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 0;
   background: transparent;
   list-style: none;
@@ -3902,9 +4469,7 @@ body[data-dsh-internet-angel-desktop][data-ngo-jine-open][data-ngo-jine-queue-fa
   pointer-events: none;
 }
 
-/* Unity Image = start_menu, RectTransform 212px wide. Its sprite border is
- * (left 0, bottom 144, right 0, top 37), so only the 23px middle band grows
- * when the six 40px rows make the menu 240px tall. */
+/* Stretch the menu body while keeping its sprite caps intact. */
 .startMenu::before {
   content: '';
   position: absolute;
@@ -4030,9 +4595,10 @@ body[data-dsh-internet-angel-desktop][data-ngo-start-open] .startMenu {
   text-align: center;
 }
 
-.settingsWindow {
-  top: 7vh;
-  left: 20vw;
+.settingsWindow,
+.pluginsWindow {
+  top: calc(var(--ngo-chrome-top) + 32px);
+  left: calc(var(--ngo-side-width) + 16px);
   width: var(--ngo-control-panel-width);
   height: var(--ngo-control-panel-height);
   background: var(--ngo-pink-soft);
@@ -4040,11 +4606,13 @@ body[data-dsh-internet-angel-desktop][data-ngo-start-open] .startMenu {
   pointer-events: none;
 }
 
-.settingsWindow .titleBar {
+.settingsWindow .titleBar,
+.pluginsWindow .titleBar {
   pointer-events: auto;
 }
 
-.settingsWindow .windowBody {
+.settingsWindow .windowBody,
+.pluginsWindow .windowBody {
   background: var(--ngo-pink-soft);
   pointer-events: none;
 }
@@ -4063,44 +4631,6 @@ body[data-dsh-internet-angel-desktop] [id='root'] > [data-slot='root'] > [class$
   border: 3px solid var(--ngo-purple) !important;
   background: var(--ngo-pink-soft) !important;
   box-shadow: 5px 5px 0 rgb(81 39 255 / 22%);
-}
-
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [id='root'] > [data-slot='root'] > [class$='_frame'] {
-  z-index: auto !important;
-  pointer-events: none;
-}
-
-/* The current installed DSH mounts its fixed settings overlay inside the
- * sidebar column. Temporarily turn that column into a viewport-sized portal
- * host so the game's control panel can escape the save-manager geometry. */
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [id='root'] > [data-slot='root'] > [class$='_frame'] > [class$='_sidebarCol'] {
-  z-index: var(--ngo-settings-layer) !important;
-  inset: 0 !important;
-  display: block !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  pointer-events: none;
-}
-
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [class$='_sidebarCol'] [data-slot='sidebar'] > div {
-  padding: 0 !important;
-  background: transparent !important;
-}
-
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [class$='_sidebarCol'] [data-slot='sidebar'] > div::before {
-  display: none;
-}
-
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [class$='_sidebarCol'] [data-slot='sidebar'] > div > [class*='footArea'] {
-  display: block !important;
-  pointer-events: none;
-}
-
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [data-slot='sidebar'] [class*='regionArea'] {
-  display: none !important;
 }
 
 body[data-dsh-internet-angel-desktop] [data-slot='sidebar'] > div {
@@ -4151,7 +4681,7 @@ body[data-dsh-internet-angel-desktop] [data-slot='sidebar'] [aria-current='true'
 
 /* The official settings controls remain functional, but are painted inside the
  * independently managed Control Panel game window. */
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) {
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] {
   z-index: 980 !important;
   position: fixed !important;
   right: auto !important;
@@ -4170,31 +4700,49 @@ body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='cauti
   pointer-events: auto;
 }
 
-body[data-dsh-internet-angel-desktop][data-ngo-settings-open] [role='presentation'] > [class$='_mask'] {
+/* The account menu is only a launch path for the Control Panel on desktop. */
+body[data-dsh-internet-angel-desktop][data-ngo-settings-launching] [role='menu'] {
+  visibility: hidden !important;
+}
+
+body[data-dsh-internet-angel-desktop] [role='presentation']:has(> [data-shortcut-modal='settings']) {
+  z-index: var(--ngo-settings-layer) !important;
+  pointer-events: none;
+}
+
+body[data-dsh-internet-angel-desktop] [role='presentation']:has(> [data-shortcut-modal='settings']) > [aria-hidden='true'] {
   display: none !important;
   pointer-events: none !important;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution'])::before {
+body[data-dsh-internet-angel-desktop] [data-shortcut-modal='settings'] > nav {
+  flex: 0 0 172px;
+}
+
+body[data-dsh-internet-angel-desktop] [data-shortcut-modal='settings'] > nav + div {
+  min-width: 480px;
+}
+
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings']::before {
   display: none;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) nav,
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) [class*='content'] {
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] nav,
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] [class*='content'] {
   padding-top: 0;
   border-radius: 0 !important;
   background: transparent !important;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) button,
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input,
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) select {
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] button,
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] input,
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] select {
   border-radius: 0 !important;
   font-family: var(--ngo-pixel-font) !important;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) button[aria-current='true'],
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) button[aria-checked='true'] {
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] button[aria-current='true'],
+body[data-dsh-internet-angel-desktop] [role='dialog'][data-shortcut-modal='settings'] button[aria-checked='true'] {
   color: white !important;
   background: var(--ngo-purple) !important;
 }
@@ -4295,6 +4843,13 @@ body[data-dsh-internet-angel-desktop] [data-ngo-theme-choice='dark'] {
 }
 
 .lightBootOverlay > [data-boot-part='bios'] {
+  /* Fit the 4:3 scene; the 16:9 BIOS asset includes black side margins. */
+  top: 50%;
+  left: 50%;
+  width: min(calc(100% - var(--ngo-side-width) * 2), calc(100vh * 4 / 3));
+  height: auto;
+  aspect-ratio: 4 / 3;
+  transform: translate(-50%, -50%);
   container-type: size;
 }
 
@@ -4581,6 +5136,11 @@ body[data-dsh-internet-angel-desktop] [data-ngo-theme-choice='dark'] {
   top: 16.3%;
   left: 13.6%;
   right: 4.6%;
+  bottom: calc(7% + min(2.7797cqw, 3.7106cqh));
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
   margin: 0;
   color: #5127ff;
   font-size: 1.855cqh;
@@ -5033,7 +5593,7 @@ body[data-dsh-internet-angel-desktop] [data-ngo-login-api-key]:disabled {
  * pink fill bar and a white pixel-ball thumb (colour/shape tracked from an
  * in-game ControlPanel grab; thumb is a cropped game sprite). The fill width
  * is mirrored by the skin into --ngo-range-fill on every range input. */
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input[type='range'] {
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel]) input[type='range'] {
   --ngo-range-fill: 0%;
   appearance: none;
   -webkit-appearance: none;
@@ -5047,7 +5607,7 @@ body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='cauti
   outline: 0;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input[type='range']::-webkit-slider-runnable-track {
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel]) input[type='range']::-webkit-slider-runnable-track {
   height: 22px;
   border: 0;
   border-radius: 0;
@@ -5056,7 +5616,7 @@ body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='cauti
     linear-gradient(180deg, transparent 9px, #f4bfe6 9px 12px, transparent 12px);
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input[type='range']::-webkit-slider-thumb {
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel]) input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 30px;
@@ -5071,7 +5631,7 @@ body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='cauti
   image-rendering: pixelated;
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input[type='range']::-moz-range-track {
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel]) input[type='range']::-moz-range-track {
   height: 22px;
   border: 0;
   border-radius: 0;
@@ -5080,7 +5640,7 @@ body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='cauti
     linear-gradient(180deg, transparent 9px, #f4bfe6 9px 12px, transparent 12px);
 }
 
-body[data-dsh-internet-angel-desktop] [role='dialog']:not([data-boot-part='caution']) input[type='range']::-moz-range-thumb {
+body[data-dsh-internet-angel-desktop] :is([data-shortcut-modal='settings'], [data-slot='main']:not(:has(> [data-slot='main.conversation'])), [data-sidebar-right-panel]) input[type='range']::-moz-range-thumb {
   width: 30px;
   height: 32px;
   border: 0;
@@ -5214,14 +5774,14 @@ body[data-dsh-internet-angel-desktop] [role='option'][aria-selected='true'] {
   }
 
   .liveWindow {
-    top: 2vh;
+    top: calc(var(--ngo-chrome-top) + 2vh);
     left: 2vw;
     width: 61vw;
     height: 55vh;
   }
 
   .tweetWindow {
-    top: 2vh;
+    top: calc(var(--ngo-chrome-top) + 2vh);
     right: 2vw;
     width: 34vw;
     height: 55vh;

@@ -90,7 +90,7 @@ function isDeepSeekEditor(editor: HTMLElement): boolean {
 }
 
 function decorateApiKeyEditor(owned: Set<Element>): void {
-  const settings = document.querySelector<HTMLElement>("[data-slot='sidebar.settings']")
+  const settings = document.querySelector<HTMLElement>("[role='dialog'][data-shortcut-modal='settings']")
   if (settings === null) return
   for (const input of settings.querySelectorAll<HTMLInputElement>("input[type='password']")) {
     const field = input.parentElement
